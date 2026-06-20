@@ -14,21 +14,21 @@
         button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button:disabled { background-color: #bbb; cursor: not-allowed; }
         .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; margin-top: 20px; width: 100%; }
-        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 8px 3px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; box-sizing: border-box; }
-        .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 10px; }
+        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; box-sizing: border-box; }
+        .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 15px; }
         table { margin: 0 auto; border-collapse: collapse; width: 100%; table-layout: fixed; }
         .char-row { height: 60px; }
         .arrow-row { height: 45px; vertical-align: middle; }
         .arrow-row td { height: 45px; padding: 0; }
-        .stroke-text { font-size: 11px; color: #aaa; width: 22px; text-align: center; }
-        .char-text { font-size: 18px; font-weight: bold; width: 38px; color: black; text-align: center; }
-        .num-text { font-size: 17px; color: #483D8B; width: 28px; text-align: center; }
-        .wx-text { font-size: 15px; color: #483D8B; width: 25px; text-align: center; }
-        .ge-label { font-size: 13px; color: #483D8B; font-weight: bold; width: 38px; text-align: left; }
-        .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 10px; }
-        .analysis-box { max-width: 450px; margin: 20px auto; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 15px; display: block; }
-        .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 5px; }
-        .analysis-item { font-size: 16px; margin: 5px 0; color: #333; line-height: 1.5; font-weight: bold; }
+        
+        /* 調整了數字與名字的寬度與對齊，讓它們靠得更近 */
+        .stroke-text { font-size: 13px; color: #aaa; width: 55px; text-align: right; padding-right: 12px; box-sizing: border-box; }
+        .char-text { font-size: 18px; font-weight: bold; width: 45px; color: black; text-align: left; padding-left: 5px; box-sizing: border-box; }
+        .num-text { font-size: 17px; color: #483D8B; width: 35px; text-align: center; }
+        .wx-text { font-size: 15px; color: #483D8B; width: 30px; text-align: center; }
+        .ge-label { font-size: 13px; color: #483D8B; font-weight: bold; width: 40px; text-align: left; }
+        
+        .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 15px; }
         #status { font-size: 13px; color: #888; margin-bottom: 10px; }
     </style>
 </head>
@@ -52,11 +52,6 @@
             <table id="mResultTable"></table>
             <div id="mTotalBox" class="total-box"></div>
         </div>
-    </div>
-
-    <div id="analysisBox" class="analysis-box">
-        <h3>分析結果：</h3>
-        <div id="analysisList" style="color: #888;">請輸入姓名後點擊「開始分析」</div>
     </div>
 
     <script>
@@ -93,7 +88,6 @@
         }
         loadDict();
 
-        // 氣化邏輯：相加至個位數
         function reduceToSingleDigit(n) {
             while (n >= 10) { n = String(n).split('').reduce((sum, d) => sum + parseInt(d), 0); }
             return n;
@@ -167,21 +161,16 @@
             return { lNameArr, fNameArr, lStrokes, fStrokes, tian, ren, di, zong };
         }
 
-        function getCanonicalRel(wx1, wx2) {
-            const wxArr = ["木", "火", "土", "金", "水"];
-            const i1 = wxArr.indexOf(wx1);
-            const i2 = wxArr.indexOf(wx2);
-            if (i1 === i2) return wx1 + wx2; // 平
-            if ((i1 + 1) % 5 === i2) return wx1 + "生" + wx2; // 生
-            if ((i2 + 1) % 5 === i1) return wx2 + "生" + wx1; // 生
-            if ((i1 + 2) % 5 === i2) return wx1 + "剋" + wx2; // 剋
-            if ((i2 + 2) % 5 === i1) return wx2 + "剋" + wx1; // 剋
-        }
-
-        // 修改建構表格的邏輯，將婚姻宮的五行標註在第三個數字(地格)的左邊
-        function buildTableHtml(data, marriageWx) {
+        function buildTableHtml(data, renWx, diWx) {
             let html = "";
             
+            // 建立直向的氣化五行 HTML，使用絕對定位綁在第三個數字左邊
+            const palaceHtml = `
+                <div style="position:absolute; right:35px; top:50%; transform:translateY(-50%); font-size:15px; font-weight:bold; color:#800000; line-height:1.3; text-align:center;">
+                    <div>${renWx}</div>
+                    <div>${diWx}</div>
+                </div>`;
+
             // 天格
             if (data.lStrokes.length === 1) {
                 html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
@@ -199,14 +188,11 @@
             // 箭頭
             html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.ren, data.di))}</td><td></td></tr>`;
             
-            // 婚姻宮標示 (使用絕對定位，固定在第三個數字左側)
-            const badgeHtml = `<div style="position:absolute; right:100%; top:50%; transform:translateY(-50%); font-size:10px; color:#800000; line-height:1.2; width:45px; text-align:right; margin-right:4px;">婚姻宮<br>${marriageWx}</div>`;
-
-            // 地格
+            // 地格 (加入氣化的五行)
             if (data.fStrokes.length > 1) {
-                html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[1]}</td><td class="char-text">${data.fNameArr[1]}</td><td class="num-text" style="position:relative;">${badgeHtml}${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}${data.fStrokes[1]}</td><td class="char-text">${data.fNameArr[1]}</td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
             } else {
-                html += `<tr class="char-row"><td class="stroke-text">1</td><td></td><td class="num-text" style="position:relative;">${badgeHtml}${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}1</td><td></td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
             }
             return html;
         }
@@ -214,21 +200,14 @@
         function analyzeName() {
             const data = getGirdData(document.getElementById('lName').value.trim(), document.getElementById('fName').value.trim());
 
-            // 計算婚姻宮 (人格與地格氣化後的五行關係)
-            const renD = reduceToSingleDigit(data.ren);
-            const diD = reduceToSingleDigit(data.di);
-            const renWx = getWX(renD);
-            const diWx = getWX(diD);
-            const marriageWx = getCanonicalRel(renWx, diWx);
+            // 計算人格與地格各自的氣化五行
+            const renWx = getWX(reduceToSingleDigit(data.ren));
+            const diWx = getWX(reduceToSingleDigit(data.di));
 
-            // 渲染表格與格局
-            document.getElementById('mResultTable').innerHTML = buildTableHtml(data, marriageWx);
+            // 渲染表格與格局，並將這兩個五行傳遞進去
+            document.getElementById('mResultTable').innerHTML = buildTableHtml(data, renWx, diWx);
             document.getElementById('mTotalBox').innerText = "總格 ： " + data.zong;
             document.getElementById('mResultFrame').style.display = "block";
-
-            // 渲染底部結果清單
-            const aList = document.getElementById('analysisList');
-            aList.innerHTML = `<div class="analysis-item" style="color: #800000;">婚姻宮五行關係：${marriageWx} <br><span style="font-size:13px; color:#888; font-weight:normal;">(人格氣化五行：${renWx} / 地格氣化五行：${diWx})</span></div>`;
         }
     </script>
 </body>
