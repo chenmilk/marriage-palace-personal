@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名婚姻分析 - 甄好運姓名學專用</title>
+    <style>
+        html { -webkit-text-size-adjust: none; text-size-adjust: none; }
+        body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; padding: 15px; text-align: center; color: #333; }
+        .input-box { background: white; border: 1px solid #ddd; border-radius: 15px; padding: 20px; max-width: 450px; margin: 0 auto 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .name-group { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 10px; }
+        .name-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #800000; }
+        input { width: 35%; padding: 12px; margin: 5px; text-align: center; font-size: 18px; border: 1px solid #ccc; border-radius: 8px; }
+        button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:disabled { background-color: #bbb; cursor: not-allowed; }
+        .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; margin-top: 20px; width: 100%; }
+        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 8px 3px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; box-sizing: border-box; }
+        .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 10px; }
+        table { margin: 0 auto; border-collapse: collapse; width: 100%; table-layout: fixed; }
+        .char-row { height: 60px; }
+        .arrow-row { height: 45px; vertical-align: middle; }
+        .arrow-row td { height: 45px; padding: 0; }
+        .stroke-text { font-size: 11px; color: #aaa; width: 22px; text-align: center; }
+        .char-text { font-size: 18px; font-weight: bold; width: 38px; color: black; text-align: center; }
+        .num-text { font-size: 17px; color: #483D8B; width: 28px; text-align: center; }
+        .wx-text { font-size: 15px; color: #483D8B; width: 25px; text-align: center; }
+        .ge-label { font-size: 13px; color: #483D8B; font-weight: bold; width: 38px; text-align: left; }
+        .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 10px; }
+        .analysis-box { max-width: 450px; margin: 20px auto; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 15px; display: block; }
+        .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 5px; }
+        .analysis-item { font-size: 16px; margin: 5px 0; color: #333; line-height: 1.5; font-weight: bold; }
+        #status { font-size: 13px; color: #888; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2 style="margin-bottom: 5px; line-height: 1.2;">姓名婚姻分析</h2>
+    <div style="font-size: 18px; color: #666; margin-bottom: 15px; font-weight: normal;">甄好運姓名學專用</div>
+    <div id="status">正在同步字典數據...</div>
+
+    <div class="input-box">
+        <div class="name-group">
+            <label>請輸入姓名</label>
+            <input type="text" id="lName" placeholder="姓" maxlength="2">
+            <input type="text" id="fName" placeholder="名" maxlength="4">
+        </div>
+        <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
+    </div>
+
+    <div class="result-container">
+        <div id="mResultFrame" class="result-frame">
+            <div class="result-title">命盤格局</div>
+            <table id="mResultTable"></table>
+            <div id="mTotalBox" class="total-box"></div>
+        </div>
+    </div>
+
+    <div id="analysisBox" class="analysis-box">
+        <h3>分析結果：</h3>
+        <div id="analysisList" style="color: #888;">請輸入姓名後點擊「開始分析」</div>
+    </div>
+
+    <script>
+        let dictionary = {};
+        const btn = document.getElementById('btnRun');
+        const status = document.getElementById('status');
+
+        function getStrokes(char) {
+            const customStrokes = {
+                '互': 4, '片': 4, '氏': 4, '及': 4, '之': 4, '王': 4, '瓦': 5, '台': 5, '巡': 6, '卉': 6,
+                '廷': 7, '初': 7, '秀': 7, '成': 7, '亞': 8, '武': 8, '昆': 8, '沛': 8, '牧': 8, '弢': 8, '去': 8, '幺': 8,
+                '政': 9, '盈': 9, '建': 9, '妍': 9, '致': 9, '修': 9, '哲': 10, '卿': 10, '娜': 10, '育': 10,
+                '屏': 11, '胡': 11, '強': 11, '迎': 11, '閏': 11, '一': 11, '弓': 11, '丿': 11,
+                '傑': 12, '黃': 12, '盛': 12, '勝': 12, '為': 12, '能': 12, '胸': 12, '涵': 12,
+                '溫': 13, '新': 13, '敬': 13, '雋': 13, '淵': 13, '郎': 14, '鳳': 14, '萍': 14, '慈': 14, '嘉': 14,
+                '萬': 15, '興': 15, '霈': 15, '數': 15, '寬': 15, '豎': 15, '履': 15, '學': 16, '樺': 16, '璇': 16, '閣': 16, '潔': 16, '頤': 16,
+                '鴻': 17, '臨': 17, '燦': 17, '戴': 18, '豐': 18, '珞': 18, '魏': 18, '蕭': 19, '覺': 19, '贊': 19, '羅': 20, '寶': 20, '藏': 20, '譽': 20, '馨': 20,
+                '屬': 21, '龔': 22, '響': 22, '霽': 22, '蘭': 23, '麟': 23, '艷': 24
+            };
+            return customStrokes[char] || dictionary[char] || 0;
+        }
+
+        async function loadDict() {
+            try {
+                const files = ['slim_a.txt', 'slim_b.txt'];
+                for (const file of files) {
+                    const response = await fetch(file);
+                    const data = await response.json();
+                    for (let key in data) { dictionary[key] = data[key]; }
+                }
+                status.innerText = "✅ 字典已就緒";
+                btn.disabled = false;
+            } catch (err) { status.innerHTML = "❌ 字典載入異常"; }
+        }
+        loadDict();
+
+        // 氣化邏輯：相加至個位數
+        function reduceToSingleDigit(n) {
+            while (n >= 10) { n = String(n).split('').reduce((sum, d) => sum + parseInt(d), 0); }
+            return n;
+        }
+
+        function getWX(n) {
+            const map = {1:"木", 2:"木", 3:"火", 4:"火", 5:"土", 6:"土", 7:"金", 8:"金", 9:"水", 0:"水"};
+            return map[n % 10];
+        }
+
+        function getRelationInfo(up, down) {
+            const getIdx = (n) => {
+                const t = n % 10;
+                if (t==1||t==2) return 0; if (t==3||t==4) return 1;
+                if (t==5||t==6) return 2; if (t==7||t==8) return 3; return 4;
+            };
+            const u = getIdx(up), d = getIdx(down);
+            if (u == d) return { type: "無", dir: "" };
+            if ((u + 1) % 5 == d) return { type: "生", dir: "下" };
+            if ((d + 1) % 5 == u) return { type: "生", dir: "上" };
+            const ke = [0, 2, 4, 1, 3];
+            const ui = ke.indexOf(u), di = ke.indexOf(d);
+            if ((ui + 1) % 5 == di) return { type: "剋", dir: "下" };
+            if ((di + 1) % 5 == ui) return { type: "剋", dir: "上" };
+            return { type: "無", dir: "" };
+        }
+
+        function createArrowSvg(info) {
+            if (info.type === "無") return `<svg width="30" height="35" style="display:block; margin:0 auto; visibility:hidden;"></svg>`;
+            const head = info.type === "生" ? 
+                (info.dir === "下" ? "M -4,-6 L 0,0 L 4,-6" : "M -4,6 L 0,0 L 4,6") :
+                (info.dir === "下" ? "M -5,-8 L 5,-8 L 0,2 Z" : "M -5,8 L 5,8 L 0,-2 Z");
+            const y = info.dir === "下" ? 30 : 5;
+            return `<svg width="30" height="35" style="display:block; margin:0 auto;">
+                <line x1="15" y1="5" x2="15" y2="30" stroke="red" stroke-width="1.2" />
+                <path d="${head}" fill="${info.type === '生' ? 'none' : 'red'}" stroke="red" stroke-width="1.2" transform="translate(15,${y})" />
+            </svg>`;
+        }
+
+        function getGirdData(lStr, fStr) {
+            let lNameArr = [], fNameArr = [], lStrokes = [], fStrokes = [];
+            
+            if (/^\d{1,2}$/.test(lStr)) {
+                lNameArr = [lStr];
+                lStrokes = [parseInt(lStr)];
+            } else {
+                lNameArr = lStr.split('');
+                lStrokes = lNameArr.map(c => getStrokes(c));
+            }
+
+            if (/^\d{4}$/.test(fStr)) {
+                let n1 = parseInt(fStr.substring(0, 2));
+                let n2 = parseInt(fStr.substring(2, 4));
+                fNameArr = [fStr.substring(0, 2)];
+                fStrokes = [n1];
+                if (n2 !== 0) {
+                    fNameArr.push(fStr.substring(2, 4));
+                    fStrokes.push(n2);
+                }
+            } else {
+                fNameArr = fStr.split('');
+                fStrokes = fNameArr.map(c => getStrokes(c));
+            }
+
+            const lTotal = lStrokes.reduce((a, b) => a + b, 0);
+            const tian = lStrokes.length === 1 ? lStrokes[0] + 1 : lTotal;
+            const ren = lTotal + fStrokes[0];
+            const di = fStrokes.length === 1 ? fStrokes[0] + 1 : fStrokes[0] + fStrokes[1];
+            const zong = lTotal + fStrokes.reduce((a, b) => a + b, 0);
+
+            return { lNameArr, fNameArr, lStrokes, fStrokes, tian, ren, di, zong };
+        }
+
+        function getCanonicalRel(wx1, wx2) {
+            const wxArr = ["木", "火", "土", "金", "水"];
+            const i1 = wxArr.indexOf(wx1);
+            const i2 = wxArr.indexOf(wx2);
+            if (i1 === i2) return wx1 + wx2; // 平
+            if ((i1 + 1) % 5 === i2) return wx1 + "生" + wx2; // 生
+            if ((i2 + 1) % 5 === i1) return wx2 + "生" + wx1; // 生
+            if ((i1 + 2) % 5 === i2) return wx1 + "剋" + wx2; // 剋
+            if ((i2 + 2) % 5 === i1) return wx2 + "剋" + wx1; // 剋
+        }
+
+        // 修改建構表格的邏輯，將婚姻宮的五行標註在第三個數字(地格)的左邊
+        function buildTableHtml(data, marriageWx) {
+            let html = "";
+            
+            // 天格
+            if (data.lStrokes.length === 1) {
+                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
+            } else {
+                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td></td><td></td><td></td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[1]}</td><td class="char-text">${data.lNameArr[1]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
+            }
+            
+            // 箭頭
+            html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.tian, data.ren))}</td><td></td></tr>`;
+            
+            // 人格
+            html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[0]}</td><td class="char-text">${data.fNameArr[0]}</td><td class="num-text">${data.ren}</td><td class="wx-text">${getWX(data.ren)}</td><td class="ge-label">人格</td></tr>`;
+            
+            // 箭頭
+            html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.ren, data.di))}</td><td></td></tr>`;
+            
+            // 婚姻宮標示 (使用絕對定位，固定在第三個數字左側)
+            const badgeHtml = `<div style="position:absolute; right:100%; top:50%; transform:translateY(-50%); font-size:10px; color:#800000; line-height:1.2; width:45px; text-align:right; margin-right:4px;">婚姻宮<br>${marriageWx}</div>`;
+
+            // 地格
+            if (data.fStrokes.length > 1) {
+                html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[1]}</td><td class="char-text">${data.fNameArr[1]}</td><td class="num-text" style="position:relative;">${badgeHtml}${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
+            } else {
+                html += `<tr class="char-row"><td class="stroke-text">1</td><td></td><td class="num-text" style="position:relative;">${badgeHtml}${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
+            }
+            return html;
+        }
+
+        function analyzeName() {
+            const data = getGirdData(document.getElementById('lName').value.trim(), document.getElementById('fName').value.trim());
+
+            // 計算婚姻宮 (人格與地格氣化後的五行關係)
+            const renD = reduceToSingleDigit(data.ren);
+            const diD = reduceToSingleDigit(data.di);
+            const renWx = getWX(renD);
+            const diWx = getWX(diD);
+            const marriageWx = getCanonicalRel(renWx, diWx);
+
+            // 渲染表格與格局
+            document.getElementById('mResultTable').innerHTML = buildTableHtml(data, marriageWx);
+            document.getElementById('mTotalBox').innerText = "總格 ： " + data.zong;
+            document.getElementById('mResultFrame').style.display = "block";
+
+            // 渲染底部結果清單
+            const aList = document.getElementById('analysisList');
+            aList.innerHTML = `<div class="analysis-item" style="color: #800000;">婚姻宮五行關係：${marriageWx} <br><span style="font-size:13px; color:#888; font-weight:normal;">(人格氣化五行：${renWx} / 地格氣化五行：${diWx})</span></div>`;
+        }
+    </script>
+</body>
+</html>
