@@ -28,6 +28,12 @@
         .ge-label { font-size: 13px; color: #483D8B; font-weight: bold; width: 40px; text-align: left; }
         
         .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 15px; }
+        
+        /* 新增的分析區塊樣式 */
+        .analysis-box { max-width: 450px; margin: 20px auto; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 15px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
+        .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 5px; }
+        .analysis-text { font-size: 15.5px; line-height: 1.6; color: #333; font-weight: bold; }
+        
         #status { font-size: 13px; color: #888; margin-bottom: 10px; }
     </style>
 </head>
@@ -51,6 +57,12 @@
             <table id="mResultTable"></table>
             <div id="mTotalBox" class="total-box"></div>
         </div>
+    </div>
+    
+    <!-- 新增的分析結果區塊 -->
+    <div id="analysisBox" class="analysis-box">
+        <h3>婚姻宮分析結果</h3>
+        <div id="analysisContent"></div>
     </div>
 
     <script>
@@ -126,7 +138,6 @@
             </svg>`;
         }
         
-        // 專門為了左側婚姻宮縮小版的箭頭
         function createMiniArrowSvg(info) {
             if (info.type === "無") return `<svg width="20" height="20" style="display:block; margin:2px auto; visibility:hidden;"></svg>`;
             const head = info.type === "生" ? 
@@ -176,7 +187,6 @@
         function buildTableHtml(data, renWx, diWx, marriageRel) {
             let html = "";
             
-            // 建立直向的氣化五行 HTML，並包含微型生剋箭頭
             const palaceHtml = `
                 <div style="position:absolute; right:35px; top:50%; transform:translateY(-50%); font-size:15px; font-weight:bold; color:#800000; line-height:1; text-align:center;">
                     <div>${renWx}</div>
@@ -184,7 +194,6 @@
                     <div>${diWx}</div>
                 </div>`;
 
-            // 天格
             if (data.lStrokes.length === 1) {
                 html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
             } else {
@@ -192,16 +201,12 @@
                 html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[1]}</td><td class="char-text">${data.lNameArr[1]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
             }
             
-            // 箭頭
             html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.tian, data.ren))}</td><td></td></tr>`;
             
-            // 人格
             html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[0]}</td><td class="char-text">${data.fNameArr[0]}</td><td class="num-text">${data.ren}</td><td class="wx-text">${getWX(data.ren)}</td><td class="ge-label">人格</td></tr>`;
             
-            // 箭頭
             html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.ren, data.di))}</td><td></td></tr>`;
             
-            // 地格 (加入氣化的五行與箭頭)
             if (data.fStrokes.length > 1) {
                 html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}${data.fStrokes[1]}</td><td class="char-text">${data.fNameArr[1]}</td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
             } else {
@@ -213,21 +218,53 @@
         function analyzeName() {
             const data = getGirdData(document.getElementById('lName').value.trim(), document.getElementById('fName').value.trim());
 
-            // 取得人格與地格縮減至個位數的數字
             const renD = reduceToSingleDigit(data.ren);
             const diD = reduceToSingleDigit(data.di);
 
-            // 計算各自的氣化五行
             const renWx = getWX(renD);
             const diWx = getWX(diD);
 
-            // 計算婚姻宮生剋關係
             const marriageRel = getRelationInfo(renD, diD);
 
-            // 渲染表格與格局
             document.getElementById('mResultTable').innerHTML = buildTableHtml(data, renWx, diWx, marriageRel);
             document.getElementById('mTotalBox').innerText = "總格 ： " + data.zong;
             document.getElementById('mResultFrame').style.display = "block";
+            
+            // --- 處理婚姻宮分析文字 ---
+            const analysisBox = document.getElementById('analysisBox');
+            const analysisContent = document.getElementById('analysisContent');
+            let analysisHtml = "";
+
+            if (marriageRel.type === "剋") {
+                let detailText = "";
+                // 判斷五行組合 (不分上下方向)
+                if ((renWx === "金" && diWx === "木") || (renWx === "木" && diWx === "金")) {
+                    detailText = "從婚姻宮我們可以看出(金剋木)<br>1.你的緣分往往來自工作上或事業夥伴,因此建議可以往職場上尋找有共同理念的人.<br>2.或與另一半年紀相差大於5歲以上也很適合，但若另一半是年紀較小的,容易遇到長輩的阻礙,建議可以公證結婚減少阻礙<br>總結:<br>因此若找到職場上認識的以及年紀差大於5歲最好,若沒有則一也很好!";
+                } else if ((renWx === "木" && diWx === "土") || (renWx === "土" && diWx === "木")) {
+                    detailText = "從婚姻宮我們可以看出(木剋土)<br>1.你的緣分往往來自於人情,例如對方常常幫助你,使你欠對方人情,<br>2.若已經有不錯的對象,想踏入婚姻的人,較容易發生婚期拖延的現象,導致變卦<br>3.若已經結婚者或有對象,較容易長期聚少離多導致斷緣<br>總結:<br>若有不錯的對象建議早婚,經營上不能聚少離多,需要常常見面維繫感情";
+                } else if ((renWx === "土" && diWx === "水") || (renWx === "水" && diWx === "土")) {
+                    detailText = "從婚姻宮我們可以看出(土剋水)<br>1.你的緣分往往來自於才或財,意思是你的潛意識喜歡有才能或有錢財的另一半<br>2.容易因為對象太多導致難以選擇,因此不建議早婚,要慢慢挑選較好<br>總結:不建議早婚,慢慢挑選對象對您較好,除非已經遇到非常好的對象了";
+                } else if ((renWx === "水" && diWx === "火") || (renWx === "火" && diWx === "水")) {
+                    detailText = "從婚姻宮我們可以看出(水剋火)<br>1.你的緣分往往來自於瞬間接觸,較容易閃電結婚<br>2.容易找得太急,導致找錯人,因此容易閃電結婚也容易閃電離婚<br>總結:若確定遇到對的人,建議您可以閃電結婚,因婚姻宮水剋火的性質,若動作不快一點容易導致對象換人,錯失良緣";
+                } else if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
+                    detailText = "從婚姻宮我們可以看出(火剋金)<br>1.你的緣分往往來自於最後認識者(結婚的那個)<br>總結:您結婚後就不容易離婚,若離婚緣分就斷了,因此不管任何原因千萬不能假離婚";
+                }
+                
+                analysisHtml = `
+                    <div class="analysis-text">
+                        (若用姓名學專用的術語您的婚姻宮為剋宮,帶破象。<br>
+                        進入婚姻前或過程中,容易有特殊狀況與波折,故稱為「破象」<br>
+                        但不用因為看到破象就覺得不好或是緊張.只要能提早知道用對方法與好好經營,在感情上您也可以很順利。)<br><br>
+                        (${detailText})
+                    </div>
+                `;
+            } else if (marriageRel.type === "生" || marriageRel.type === "無") {
+                const typeName = marriageRel.type === "無" ? "平" : "生";
+                analysisHtml = `<div class="analysis-text" style="color: #888; font-weight: normal;">(此格局為${typeName}宮，相關分析內容即將推出，敬請期待。)</div>`;
+            }
+
+            analysisContent.innerHTML = analysisHtml;
+            analysisBox.style.display = "block";
         }
     </script>
 </body>
