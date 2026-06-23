@@ -8,10 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         html { -webkit-text-size-adjust: none; text-size-adjust: none; }
-        /* 【修復1】拿掉 body 的 margin 和 padding，避免 PDF 抓到錯誤的上方空白 */
         body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; text-align: center; color: #333; margin: 0; padding: 0; }
         
-        /* 將原本的間距移到這個主容器內 */
         .main-container { padding: 20px 15px; }
 
         .input-box { background: white; border: 1px solid #ddd; border-radius: 15px; padding: 20px; max-width: 450px; margin: 0 auto 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
@@ -21,7 +19,7 @@
         button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button:disabled { background-color: #bbb; cursor: not-allowed; }
         
-        /* PDF 擷取區塊：改成純白底色，印成 PDF 比較專業好看 */
+        /* PDF 擷取區塊：純白底色 */
         #captureArea { background-color: #ffffff; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 500px; box-sizing: border-box; }
         
         .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; width: 100%; }
@@ -404,7 +402,7 @@
             document.getElementById('downloadContainer').style.display = "block";
         }
         
-        // --- 最強防切斷與防偏移修復 ---
+        // --- 核心解法：動態計算高度，輸出「單一長頁」不截斷的 PDF ---
         function downloadPDF() {
             const btn = document.getElementById('btnDownload');
             const captureElement = document.getElementById('captureArea');
@@ -413,14 +411,10 @@
             btn.innerText = "⏳ PDF 產生中...";
             btn.disabled = true;
             
-            // 紀錄目前的捲動位置
             const originalScrollY = window.scrollY;
             const originalScrollX = window.scrollX;
             
-            // 1. 強制捲動到最頂部，消除 html2canvas 的 Y 軸偏移
             window.scrollTo(0, 0);
-            
-            // 2. 暫時將 body 設為不可捲動，鎖定畫面
             document.body.style.overflow = 'hidden';
             
             pdfTitle.style.display = 'block';
@@ -428,9 +422,18 @@
             const fullName = document.getElementById('lName').value.trim() + document.getElementById('fName').value.trim();
             const fileName = fullName ? `${fullName}_婚姻宮分析.pdf` : '姓名婚姻分析.pdf';
 
-            // 3. 設定 PDF 防切斷 (pagebreak)
+            // 1. 動態取得擷取區塊的總高度 (像素 px)
+            const elementHeightPx = captureElement.scrollHeight;
+            
+            // 2. 將像素 (px) 轉換為毫米 (mm) ，常數大約是 0.264583
+            const elementHeightMm = elementHeightPx * 0.264583; 
+            
+            // 3. 設定最終的 PDF 高度。加入 20mm 邊界緩衝。
+            // 並且設定一個最小高度 (A4 的標準高度 297mm)，如果內容超過 A4，就會自動變成長頁！
+            const finalPdfHeight = Math.max(297, elementHeightMm + 20);
+
             const opt = {
-                margin:       [10, 10, 10, 10], // 上下左右留白
+                margin:       10, // 四周留白 10mm
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
@@ -440,19 +443,16 @@
                     scrollY: 0,
                     windowY: 0
                 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                // 防止分析框或排盤框被切成兩半
-                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+                // 【重點更新】將 format 設為自訂長寬的陣列： [寬度, 動態高度]
+                jsPDF:        { unit: 'mm', format: [210, finalPdfHeight], orientation: 'portrait' }
             };
 
-            // 延遲一下，確保瀏覽器真的捲動到頂部才開始拍照
             setTimeout(() => {
                 html2pdf().set(opt).from(captureElement).save().then(() => {
                     pdfTitle.style.display = 'none';
                     btn.innerText = "📥 下載分析結果 (PDF)";
                     btn.disabled = false;
                     
-                    // 恢復原本的畫面捲動狀態
                     document.body.style.overflow = '';
                     window.scrollTo(originalScrollX, originalScrollY);
                 });
