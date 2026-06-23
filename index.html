@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>姓名婚姻分析 - 甄好運姓名學專用</title>
+    <!-- 引入 html2pdf 函式庫，用來產出 PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         html { -webkit-text-size-adjust: none; text-size-adjust: none; }
         body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; padding: 15px; text-align: center; color: #333; }
@@ -13,8 +15,12 @@
         input { width: 35%; padding: 12px; margin: 5px; text-align: center; font-size: 18px; border: 1px solid #ccc; border-radius: 8px; }
         button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button:disabled { background-color: #bbb; cursor: not-allowed; }
-        .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; margin-top: 20px; width: 100%; }
-        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; box-sizing: border-box; }
+        
+        /* 擷取成 PDF 的專屬區塊範圍 */
+        #captureArea { background-color: #f8f9fa; padding: 10px 0; border-radius: 10px; margin: 0 auto; max-width: 480px; }
+        
+        .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; width: 100%; }
+        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; box-sizing: border-box; margin: 0 auto; }
         .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 15px; }
         table { margin: 0 auto; border-collapse: collapse; width: 100%; table-layout: fixed; }
         .char-row { height: 60px; }
@@ -30,9 +36,17 @@
         .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 15px; }
         
         /* 分析區塊樣式 */
-        .analysis-box { max-width: 450px; margin: 20px auto; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 15px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
-        .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 5px; }
+        .analysis-box { max-width: 450px; margin: 20px auto; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 18px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
+        .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 15px; }
         .analysis-text { font-size: 15.5px; line-height: 1.6; color: #333; font-weight: bold; }
+        
+        /* 破象專屬的提示框設計 */
+        .warning-box { background-color: #FFF4F4; border: 1px solid #FFD3D3; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin-bottom: 15px; color: #5D4037; font-size: 15px; line-height: 1.5; font-weight: bold; }
+        .warning-title { font-size: 17px; color: #D32F2F; margin-bottom: 8px; display: flex; align-items: center; }
+        
+        /* 下載按鈕樣式 */
+        .btn-download { display: none; width: 100%; max-width: 450px; margin: 10px auto 30px; padding: 14px; background-color: #2E8B57; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3); }
+        .btn-download:hover { background-color: #246B43; }
         
         #status { font-size: 13px; color: #888; margin-bottom: 10px; }
     </style>
@@ -51,19 +65,31 @@
         <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
     </div>
 
-    <div class="result-container">
-        <div id="mResultFrame" class="result-frame">
-            <div class="result-title">命盤格局</div>
-            <table id="mResultTable"></table>
-            <div id="mTotalBox" class="total-box"></div>
+    <!-- 這是準備轉換成 PDF 的範圍，包含隱藏的 PDF 專屬標題、排盤與分析結果 -->
+    <div id="captureArea">
+        <!-- 這個標題平時隱藏，只有在產生 PDF 的瞬間才會顯示出來 -->
+        <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:20px; padding-top:10px;">
+            <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 24px;">姓名婚姻分析</h2>
+            <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專用</div>
+        </div>
+
+        <div class="result-container">
+            <div id="mResultFrame" class="result-frame">
+                <div class="result-title">命盤格局</div>
+                <table id="mResultTable"></table>
+                <div id="mTotalBox" class="total-box"></div>
+            </div>
+        </div>
+        
+        <!-- 分析結果區塊 -->
+        <div id="analysisBox" class="analysis-box">
+            <h3>婚姻宮分析結果</h3>
+            <div id="analysisContent"></div>
         </div>
     </div>
     
-    <!-- 分析結果區塊 -->
-    <div id="analysisBox" class="analysis-box">
-        <h3>婚姻宮分析結果</h3>
-        <div id="analysisContent"></div>
-    </div>
+    <!-- 下載 PDF 按鈕 (算完才會出現) -->
+    <button id="btnDownload" class="btn-download" onclick="downloadPDF()">📥 下載分析結果 (PDF)</button>
 
     <script>
         let dictionary = {};
@@ -216,7 +242,15 @@
         }
 
         function analyzeName() {
-            const data = getGirdData(document.getElementById('lName').value.trim(), document.getElementById('fName').value.trim());
+            const lNameInput = document.getElementById('lName').value.trim();
+            const fNameInput = document.getElementById('fName').value.trim();
+            
+            if (!lNameInput || !fNameInput) {
+                alert("請先輸入完整的姓名！");
+                return;
+            }
+            
+            const data = getGirdData(lNameInput, fNameInput);
 
             const renD = reduceToSingleDigit(data.ren);
             const diD = reduceToSingleDigit(data.di);
@@ -237,62 +271,115 @@
 
             if (marriageRel.type === "剋") {
                 let detailText = "";
+                let title = "";
+                
                 if ((renWx === "金" && diWx === "木") || (renWx === "木" && diWx === "金")) {
-                    detailText = "從婚姻宮我們可以看出(金剋木)<br>1.你的緣分往往來自工作上或事業夥伴,因此建議可以往職場上尋找有共同理念的人.<br>2.或與另一半年紀相差大於5歲以上也很適合，但若另一半是年紀較小的,容易遇到長輩的阻礙,建議可以公證結婚減少阻礙<br><br>總結:<br>因此若找到職場上認識的以及年紀差大於5歲最好,若沒有則一也很好!";
+                    title = "金剋木";
+                    detailText = `
+                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
+                            <li style="margin-bottom: 8px;">你的緣分往往來自工作上或事業夥伴，因此建議可以往職場上尋找有共同理念的人。</li>
+                            <li>或與另一半年紀相差大於5歲以上也很適合，但若另一半是年紀較小的，容易遇到長輩的阻礙，建議可以公證結婚減少阻礙。</li>
+                        </ul>
+                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
+                            <strong>💡 總結：</strong>因此若找到職場上認識的，以及年紀相差大於5歲的對象最好，若符合其中一項也非常不錯！
+                        </div>
+                    `;
                 } else if ((renWx === "木" && diWx === "土") || (renWx === "土" && diWx === "木")) {
-                    detailText = "從婚姻宮我們可以看出(木剋土)<br>1.你的緣分往往來自於人情,例如對方常常幫助你,使你欠對方人情,<br>2.若已經有不錯的對象,想踏入婚姻的人,較容易發生婚期拖延的現象,導致變卦<br>3.若已經結婚者或有對象,較容易長期聚少離多導致斷緣<br><br>總結:<br>若有不錯的對象建議早婚,經營上不能聚少離多,需要常常見面維繫感情";
+                    title = "木剋土";
+                    detailText = `
+                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
+                            <li style="margin-bottom: 8px;">你的緣分往往來自於人情，例如對方常常幫助你，使你欠對方人情。</li>
+                            <li style="margin-bottom: 8px;">若已經有不錯的對象想踏入婚姻，較容易發生婚期拖延的現象，導致變卦。</li>
+                            <li>若已經結婚或有穩定對象，較容易因長期聚少離多導致斷緣。</li>
+                        </ul>
+                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
+                            <strong>💡 總結：</strong>若有不錯的對象建議可以早婚，在關係經營上絕對不能聚少離多，需要常常見面維繫感情。
+                        </div>
+                    `;
                 } else if ((renWx === "土" && diWx === "水") || (renWx === "水" && diWx === "土")) {
-                    detailText = "從婚姻宮我們可以看出(土剋水)<br>1.你的緣分往往來自於才或財,意思是你的潛意識喜歡有才能或有錢財的另一半<br>2.容易因為對象太多導致難以選擇,因此不建議早婚,要慢慢挑選較好<br><br>總結:不建議早婚,慢慢挑選對象對您較好,除非已經遇到非常好的對象了";
+                    title = "土剋水";
+                    detailText = `
+                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
+                            <li style="margin-bottom: 8px;">你的緣分往往來自於「才」或「財」，代表你的潛意識喜歡有才能或具備經濟實力的另一半。</li>
+                            <li>容易因為身邊對象太多導致難以選擇，因此不建議早婚，慢慢挑選較好。</li>
+                        </ul>
+                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
+                            <strong>💡 總結：</strong>不建議早婚，慢慢挑選對象對您較好，除非您已經遇到各方面都非常出色的理想對象。
+                        </div>
+                    `;
                 } else if ((renWx === "水" && diWx === "火") || (renWx === "火" && diWx === "水")) {
-                    detailText = "從婚姻宮我們可以看出(水剋火)<br>1.你的緣分往往來自於瞬間接觸,較容易閃電結婚<br>2.容易找得太急,導致找錯人,因此容易閃電結婚也容易閃電離婚<br><br>總結:若確定遇到對的人,建議您可以閃電結婚,因婚姻宮水剋火的性質,若動作不快一點容易導致對象換人,錯失良緣";
+                    title = "水剋火";
+                    detailText = `
+                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
+                            <li style="margin-bottom: 8px;">你的緣分往往來自於瞬間接觸的火花，較容易走向閃電結婚。</li>
+                            <li>但也因為容易找得太急而找錯人，因此容易閃電結婚，也容易面臨閃電離婚的風險。</li>
+                        </ul>
+                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
+                            <strong>💡 總結：</strong>若確定遇到對的人，建議您可以閃電結婚；因婚姻宮水剋火的性質，若動作不快一點容易導致對象換人、錯失良緣。
+                        </div>
+                    `;
                 } else if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
-                    detailText = "從婚姻宮我們可以看出(火剋金)<br>1.你的緣分往往來自於最後認識者(結婚的那個)<br><br>總結:您結婚後就不容易離婚,若離婚緣分就斷了,因此不管任何原因千萬不能假離婚";
+                    title = "火剋金";
+                    detailText = `
+                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
+                            <li>你的緣分往往來自於最後認識的那個人（步入禮堂的對象）。</li>
+                        </ul>
+                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
+                            <strong>💡 總結：</strong>您結婚後通常不容易離婚，但若是辦理了離婚，雙方的緣分就徹底斷了，因此不管任何原因，千萬不能隨便答應「假離婚」。
+                        </div>
+                    `;
                 }
                 
                 analysisHtml = `
-                    <div class="analysis-text">
-                        (若用姓名學專用的術語您的婚姻宮為剋宮,帶破象。<br>
-                        進入婚姻前或過程中,容易有特殊狀況與波折,故稱為「破象」<br>
-                        但不用因為看到破象就覺得不好或是緊張.只要能提早知道用對方法與好好經營,在感情上您也可以很順利。)<br><br>
+                    <div class="warning-box">
+                        <div class="warning-title">⚠️ 婚姻宮帶「破象」</div>
+                        <div style="font-weight: normal;">
+                            若以姓名學專用的術語來看，您的婚姻宮為「剋宮」，格局帶有破象。<br>
+                            這代表在進入婚姻前或過程中，較容易遇到一些波折與特殊狀況，故稱為破象。<br>
+                            <span style="color:#D32F2F; font-weight:bold;">但不用因為看到破象就覺得不好或是緊張！</span><br>只要提早了解、用對方法並好好經營，您的感情之路依然可以順利圓滿。
+                        </div>
+                    </div>
+                    <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                        <div style="color:#483D8B; font-size:16px; margin-bottom:12px;">📌 <strong>從婚姻宮進一步解析（${title}）：</strong></div>
                         ${detailText}
                     </div>
                 `;
             } else if (marriageRel.type === "無") {
                 if (renD === diD) {
-                    // 平雙
                     analysisHtml = `
                         <div class="analysis-text">
+                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：平雙</strong></div>
                             從婚姻宮可以看出，您的格局為「平雙」。在感情上您屬於較理性的人，相較於感情，您往往更注重工作與個人發展，愛自己多過於愛對方。<br><br>
                             需要特別注意的是，您的感情與「初戀」或「第一任」較為無緣，即使步入婚姻也容易面臨斷緣的考驗。<br>
-                            不過別擔心！若您目前的另一半或婚姻對象已不是第一任，那麼恭喜您，這個破象已經自然化解了。<br>
+                            <span style="color: #2E8B57;">不過別擔心！若您目前的另一半或婚姻對象已不是第一任，那麼恭喜您，這個破象已經自然化解了。</span><br><br>
                             若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理，透過這樣的方式化解，未來的感情之路就會順利順心！
                         </div>
                     `;
                 } else {
-                    // 陰陽雙
                     analysisHtml = `
                         <div class="analysis-text">
+                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：陰陽雙</strong></div>
                             從婚姻宮可以看出，您的格局為「陰陽雙」。在感情上您屬於較感性的人，相較於工作，您更看重感情經營，往往愛對方勝過愛自己。<br><br>
                             需要特別注意的是，您的感情與「初戀」或「第一任」較為無緣，即使步入婚姻也容易面臨斷緣的考驗。<br>
-                            若您目前的另一半已經不是第一任，那麼恭喜您，這個破象已自然化解了。若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理來化解。<br><br>
+                            <span style="color: #2E8B57;">若您目前的另一半已經不是第一任，那麼恭喜您，這個破象已自然化解了。</span>若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理來化解。<br><br>
                             另外，因您生性較感性，容易因為心軟或一時衝動而早婚。強烈建議您「盡量避免早婚」，以免因衝動而選錯對象；除非您與另一半的命盤契合度極高（歡迎加入甄好命官方Line，找甄老師諮詢或購買「婚姻宮-雙人配對」進行深入了解），掌握好這些關鍵，您的感情就能順利順心！
                         </div>
                     `;
                 }
             } else if (marriageRel.type === "生") {
-                if (marriageRel.dir === "下") { // 人格生地格
-                    // 旺象
+                if (marriageRel.dir === "下") {
                     analysisHtml = `
                         <div class="analysis-text">
+                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：旺象 (人格生地格)</strong></div>
                             從婚姻宮可以看出，您的格局為「旺象」。在感情上您屬於較感性的人，比起工作，您往往更看重感情的經營。<br><br>
                             在選擇另一半時，您通常會傾向選擇「自己喜歡的人」，而不是「愛自己比較多的人」。進入關係後，您愛對方會勝過愛自己，總是把對方擺在心上並無微不至地照顧。<br><br>
                             若您現階段的目標是想衝刺事業，建議在尋找對象時，盡量選擇「對方對您來電（主動喜歡您）」的人，而非您單方面強烈來電的對象（若想了解雙方的來電關係，歡迎加入甄好命官方Line，找甄老師諮詢或購買「婚姻宮-雙人配對」）。否則，您極容易將所有心思都傾注在伴侶身上，進而忽視了事業的發展。
                         </div>
                     `;
-                } else if (marriageRel.dir === "上") { // 地格生人格
-                    // 淡象
+                } else if (marriageRel.dir === "上") {
                     analysisHtml = `
                         <div class="analysis-text">
+                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：淡象 (地格生人格)</strong></div>
                             從婚姻宮可以看出，您的格局為「淡象」。在感情上您屬於較理性的人，比起感情，您往往將更多重心放在工作與個人發展上，愛自己多過於愛對方。<br><br>
                             在尋找另一半時，您會傾向選擇「比較愛您、懂得照顧您」的人。不過，由於您在感情方面相對被動，一旦全心投入工作，就非常容易耽誤到婚姻大事。<br><br>
                             因此，建議您在感情上可以考慮「早婚」（約35歲以前把握機會），否則未來較容易出現晚婚，甚至是不婚的現象。
@@ -303,6 +390,44 @@
 
             analysisContent.innerHTML = analysisHtml;
             analysisBox.style.display = "block";
+            
+            // 顯示下載按鈕
+            document.getElementById('btnDownload').style.display = "block";
+        }
+        
+        // 產出 PDF 功能
+        function downloadPDF() {
+            const btn = document.getElementById('btnDownload');
+            const captureElement = document.getElementById('captureArea');
+            const pdfTitle = document.getElementById('pdfTitle');
+            
+            // 防止重複點擊
+            btn.innerText = "⏳ PDF 產生中...";
+            btn.disabled = true;
+            
+            // 把專屬標題顯示出來，讓 PDF 畫面比較完整
+            pdfTitle.style.display = 'block';
+
+            // 取得輸入的姓名來當檔名
+            const fullName = document.getElementById('lName').value.trim() + document.getElementById('fName').value.trim();
+            const fileName = fullName ? `${fullName}_婚姻宮分析.pdf` : '姓名婚姻分析.pdf';
+
+            // 設定 html2pdf 參數
+            const opt = {
+                margin:       [15, 10, 15, 10], // 上、左、下、右 邊距
+                filename:     fileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#f8f9fa' },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // 執行匯出
+            html2pdf().set(opt).from(captureElement).save().then(() => {
+                // 匯出完成後恢復原狀
+                pdfTitle.style.display = 'none';
+                btn.innerText = "📥 下載分析結果 (PDF)";
+                btn.disabled = false;
+            });
         }
     </script>
 </body>
