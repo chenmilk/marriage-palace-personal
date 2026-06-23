@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>姓名婚姻分析 - 甄好運姓名學專用</title>
-    <!-- 引入 html2pdf 函式庫，用來產出 PDF -->
+    <!-- 引入 html2pdf 函式庫 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         html { -webkit-text-size-adjust: none; text-size-adjust: none; }
@@ -16,11 +16,11 @@
         button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button:disabled { background-color: #bbb; cursor: not-allowed; }
         
-        /* 擷取成 PDF 的專屬區塊範圍 */
-        #captureArea { background-color: #f8f9fa; padding: 10px 0; border-radius: 10px; margin: 0 auto; max-width: 480px; }
+        /* PDF 擷取區塊：改成純白底色，印成 PDF 比較專業好看 */
+        #captureArea { background-color: #ffffff; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 500px; box-sizing: border-box; }
         
         .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; width: 100%; }
-        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; box-sizing: border-box; margin: 0 auto; }
+        .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: none; box-sizing: border-box; margin: 0 auto; }
         .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 15px; }
         table { margin: 0 auto; border-collapse: collapse; width: 100%; table-layout: fixed; }
         .char-row { height: 60px; }
@@ -36,7 +36,7 @@
         .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 15px; }
         
         /* 分析區塊樣式 */
-        .analysis-box { max-width: 450px; margin: 20px auto; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 18px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
+        .analysis-box { width: 100%; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 18px; margin-top: 20px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
         .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 15px; }
         .analysis-text { font-size: 15.5px; line-height: 1.6; color: #333; font-weight: bold; }
         
@@ -45,7 +45,8 @@
         .warning-title { font-size: 17px; color: #D32F2F; margin-bottom: 8px; display: flex; align-items: center; }
         
         /* 下載按鈕樣式 */
-        .btn-download { display: none; width: 100%; max-width: 450px; margin: 10px auto 30px; padding: 14px; background-color: #2E8B57; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3); }
+        #downloadContainer { display: none; margin-top: 20px; }
+        .btn-download { width: 100%; max-width: 450px; margin: 0 auto; padding: 14px; background-color: #2E8B57; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3); display: block; }
         .btn-download:hover { background-color: #246B43; }
         
         #status { font-size: 13px; color: #888; margin-bottom: 10px; }
@@ -65,12 +66,12 @@
         <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
     </div>
 
-    <!-- 這是準備轉換成 PDF 的範圍，包含隱藏的 PDF 專屬標題、排盤與分析結果 -->
+    <!-- 這是準備轉換成 PDF 的範圍 -->
     <div id="captureArea">
-        <!-- 這個標題平時隱藏，只有在產生 PDF 的瞬間才會顯示出來 -->
-        <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:20px; padding-top:10px;">
-            <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 24px;">姓名婚姻分析</h2>
-            <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專用</div>
+        <!-- PDF 專屬標題 -->
+        <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:25px; padding-top:10px;">
+            <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 26px;">姓名婚姻分析</h2>
+            <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專屬報告</div>
         </div>
 
         <div class="result-container">
@@ -88,8 +89,10 @@
         </div>
     </div>
     
-    <!-- 下載 PDF 按鈕 (算完才會出現) -->
-    <button id="btnDownload" class="btn-download" onclick="downloadPDF()">📥 下載分析結果 (PDF)</button>
+    <!-- 下載按鈕的容器 -->
+    <div id="downloadContainer">
+        <button id="btnDownload" class="btn-download" onclick="downloadPDF()">📥 下載分析結果 (PDF)</button>
+    </div>
 
     <script>
         let dictionary = {};
@@ -373,7 +376,7 @@
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：旺象 (人格生地格)</strong></div>
                             從婚姻宮可以看出，您的格局為「旺象」。在感情上您屬於較感性的人，比起工作，您往往更看重感情的經營。<br><br>
                             在選擇另一半時，您通常會傾向選擇「自己喜歡的人」，而不是「愛自己比較多的人」。進入關係後，您愛對方會勝過愛自己，總是把對方擺在心上並無微不至地照顧。<br><br>
-                            若您現階段的目標是想衝刺事業，建議在尋找對象時，盡量選擇對您來電的人，而非您對對方來電（若想了解雙方的來電關係，歡迎加入甄好命官方Line，找甄老師諮詢或購買「婚姻宮-雙人配對」）。否則，您極容易將所有心思都傾注在伴侶身上，進而忽視了事業的發展。
+                            若您現階段的目標是想衝刺事業，建議在尋找對象時，盡量選擇「對方對您來電（主動喜歡您）」的人，而非您單方面強烈來電的對象（若想了解雙方的來電關係，歡迎加入甄好命官方Line，找甄老師諮詢或購買「婚姻宮-雙人配對」）。否則，您極容易將所有心思都傾注在伴侶身上，進而忽視了事業的發展。
                         </div>
                     `;
                 } else if (marriageRel.dir === "上") {
@@ -391,43 +394,49 @@
             analysisContent.innerHTML = analysisHtml;
             analysisBox.style.display = "block";
             
-            // 顯示下載按鈕
-            document.getElementById('btnDownload').style.display = "block";
+            document.getElementById('downloadContainer').style.display = "block";
         }
         
-        // 產出 PDF 功能
+        // --- 修正 PDF 偏移問題 ---
         function downloadPDF() {
             const btn = document.getElementById('btnDownload');
             const captureElement = document.getElementById('captureArea');
             const pdfTitle = document.getElementById('pdfTitle');
             
-            // 防止重複點擊
             btn.innerText = "⏳ PDF 產生中...";
             btn.disabled = true;
             
-            // 把專屬標題顯示出來，讓 PDF 畫面比較完整
             pdfTitle.style.display = 'block';
 
-            // 取得輸入的姓名來當檔名
+            // 強制將捲動條移回最上方，解決 html2canvas 在捲動後截圖上方出現空白的 BUG
+            window.scrollTo(0, 0);
+
             const fullName = document.getElementById('lName').value.trim() + document.getElementById('fName').value.trim();
             const fileName = fullName ? `${fullName}_婚姻宮分析.pdf` : '姓名婚姻分析.pdf';
 
-            // 設定 html2pdf 參數
+            // 設定 html2pdf 參數，加入 scrollY: 0 強制從頂部抓取
             const opt = {
-                margin:       [15, 10, 15, 10], // 上、左、下、右 邊距
+                margin:       10, // 調整邊距
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#f8f9fa' },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#ffffff',
+                    scrollY: 0, // 【重要修復】忽略當前的捲動位置
+                    windowY: 0  // 【重要修復】設定虛擬視窗 Y 軸為 0
+                },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // 執行匯出
-            html2pdf().set(opt).from(captureElement).save().then(() => {
-                // 匯出完成後恢復原狀
-                pdfTitle.style.display = 'none';
-                btn.innerText = "📥 下載分析結果 (PDF)";
-                btn.disabled = false;
-            });
+            // 稍微延遲一點點，確保捲軸已經回到頂部再開始擷取
+            setTimeout(() => {
+                html2pdf().set(opt).from(captureElement).save().then(() => {
+                    pdfTitle.style.display = 'none';
+                    btn.innerText = "📥 下載分析結果 (PDF)";
+                    btn.disabled = false;
+                });
+            }, 100);
         }
     </script>
 </body>
