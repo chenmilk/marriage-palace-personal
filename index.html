@@ -8,7 +8,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         html { -webkit-text-size-adjust: none; text-size-adjust: none; }
-        body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; padding: 15px; text-align: center; color: #333; }
+        /* 【修復1】拿掉 body 的 margin 和 padding，避免 PDF 抓到錯誤的上方空白 */
+        body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; text-align: center; color: #333; margin: 0; padding: 0; }
+        
+        /* 將原本的間距移到這個主容器內 */
+        .main-container { padding: 20px 15px; }
+
         .input-box { background: white; border: 1px solid #ddd; border-radius: 15px; padding: 20px; max-width: 450px; margin: 0 auto 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .name-group { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 10px; }
         .name-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #800000; }
@@ -45,7 +50,7 @@
         .warning-title { font-size: 17px; color: #D32F2F; margin-bottom: 8px; display: flex; align-items: center; }
         
         /* 下載按鈕樣式 */
-        #downloadContainer { display: none; margin-top: 20px; }
+        #downloadContainer { display: none; margin-top: 20px; padding-bottom: 30px; }
         .btn-download { width: 100%; max-width: 450px; margin: 0 auto; padding: 14px; background-color: #2E8B57; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3); display: block; }
         .btn-download:hover { background-color: #246B43; }
         
@@ -53,45 +58,47 @@
     </style>
 </head>
 <body>
-    <h2 style="margin-bottom: 5px; line-height: 1.2;">姓名婚姻分析</h2>
-    <div style="font-size: 18px; color: #666; margin-bottom: 15px; font-weight: normal;">甄好運姓名學專用</div>
-    <div id="status">正在同步字典數據...</div>
+    <div class="main-container">
+        <h2 style="margin-top: 0; margin-bottom: 5px; line-height: 1.2;">姓名婚姻分析</h2>
+        <div style="font-size: 18px; color: #666; margin-bottom: 15px; font-weight: normal;">甄好運姓名學專用</div>
+        <div id="status">正在同步字典數據...</div>
 
-    <div class="input-box">
-        <div class="name-group">
-            <label>請輸入姓名</label>
-            <input type="text" id="lName" placeholder="姓" maxlength="2">
-            <input type="text" id="fName" placeholder="名" maxlength="4">
-        </div>
-        <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
-    </div>
-
-    <!-- 這是準備轉換成 PDF 的範圍 -->
-    <div id="captureArea">
-        <!-- PDF 專屬標題 -->
-        <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:25px; padding-top:10px;">
-            <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 26px;">姓名婚姻分析</h2>
-            <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專屬報告</div>
+        <div class="input-box">
+            <div class="name-group">
+                <label>請輸入姓名</label>
+                <input type="text" id="lName" placeholder="姓" maxlength="2">
+                <input type="text" id="fName" placeholder="名" maxlength="4">
+            </div>
+            <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
         </div>
 
-        <div class="result-container">
-            <div id="mResultFrame" class="result-frame">
-                <div class="result-title">命盤格局</div>
-                <table id="mResultTable"></table>
-                <div id="mTotalBox" class="total-box"></div>
+        <!-- 這是準備轉換成 PDF 的範圍 -->
+        <div id="captureArea">
+            <!-- PDF 專屬標題 -->
+            <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:25px; padding-top:10px;">
+                <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 26px;">姓名婚姻分析</h2>
+                <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專屬報告</div>
+            </div>
+
+            <div class="result-container">
+                <div id="mResultFrame" class="result-frame">
+                    <div class="result-title">命盤格局</div>
+                    <table id="mResultTable"></table>
+                    <div id="mTotalBox" class="total-box"></div>
+                </div>
+            </div>
+            
+            <!-- 分析結果區塊 -->
+            <div id="analysisBox" class="analysis-box">
+                <h3>婚姻宮分析結果</h3>
+                <div id="analysisContent"></div>
             </div>
         </div>
         
-        <!-- 分析結果區塊 -->
-        <div id="analysisBox" class="analysis-box">
-            <h3>婚姻宮分析結果</h3>
-            <div id="analysisContent"></div>
+        <!-- 下載按鈕的容器 -->
+        <div id="downloadContainer">
+            <button id="btnDownload" class="btn-download" onclick="downloadPDF()">📥 下載分析結果 (PDF)</button>
         </div>
-    </div>
-    
-    <!-- 下載按鈕的容器 -->
-    <div id="downloadContainer">
-        <button id="btnDownload" class="btn-download" onclick="downloadPDF()">📥 下載分析結果 (PDF)</button>
     </div>
 
     <script>
@@ -397,7 +404,7 @@
             document.getElementById('downloadContainer').style.display = "block";
         }
         
-        // --- 修正 PDF 偏移問題 ---
+        // --- 最強防切斷與防偏移修復 ---
         function downloadPDF() {
             const btn = document.getElementById('btnDownload');
             const captureElement = document.getElementById('captureArea');
@@ -406,37 +413,50 @@
             btn.innerText = "⏳ PDF 產生中...";
             btn.disabled = true;
             
-            pdfTitle.style.display = 'block';
-
-            // 強制將捲動條移回最上方，解決 html2canvas 在捲動後截圖上方出現空白的 BUG
+            // 紀錄目前的捲動位置
+            const originalScrollY = window.scrollY;
+            const originalScrollX = window.scrollX;
+            
+            // 1. 強制捲動到最頂部，消除 html2canvas 的 Y 軸偏移
             window.scrollTo(0, 0);
+            
+            // 2. 暫時將 body 設為不可捲動，鎖定畫面
+            document.body.style.overflow = 'hidden';
+            
+            pdfTitle.style.display = 'block';
 
             const fullName = document.getElementById('lName').value.trim() + document.getElementById('fName').value.trim();
             const fileName = fullName ? `${fullName}_婚姻宮分析.pdf` : '姓名婚姻分析.pdf';
 
-            // 設定 html2pdf 參數，加入 scrollY: 0 強制從頂部抓取
+            // 3. 設定 PDF 防切斷 (pagebreak)
             const opt = {
-                margin:       10, // 調整邊距
+                margin:       [10, 10, 10, 10], // 上下左右留白
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true, 
                     backgroundColor: '#ffffff',
-                    scrollY: 0, // 【重要修復】忽略當前的捲動位置
-                    windowY: 0  // 【重要修復】設定虛擬視窗 Y 軸為 0
+                    scrollY: 0,
+                    windowY: 0
                 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                // 防止分析框或排盤框被切成兩半
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
             };
 
-            // 稍微延遲一點點，確保捲軸已經回到頂部再開始擷取
+            // 延遲一下，確保瀏覽器真的捲動到頂部才開始拍照
             setTimeout(() => {
                 html2pdf().set(opt).from(captureElement).save().then(() => {
                     pdfTitle.style.display = 'none';
                     btn.innerText = "📥 下載分析結果 (PDF)";
                     btn.disabled = false;
+                    
+                    // 恢復原本的畫面捲動狀態
+                    document.body.style.overflow = '';
+                    window.scrollTo(originalScrollX, originalScrollY);
                 });
-            }, 100);
+            }, 300);
         }
     </script>
 </body>
