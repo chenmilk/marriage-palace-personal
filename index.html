@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>姓名婚姻分析 - 甄好運姓名學專用</title>
+    <title>姓名婚姻與流年分析 - 甄好運姓名學專用</title>
     <!-- 引入 html2pdf 函式庫 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
@@ -16,7 +16,8 @@
         .name-group { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 10px; }
         .name-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #800000; }
         input { width: 35%; padding: 12px; margin: 5px; text-align: center; font-size: 18px; border: 1px solid #ccc; border-radius: 8px; }
-        button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .short-input { width: 30%; } /* 新增流年短輸入框樣式 */
+        button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 10px; }
         button:disabled { background-color: #bbb; cursor: not-allowed; }
         
         /* PDF 擷取區塊：純白底色 */
@@ -24,7 +25,7 @@
         
         .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; width: 100%; }
         .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: none; box-sizing: border-box; margin: 0 auto; }
-        .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 15px; }
+        .result-title { font-weight: bold; font-size: 18px; color: #800000; margin-bottom: 5px; }
         table { margin: 0 auto; border-collapse: collapse; width: 100%; table-layout: fixed; }
         .char-row { height: 60px; }
         .arrow-row { height: 45px; vertical-align: middle; }
@@ -34,10 +35,18 @@
         .char-text { font-size: 18px; font-weight: bold; width: 45px; color: black; text-align: left; padding-left: 5px; box-sizing: border-box; }
         .num-text { font-size: 17px; color: #483D8B; width: 35px; text-align: center; }
         .wx-text { font-size: 15px; color: #483D8B; width: 30px; text-align: center; }
-        .ge-label { font-size: 13px; color: #483D8B; font-weight: bold; width: 40px; text-align: left; }
+        .ge-label { font-size: 13px; color: #483D8B; font-weight: bold; width: 70px; text-align: left; } /* 寬度加寬以容納氣 */
+        .qi-text { color: #d32f2f; font-weight: bold; margin-left: 5px; } /* 氣的文字樣式 */
         
         .total-box { font-size: 18px; color: darkred; font-weight: bold; margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 15px; }
         
+        /* 流年專用彈性樣式 */
+        .fortune-display { margin: 10px 0 15px 0; padding: 5px; width: 100%; box-sizing: border-box; }
+        .age-line-container { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; width: 100%; flex-wrap: nowrap; }
+        .date-text { font-size: 12px; color: #666; font-weight: bold; flex: 0 0 auto; white-space: nowrap; }
+        .line-wrapper { flex: 1 1 auto; position: relative; height: 35px; display: flex; align-items: flex-end; border-bottom: 2px solid #800000; margin-bottom: 10px; min-width: 40px; }
+        .age-text { position: absolute; width: 100%; text-align: center; bottom: 5px; font-size: 20px; font-weight: bold; color: red; white-space: nowrap; }
+
         /* 分析區塊樣式 */
         .analysis-box { width: 100%; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 18px; margin-top: 20px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
         .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 15px; }
@@ -57,16 +66,29 @@
 </head>
 <body>
     <div class="main-container">
-        <h2 style="margin-top: 0; margin-bottom: 5px; line-height: 1.2;">姓名婚姻分析</h2>
+        <h2 style="margin-top: 0; margin-bottom: 5px; line-height: 1.2;">姓名婚姻與流年分析</h2>
         <div style="font-size: 18px; color: #666; margin-bottom: 15px; font-weight: normal;">甄好運姓名學專用</div>
         <div id="status">正在同步字典數據...</div>
 
         <div class="input-box">
             <div class="name-group">
-                <label>請輸入姓名</label>
+                <label>1. 輸入鑑定姓名</label>
                 <input type="text" id="lName" placeholder="姓" maxlength="2">
                 <input type="text" id="fName" placeholder="名" maxlength="4">
             </div>
+            
+            <div class="name-group">
+                <label>2. 流年參數設定</label>
+                <input type="number" id="yearCurrent" placeholder="計算民國年 (如 115)" style="width: 80%;">
+                <div style="margin-top: 10px;">
+                    <span style="font-weight: bold; color: #666; font-size: 14px;">出生：民國 </span>
+                    <input type="number" id="birthYear" class="short-input" placeholder="年">
+                    <span style="font-weight: bold; color: #666; font-size: 14px;"> 年 </span>
+                    <input type="number" id="birthMonth" class="short-input" placeholder="月">
+                    <span style="font-weight: bold; color: #666; font-size: 14px;"> 月 </span>
+                </div>
+            </div>
+            
             <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
         </div>
 
@@ -74,13 +96,17 @@
         <div id="captureArea">
             <!-- PDF 專屬標題 -->
             <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:25px; padding-top:10px;">
-                <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 26px;">姓名婚姻分析</h2>
+                <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 26px;">姓名婚姻與流年分析</h2>
                 <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專屬報告</div>
             </div>
 
             <div class="result-container">
                 <div id="mResultFrame" class="result-frame">
                     <div class="result-title">命盤格局</div>
+                    
+                    <!-- 流年時間軸放置處 -->
+                    <div id="fortuneDisplay" class="fortune-display"></div>
+                    
                     <table id="mResultTable"></table>
                     <div id="mTotalBox" class="total-box"></div>
                 </div>
@@ -218,8 +244,23 @@
             return { lNameArr, fNameArr, lStrokes, fStrokes, tian, ren, di, zong };
         }
 
-        function buildTableHtml(data, renWx, diWx, marriageRel) {
+        // --- 新增：計算九宮氣函數 ---
+        function getQi(strokeVal, yearVal) {
+            const qiList = ["名", "財", "官", "利", "交", "敗", "衰", "煞", "絕"];
+            const sDig = strokeVal % 9 || 9;
+            const yDig = yearVal % 9 || 9;
+            let diff = (yDig - sDig) % 9;
+            if (diff < 0) diff += 9;
+            return qiList[diff];
+        }
+
+        function buildTableHtml(data, renWx, diWx, marriageRel, YY) {
             let html = "";
+            
+            // 計算天、人、地宮位的氣
+            const tianQi = getQi(data.tian, YY);
+            const renQi = getQi(data.ren, YY);
+            const diQi = getQi(data.di, YY);
             
             const palaceHtml = `
                 <div style="position:absolute; right:35px; top:50%; transform:translateY(-50%); font-size:15px; font-weight:bold; color:#800000; line-height:1; text-align:center;">
@@ -229,22 +270,22 @@
                 </div>`;
 
             if (data.lStrokes.length === 1) {
-                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格 <span class="qi-text">${tianQi}</span></td></tr>`;
             } else {
                 html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[0]}</td><td class="char-text">${data.lNameArr[0]}</td><td></td><td></td><td></td></tr>`;
-                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[1]}</td><td class="char-text">${data.lNameArr[1]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格</td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text">${data.lStrokes[1]}</td><td class="char-text">${data.lNameArr[1]}</td><td class="num-text">${data.tian}</td><td class="wx-text">${getWX(data.tian)}</td><td class="ge-label">天格 <span class="qi-text">${tianQi}</span></td></tr>`;
             }
             
             html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.tian, data.ren))}</td><td></td></tr>`;
             
-            html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[0]}</td><td class="char-text">${data.fNameArr[0]}</td><td class="num-text">${data.ren}</td><td class="wx-text">${getWX(data.ren)}</td><td class="ge-label">人格</td></tr>`;
+            html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[0]}</td><td class="char-text">${data.fNameArr[0]}</td><td class="num-text">${data.ren}</td><td class="wx-text">${getWX(data.ren)}</td><td class="ge-label">人格 <span class="qi-text">${renQi}</span></td></tr>`;
             
             html += `<tr class="arrow-row"><td></td><td></td><td></td><td>${createArrowSvg(getRelationInfo(data.ren, data.di))}</td><td></td></tr>`;
             
             if (data.fStrokes.length > 1) {
-                html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}${data.fStrokes[1]}</td><td class="char-text">${data.fNameArr[1]}</td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}${data.fStrokes[1]}</td><td class="char-text">${data.fNameArr[1]}</td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格 <span class="qi-text">${diQi}</span></td></tr>`;
             } else {
-                html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}1</td><td></td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格</td></tr>`;
+                html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}1</td><td></td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格 <span class="qi-text">${diQi}</span></td></tr>`;
             }
             return html;
         }
@@ -253,23 +294,66 @@
             const lNameInput = document.getElementById('lName').value.trim();
             const fNameInput = document.getElementById('fName').value.trim();
             
+            // 獲取流年與出生年月參數
+            const YY = parseInt(document.getElementById('yearCurrent').value);
+            const XX = parseInt(document.getElementById('birthYear').value);
+            const M = parseInt(document.getElementById('birthMonth').value);
+            
             if (!lNameInput || !fNameInput) {
                 alert("請先輸入完整的姓名！");
+                return;
+            }
+            if (!YY || !XX || !M) {
+                alert("請完整填寫流年參數（計算年、出生年、出生月）！");
                 return;
             }
             
             const data = getGirdData(lNameInput, fNameInput);
 
+            // --- 婚姻宮相關變數 ---
             const renD = reduceToSingleDigit(data.ren);
             const diD = reduceToSingleDigit(data.di);
-
             const renWx = getWX(renD);
             const diWx = getWX(diD);
-
             const marriageRel = getRelationInfo(renD, diD);
 
-            document.getElementById('mResultTable').innerHTML = buildTableHtml(data, renWx, diWx, marriageRel);
-            document.getElementById('mTotalBox').innerText = "總格 ： " + data.zong;
+            // --- 流年與年齡時間軸邏輯 ---
+            const age = (YY - XX) + 1;
+            let m_calc = M - 6;
+            let startYear, endYear, displayMonth;
+            if (m_calc <= 0) {
+                displayMonth = m_calc + 12;
+                startYear = YY - 1;
+                endYear = YY;
+            } else {
+                displayMonth = m_calc;
+                startYear = YY;
+                endYear = YY + 1;
+            }
+
+            // 運勢循環 10 個 (流年)
+            const cycle = ["冠帶", "臨官", "帝旺", "衰", "病", "死", "絕", "胎", "養", "長生"];
+            const startTen = data.zong % 10;
+            const endTen = age % 10;
+            const steps = (endTen - startTen + 10) % 10;
+            const fortuneResult = cycle[steps % 10];
+            const zongQi = getQi(data.zong, YY); // 取得總格的氣
+
+            // 繪製時間軸
+            document.getElementById('fortuneDisplay').innerHTML = `
+                <div class="age-line-container">
+                    <span class="date-text">民國 ${startYear}年 ${displayMonth}月</span>
+                    <div class="line-wrapper">
+                        <span class="age-text">${age} 歲</span>
+                    </div>
+                    <span class="date-text">民國 ${endYear}年 ${displayMonth}月</span>
+                </div>
+            `;
+
+            // 繪製結果表格與總格
+            document.getElementById('mResultTable').innerHTML = buildTableHtml(data, renWx, diWx, marriageRel, YY);
+            // 總格加上流年/氣的無括號格式
+            document.getElementById('mTotalBox').innerHTML = `總格 ： ${data.zong} &nbsp; <span style="font-size:22px; color:#2196F3;">${fortuneResult}/${zongQi}</span>`;
             document.getElementById('mResultFrame').style.display = "block";
             
             // --- 處理婚姻宮分析文字 ---
@@ -420,7 +504,7 @@
             pdfTitle.style.display = 'block';
 
             const fullName = document.getElementById('lName').value.trim() + document.getElementById('fName').value.trim();
-            const fileName = fullName ? `${fullName}_婚姻宮分析.pdf` : '姓名婚姻分析.pdf';
+            const fileName = fullName ? `${fullName}_婚姻與流年分析.pdf` : '姓名婚姻與流年分析.pdf';
 
             // 1. 動態取得擷取區塊的總高度 (像素 px)
             const elementHeightPx = captureElement.scrollHeight;
@@ -429,7 +513,6 @@
             const elementHeightMm = elementHeightPx * 0.264583; 
             
             // 3. 設定最終的 PDF 高度。加入 20mm 邊界緩衝。
-            // 並且設定一個最小高度 (A4 的標準高度 297mm)，如果內容超過 A4，就會自動變成長頁！
             const finalPdfHeight = Math.max(297, elementHeightMm + 20);
 
             const opt = {
@@ -443,7 +526,6 @@
                     scrollY: 0,
                     windowY: 0
                 },
-                // 【重點更新】將 format 設為自訂長寬的陣列： [寬度, 動態高度]
                 jsPDF:        { unit: 'mm', format: [210, finalPdfHeight], orientation: 'portrait' }
             };
 
