@@ -21,7 +21,7 @@
         button:disabled { background-color: #bbb; cursor: not-allowed; }
         
         /* PDF 擷取區塊：純白底色 */
-        #captureArea { background-color: #ffffff; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 500px; box-sizing: border-box; }
+        #captureArea { background-color: #ffffff; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 520px; box-sizing: border-box; }
         
         .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; width: 100%; }
         .result-frame { border: 2px solid maroon; border-radius: 15px; padding: 15px 5px; width: 100%; max-width: 320px; background-color: #FFFBFA; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: none; box-sizing: border-box; margin: 0 auto; }
@@ -62,6 +62,31 @@
         .btn-download:hover { background-color: #246B43; }
         
         #status { font-size: 13px; color: #888; margin-bottom: 10px; }
+
+        /* -------------------------- */
+        /* 以下為 MBTI 圖表專屬樣式區 */
+        /* -------------------------- */
+        :root {
+            --mbti-primary: #583385;
+            --mbti-accent: #705898;
+            --mbti-bg-card: #fdf2f8;
+            --mbti-bar-bg: #e2d9f3;
+        }
+        .mbti-container { display: flex; flex-direction: column; gap: 15px; width: 100%; margin-top: 15px; }
+        .mbti-card { background-color: var(--mbti-bg-card); border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(88, 51, 133, 0.05); border: 1px solid #f4e8f7; text-align: left; }
+        .card-top { display: flex; align-items: center; justify-content: space-between; }
+        .side-box { display: flex; flex-direction: column; align-items: center; width: 90px; }
+        .side-label { font-size: 13px; font-weight: bold; color: #334155; }
+        .side-letter { font-size: 36px; font-family: "Georgia", serif; font-weight: bold; color: var(--mbti-primary); line-height: 1.1; margin: 2px 0;}
+        .side-desc { font-size: 11px; color: var(--mbti-accent); text-align: center; line-height: 1.2; }
+        .center-box { text-align: center; flex: 1; padding: 0 5px; }
+        .axis-title { font-size: 14px; font-weight: bold; color: var(--mbti-primary); margin-bottom: 4px; }
+        .axis-desc { font-size: 11px; color: #64748b; line-height: 1.3; font-weight: normal; }
+        
+        .progress-section { margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e9d5ff; }
+        .percent-labels { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: var(--mbti-primary); margin-bottom: 6px; }
+        .progress-bar-bg { width: 100%; height: 8px; background-color: var(--mbti-bar-bg); border-radius: 20px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #a855f7, #6366f1); border-radius: 20px; transition: width 0.8s ease-in-out; }
     </style>
 </head>
 <body>
@@ -115,6 +140,127 @@
             <div id="analysisBox" class="analysis-box">
                 <h3>婚姻宮分析結果</h3>
                 <div id="analysisContent"></div>
+
+                <!-- 新增：MBTI 圖表區塊 (整合在分析區塊的下方) -->
+                <div id="mbtiChartContainer" style="display:none;">
+                    <div class="mbti-container">
+                        <!-- 維度 1：情感表達 -->
+                        <div class="mbti-card">
+                            <div class="card-top">
+                                <div class="side-box">
+                                    <span class="side-label">主動</span>
+                                    <span class="side-letter">I</span>
+                                    <span class="side-desc">情感熾熱<br>主動追求</span>
+                                </div>
+                                <div class="center-box">
+                                    <div class="axis-title">⬅ 互動拉扯 ➡</div>
+                                    <div class="axis-desc">有些人主動出擊，<br>有些人隨緣等待。</div>
+                                </div>
+                                <div class="side-box">
+                                    <span class="side-label">被動</span>
+                                    <span class="side-letter">P</span>
+                                    <span class="side-desc">含蓄內斂<br>等待牽引</span>
+                                </div>
+                            </div>
+                            <div class="progress-section">
+                                <div class="percent-labels">
+                                    <span id="label-i">I 主動 --%</span>
+                                    <span id="label-p">--% P 被動</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div id="bar-ip" class="progress-bar-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 維度 2：擇偶取向 -->
+                        <div class="mbti-card">
+                            <div class="card-top">
+                                <div class="side-box">
+                                    <span class="side-label">理性</span>
+                                    <span class="side-letter">R</span>
+                                    <span class="side-desc">看重條件<br>現實基礎</span>
+                                </div>
+                                <div class="center-box">
+                                    <div class="axis-title">⬅ 擇偶標準 ➡</div>
+                                    <div class="axis-desc">有些人看重務實條件，<br>有些人渴望靈魂共鳴。</div>
+                                </div>
+                                <div class="side-box">
+                                    <span class="side-label">感性</span>
+                                    <span class="side-letter">M</span>
+                                    <span class="side-desc">注重契合<br>心靈感覺</span>
+                                </div>
+                            </div>
+                            <div class="progress-section">
+                                <div class="percent-labels">
+                                    <span id="label-r">R 理性 --%</span>
+                                    <span id="label-m">--% M 感性</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div id="bar-rm" class="progress-bar-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 維度 3：婚姻氣場 -->
+                        <div class="mbti-card">
+                            <div class="card-top">
+                                <div class="side-box">
+                                    <span class="side-label">穩定</span>
+                                    <span class="side-letter">S</span>
+                                    <span class="side-desc">平穩順遂<br>波折較少</span>
+                                </div>
+                                <div class="center-box">
+                                    <div class="axis-title">⬅ 緣分顯化 ➡</div>
+                                    <div class="axis-desc">有些人感情一路順遂，<br>有些人需等待黃金時機。</div>
+                                </div>
+                                <div class="side-box">
+                                    <span class="side-label">顯化</span>
+                                    <span class="side-letter">F</span>
+                                    <span class="side-desc">特定流年<br>引爆正緣</span>
+                                </div>
+                            </div>
+                            <div class="progress-section">
+                                <div class="percent-labels">
+                                    <span id="label-s">S 穩定 --%</span>
+                                    <span id="label-f">--% F 顯化</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div id="bar-sf" class="progress-bar-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 維度 4：相處模式 -->
+                        <div class="mbti-card">
+                            <div class="card-top">
+                                <div class="side-box">
+                                    <span class="side-label">互補</span>
+                                    <span class="side-letter">C</span>
+                                    <span class="side-desc">性格互補<br>動靜結合</span>
+                                </div>
+                                <div class="center-box">
+                                    <div class="axis-title">⬅ 伴侶型態 ➡</div>
+                                    <div class="axis-desc">有些人適合性格互補，<br>有些人適合志同道合。</div>
+                                </div>
+                                <div class="side-box">
+                                    <span class="side-label">相近</span>
+                                    <span class="side-letter">H</span>
+                                    <span class="side-desc">觀念相似<br>價值一致</span>
+                                </div>
+                            </div>
+                            <div class="progress-section">
+                                <div class="percent-labels">
+                                    <span id="label-c">C 互補 --%</span>
+                                    <span id="label-h">--% H 相近</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div id="bar-ch" class="progress-bar-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -254,12 +400,10 @@
         function buildTableHtml(data, renWx, diWx, marriageRel, YY) {
             let html = "";
             
-            // 計算天、人、地宮位的氣
             const tianQi = getQi(data.tian, YY);
             const renQi = getQi(data.ren, YY);
             const diQi = getQi(data.di, YY);
             
-            // 新增：計算遷移宮 (單名=1, 雙名=第二個字的筆劃+1)
             const qianYi = data.fStrokes.length > 1 ? data.fStrokes[1] + 1 : 1;
             
             const palaceHtml = `
@@ -280,7 +424,6 @@
             
             html += `<tr class="char-row"><td class="stroke-text">${data.fStrokes[0]}</td><td class="char-text">${data.fNameArr[0]}</td><td class="num-text">${data.ren}</td><td class="wx-text">${getWX(data.ren)}</td><td class="ge-label">人格 <span class="qi-text">${renQi}</span></td></tr>`;
             
-            // 這行是人格與地格之間的箭頭列，我們將遷移宮的數字放在最左邊
             html += `<tr class="arrow-row">
                         <td style="position:relative;">
                             <span title="遷移宮" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; color:#999; font-weight:bold;">${qianYi}</span>
@@ -294,6 +437,23 @@
                 html += `<tr class="char-row"><td class="stroke-text" style="position:relative;">${palaceHtml}1</td><td></td><td class="num-text">${data.di}</td><td class="wx-text">${getWX(data.di)}</td><td class="ge-label">地格 <span class="qi-text">${diQi}</span></td></tr>`;
             }
             return html;
+        }
+
+        // 新增：MBTI 計算邏輯
+        function calculateMBTI(typeStr) {
+            let scoreIP = 50, scoreRM = 50, scoreSF = 50, scoreCH = 50; 
+            
+            if (typeStr === '旺象') { scoreIP = 80; scoreRM = 35; scoreSF = 40; scoreCH = 30; }
+            else if (typeStr === '淡象') { scoreIP = 30; scoreRM = 75; scoreSF = 70; scoreCH = 70; }
+            else if (typeStr === '平雙') { scoreIP = 40; scoreRM = 60; scoreSF = 50; scoreCH = 50; }
+            else if (typeStr === '陰陽雙') { scoreIP = 70; scoreRM = 40; scoreSF = 40; scoreCH = 40; }
+            else if (typeStr.includes('金剋木')) { scoreIP = 90; scoreRM = 45; scoreSF = 60; scoreCH = 60; }
+            else if (typeStr === '木剋土') { scoreIP = 50; scoreRM = 50; scoreSF = 60; scoreCH = 70; }
+            else if (typeStr === '土剋水') { scoreIP = 60; scoreRM = 55; scoreSF = 30; scoreCH = 60; }
+            else if (typeStr === '水剋火') { scoreIP = 90; scoreRM = 25; scoreSF = 60; scoreCH = 60; }
+            else if (typeStr === '火剋金') { scoreIP = 60; scoreRM = 35; scoreSF = 50; scoreCH = 60; }
+
+            return { scoreIP, scoreRM, scoreSF, scoreCH };
         }
 
         function analyzeName() {
@@ -358,13 +518,14 @@
             const analysisBox = document.getElementById('analysisBox');
             const analysisContent = document.getElementById('analysisContent');
             let analysisHtml = "";
+            let currentMbtiType = "預設"; // 用來傳給 MBTI 圖表的變數
 
             if (marriageRel.type === "剋") {
                 let detailText = "";
                 let title = "";
                 
                 if ((renWx === "金" && diWx === "木") || (renWx === "木" && diWx === "金")) {
-                    title = "金剋木";
+                    title = "金剋木"; currentMbtiType = "金剋木";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li style="margin-bottom: 8px;">你的緣分往往來自工作上或事業夥伴，因此建議可以往職場上尋找有共同理念的人。</li>
@@ -375,7 +536,7 @@
                         </div>
                     `;
                 } else if ((renWx === "木" && diWx === "土") || (renWx === "土" && diWx === "木")) {
-                    title = "木剋土";
+                    title = "木剋土"; currentMbtiType = "木剋土";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li style="margin-bottom: 8px;">你的緣分往往來自於人情，例如對方常常幫助你，使你欠對方人情。</li>
@@ -387,7 +548,7 @@
                         </div>
                     `;
                 } else if ((renWx === "土" && diWx === "水") || (renWx === "水" && diWx === "土")) {
-                    title = "土剋水";
+                    title = "土剋水"; currentMbtiType = "土剋水";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li style="margin-bottom: 8px;">你的緣分往往來自於「才」或「財」，代表你的潛意識喜歡有才能或具備經濟實力的另一半。</li>
@@ -398,7 +559,7 @@
                         </div>
                     `;
                 } else if ((renWx === "水" && diWx === "火") || (renWx === "火" && diWx === "水")) {
-                    title = "水剋火";
+                    title = "水剋火"; currentMbtiType = "水剋火";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li style="margin-bottom: 8px;">你的緣分往往來自於瞬間接觸的火花，較容易走向閃電結婚。</li>
@@ -409,7 +570,7 @@
                         </div>
                     `;
                 } else if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
-                    title = "火剋金";
+                    title = "火剋金"; currentMbtiType = "火剋金";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li>你的緣分往往來自於最後認識的那個人（步入禮堂的對象）。</li>
@@ -436,6 +597,7 @@
                 `;
             } else if (marriageRel.type === "無") {
                 if (renD === diD) {
+                    currentMbtiType = "平雙";
                     analysisHtml = `
                         <div class="analysis-text">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：平雙</strong></div>
@@ -446,6 +608,7 @@
                         </div>
                     `;
                 } else {
+                    currentMbtiType = "陰陽雙";
                     analysisHtml = `
                         <div class="analysis-text">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：陰陽雙</strong></div>
@@ -458,6 +621,7 @@
                 }
             } else if (marriageRel.type === "生") {
                 if (marriageRel.dir === "下") {
+                    currentMbtiType = "旺象";
                     analysisHtml = `
                         <div class="analysis-text">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：旺象 (人格生地格)</strong></div>
@@ -467,6 +631,7 @@
                         </div> 
                     `;
                 } else if (marriageRel.dir === "上") {
+                    currentMbtiType = "淡象";
                     analysisHtml = `
                         <div class="analysis-text">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：淡象 (地格生人格)</strong></div>
@@ -478,9 +643,41 @@
                 }
             }
 
+            // 更新分析結果
             analysisContent.innerHTML = analysisHtml;
             analysisBox.style.display = "block";
+
+            // -----------------------------
+            // 執行 MBTI 圖表資料更新與動畫
+            // -----------------------------
+            const mbtiResult = calculateMBTI(currentMbtiType);
+            document.getElementById('mbtiChartContainer').style.display = "block";
             
+            // 先將寬度歸零 (確保每次點擊都有滑順動畫)
+            document.getElementById('bar-ip').style.width = `0%`;
+            document.getElementById('bar-rm').style.width = `0%`;
+            document.getElementById('bar-sf').style.width = `0%`;
+            document.getElementById('bar-ch').style.width = `0%`;
+
+            setTimeout(() => {
+                document.getElementById('label-i').innerText = `I 主動 ${mbtiResult.scoreIP}%`;
+                document.getElementById('label-p').innerText = `${100 - mbtiResult.scoreIP}% P 被動`;
+                document.getElementById('bar-ip').style.width = `${mbtiResult.scoreIP}%`;
+
+                document.getElementById('label-r').innerText = `R 理性 ${mbtiResult.scoreRM}%`;
+                document.getElementById('label-m').innerText = `${100 - mbtiResult.scoreRM}% M 感性`;
+                document.getElementById('bar-rm').style.width = `${mbtiResult.scoreRM}%`;
+
+                document.getElementById('label-s').innerText = `S 穩定 ${mbtiResult.scoreSF}%`;
+                document.getElementById('label-f').innerText = `${100 - mbtiResult.scoreSF}% F 顯化`;
+                document.getElementById('bar-sf').style.width = `${mbtiResult.scoreSF}%`;
+
+                document.getElementById('label-c').innerText = `C 互補 ${mbtiResult.scoreCH}%`;
+                document.getElementById('label-h').innerText = `${100 - mbtiResult.scoreCH}% H 相近`;
+                document.getElementById('bar-ch').style.width = `${mbtiResult.scoreCH}%`;
+            }, 50);
+            
+            // 顯示下載按鈕
             document.getElementById('downloadContainer').style.display = "block";
         }
         
