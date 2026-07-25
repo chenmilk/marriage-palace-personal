@@ -141,8 +141,14 @@
                 <h3>婚姻宮分析結果</h3>
                 <div id="analysisContent"></div>
 
-                <!-- 新增：MBTI 圖表區塊 (整合在分析區塊的下方) -->
+                <!-- 新增：MBTI 圖表區塊 -->
                 <div id="mbtiChartContainer" style="display:none;">
+                    <!-- 新增的第二大類標題與結果原型 -->
+                    <h3 style="margin-top: 35px; color: #800000; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">婚姻 MBTI：你的感情基因密碼</h3>
+                    <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #483D8B; margin-bottom: 15px;">
+                        <!-- JS 會自動填入「你的感情內在原型：IRSC 型（主動理性·穩健互補型）」 -->
+                    </div>
+
                     <div class="mbti-container">
                         <!-- 維度 1：情感表達 -->
                         <div class="mbti-card">
@@ -439,15 +445,15 @@
             return html;
         }
 
-        // 新增：MBTI 計算邏輯
+        // MBTI 計算邏輯 (包含最新的陰陽雙與金剋木分數)
         function calculateMBTI(typeStr) {
             let scoreIP = 50, scoreRM = 50, scoreSF = 50, scoreCH = 50; 
             
             if (typeStr === '旺象') { scoreIP = 80; scoreRM = 35; scoreSF = 40; scoreCH = 30; }
             else if (typeStr === '淡象') { scoreIP = 30; scoreRM = 75; scoreSF = 70; scoreCH = 70; }
             else if (typeStr === '平雙') { scoreIP = 40; scoreRM = 60; scoreSF = 50; scoreCH = 50; }
-            else if (typeStr === '陰陽雙') { scoreIP = 70; scoreRM = 40; scoreSF = 40; scoreCH = 40; }
-            else if (typeStr.includes('金剋木')) { scoreIP = 90; scoreRM = 45; scoreSF = 60; scoreCH = 60; }
+            else if (typeStr === '陰陽雙') { scoreIP = 90; scoreRM = 40; scoreSF = 40; scoreCH = 40; }
+            else if (typeStr.includes('金剋木')) { scoreIP = 80; scoreRM = 45; scoreSF = 60; scoreCH = 25; }
             else if (typeStr === '木剋土') { scoreIP = 50; scoreRM = 50; scoreSF = 60; scoreCH = 70; }
             else if (typeStr === '土剋水') { scoreIP = 60; scoreRM = 55; scoreSF = 30; scoreCH = 60; }
             else if (typeStr === '水剋火') { scoreIP = 90; scoreRM = 25; scoreSF = 60; scoreCH = 60; }
@@ -518,7 +524,7 @@
             const analysisBox = document.getElementById('analysisBox');
             const analysisContent = document.getElementById('analysisContent');
             let analysisHtml = "";
-            let currentMbtiType = "預設"; // 用來傳給 MBTI 圖表的變數
+            let currentMbtiType = "預設"; 
 
             if (marriageRel.type === "剋") {
                 let detailText = "";
@@ -651,6 +657,27 @@
             // 執行 MBTI 圖表資料更新與動畫
             // -----------------------------
             const mbtiResult = calculateMBTI(currentMbtiType);
+            
+            // 根據分數判定 MBTI 的英文字母與名稱 (50 則回傳 N/中立)
+            function getMbtiTrait(score, overChar, overName, underChar, underName) {
+                if (score > 50) return { letter: overChar, name: overName };
+                if (score < 50) return { letter: underChar, name: underName };
+                return { letter: 'N', name: '中立' };
+            }
+
+            const d1 = getMbtiTrait(mbtiResult.scoreIP, 'I', '主動', 'P', '被動');
+            const d2 = getMbtiTrait(mbtiResult.scoreRM, 'R', '理性', 'M', '感性');
+            const d3 = getMbtiTrait(mbtiResult.scoreSF, 'S', '穩健', 'F', '顯化');
+            const d4 = getMbtiTrait(mbtiResult.scoreCH, 'C', '互補', 'H', '相近');
+
+            const mbtiCodeStr = `${d1.letter}${d2.letter}${d3.letter}${d4.letter}`;
+            const mbtiNameStr = `${d1.name}${d2.name}·${d3.name}${d4.name}`;
+            const hasNeutral = mbtiCodeStr.includes('N');
+            const neutralNote = hasNeutral ? ` <span style="font-size:14px; color:#888; font-weight:normal; margin-left:8px;">( N: Neutral 中立 )</span>` : '';
+
+            // 將結果打在副標題上
+            document.getElementById('mbtiResultSubtitle').innerHTML = `你的感情內在原型：${mbtiCodeStr} 型（${mbtiNameStr}型）${neutralNote}`;
+
             document.getElementById('mbtiChartContainer').style.display = "block";
             
             // 先將寬度歸零 (確保每次點擊都有滑順動畫)
