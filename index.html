@@ -450,14 +450,14 @@
             let scoreIP = 50, scoreRM = 50, scoreSF = 50, scoreCH = 50; 
             
             if (typeStr === '旺象') { scoreIP = 80; scoreRM = 35; scoreSF = 40; scoreCH = 30; }
-            else if (typeStr === '淡象') { scoreIP = 30; scoreRM = 75; scoreSF = 70; scoreCH = 70; }
-            else if (typeStr === '平雙') { scoreIP = 40; scoreRM = 60; scoreSF = 50; scoreCH = 50; }
+            else if (typeStr === '淡象') { scoreIP = 45; scoreRM = 75; scoreSF = 50; scoreCH = 70; }
+            else if (typeStr === '平雙') { scoreIP = 40; scoreRM = 60; scoreSF = 50; scoreCH = 70; }
             else if (typeStr === '陰陽雙') { scoreIP = 90; scoreRM = 40; scoreSF = 40; scoreCH = 40; }
-            else if (typeStr.includes('金剋木')) { scoreIP = 80; scoreRM = 45; scoreSF = 60; scoreCH = 25; }
-            else if (typeStr === '木剋土') { scoreIP = 50; scoreRM = 50; scoreSF = 60; scoreCH = 70; }
-            else if (typeStr === '土剋水') { scoreIP = 60; scoreRM = 55; scoreSF = 30; scoreCH = 60; }
-            else if (typeStr === '水剋火') { scoreIP = 90; scoreRM = 25; scoreSF = 60; scoreCH = 60; }
-            else if (typeStr === '火剋金') { scoreIP = 60; scoreRM = 35; scoreSF = 50; scoreCH = 60; }
+            else if (typeStr.includes('金剋木')) { scoreIP = 70; scoreRM = 70; scoreSF = 80; scoreCH = 25; }
+            else if (typeStr === '木剋土') { scoreIP = 60; scoreRM = 60; scoreSF = 70; scoreCH = 50; }
+            else if (typeStr === '土剋水') { scoreIP = 80; scoreRM = 80; scoreSF = 50; scoreCH = 30; }
+            else if (typeStr === '水剋火') { scoreIP = 50; scoreRM = 30; scoreSF = 20; scoreCH = 50; }
+            else if (typeStr === '火剋金') { scoreIP = 30; scoreRM = 50; scoreSF = 40; scoreCH = 50; }
 
             return { scoreIP, scoreRM, scoreSF, scoreCH };
         }
