@@ -138,15 +138,22 @@
             
             <!-- 分析結果區塊 -->
             <div id="analysisBox" class="analysis-box">
-                <h3>婚姻宮分析結果</h3>
+                <!-- 一. 婚姻宮分析簡介 -->
+                <h3 style="color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">一.【婚姻宮分析簡介】</h3>
+                <div style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 25px; text-align: justify; font-weight: normal;">
+                    本分析跳脫傳統命理僅看日子、生剋相合甚至「命定論」的框架，是一份專屬於您的客製化指引。我們從身心靈的視角出發，依據您當前的身心靈狀態，提供最切合當下的調整建議。<br><br>
+                    甄老師深耕命理界三十餘年，經過無數案例的印證，對姓名學與命理的準確度已有深刻信心（精準度達九成以上）。然而，甄老師並未止步於此，反而持續跨足身心靈、音樂療癒等多元領域。因為我們相信，在當前快節奏且注重全人成長的時代，「算得準」已不足以解決問題；唯有「感同身受」、深入內心，才能真正陪伴您認識自我、發揮先天優勢，輕鬆迎向更快樂的人生！
+                </div>
+
+                <!-- 二. 婚姻宮分析結果 -->
+                <h3 style="color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 15px;">二. 婚姻宮分析結果</h3>
                 <div id="analysisContent"></div>
 
-                <!-- 新增：MBTI 圖表區塊 -->
+                <!-- 三. 婚姻 MBTI 圖表區塊 -->
                 <div id="mbtiChartContainer" style="display:none;">
-                    <!-- 新增的第二大類標題與結果原型 -->
-                    <h3 style="margin-top: 35px; color: #800000; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">婚姻 MBTI：你的感情基因密碼</h3>
+                    <h3 style="margin-top: 35px; color: #800000; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">三. 婚姻 MBTI：你的感情基因密碼</h3>
                     <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #483D8B; margin-bottom: 15px;">
-                        <!-- JS 會自動填入「你的感情內在原型：IRSC 型（主動理性·穩健互補型）」 -->
+                        <!-- JS 會自動填入「你的感情內在原型：IRSC 型...」 -->
                     </div>
 
                     <div class="mbti-container">
@@ -445,7 +452,7 @@
             return html;
         }
 
-        // MBTI 計算邏輯 (包含最新的陰陽雙與金剋木分數)
+        // 最新版 MBTI 計算邏輯
         function calculateMBTI(typeStr) {
             let scoreIP = 50, scoreRM = 50, scoreSF = 50, scoreCH = 50; 
             
@@ -658,7 +665,7 @@
             // -----------------------------
             const mbtiResult = calculateMBTI(currentMbtiType);
             
-            // 根據分數判定 MBTI 的英文字母與名稱 (50 則回傳 N/中立)
+            // 根據分數判定 MBTI 的英文字母與名稱 (等於 50 則回傳 N/中立)
             function getMbtiTrait(score, overChar, overName, underChar, underName) {
                 if (score > 50) return { letter: overChar, name: overName };
                 if (score < 50) return { letter: underChar, name: underName };
@@ -667,7 +674,7 @@
 
             const d1 = getMbtiTrait(mbtiResult.scoreIP, 'I', '主動', 'P', '被動');
             const d2 = getMbtiTrait(mbtiResult.scoreRM, 'R', '理性', 'M', '感性');
-            const d3 = getMbtiTrait(mbtiResult.scoreSF, 'S', '穩健', 'F', '顯化');
+            const d3 = getMbtiTrait(mbtiResult.scoreSF, 'S', '穩健', 'F', '顯化'); // 使用穩健作為S的代稱
             const d4 = getMbtiTrait(mbtiResult.scoreCH, 'C', '互補', 'H', '相近');
 
             const mbtiCodeStr = `${d1.letter}${d2.letter}${d3.letter}${d4.letter}`;
