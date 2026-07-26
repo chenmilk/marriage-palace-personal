@@ -274,6 +274,20 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 四. 良緣時日區塊 (動態產生) -->
+                <div id="auspiciousDatesContainer" style="display:none;">
+                    <h3 style="margin-top: 35px; color: #800000; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">四. 良緣時日</h3>
+                    <div style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 20px; text-align: left; font-weight: normal;">
+                        以下標註的良緣時日，都是極為適合您結婚、或備孕與受孕生子的最佳契機。無論您目前正處於猶豫不決的階段，或是早已開始規劃，都非常推薦您參考這份專屬建議。<br><br>
+                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px;">
+                            <li style="margin-bottom: 8px;"><strong>打破大眾吉日的迷思：</strong> 傳統農民曆上的「好日子」固然好，但未必適合每個人的命盤，有時甚至可能產生衝剋。</li>
+                            <li style="margin-bottom: 8px;"><strong>為您量身打造的時機：</strong> 本報告的所有時節演算，皆是完全依據您的個人命盤特別精算而成。</li>
+                        </ul>
+                        請放寬心參考，願這份專屬指引陪伴您在人生最重要的婚姻與求子大事上，走得更踏實、更順心圓滿！
+                    </div>
+                    <div id="auspiciousDatesContent"></div>
+                </div>
             </div>
         </div>
         
@@ -710,6 +724,100 @@
                 document.getElementById('label-h').innerText = `${100 - mbtiResult.scoreCH}% H 相近`;
                 document.getElementById('bar-ch').style.width = `${mbtiResult.scoreCH}%`;
             }, 50);
+            
+            // -----------------------------
+            // 執行 四. 良緣時日 (6年推算邏輯)
+            // -----------------------------
+            const qianYi = data.fStrokes.length > 1 ? data.fStrokes[1] + 1 : 1;
+            const isBirthRoot5 = (reduceToSingleDigit(XX) === 5); // 民國出生年相加為5 (等同除以9餘5，遇到敗)
+            let auspiciousDatesHtml = "";
+            let foundAny = false;
+
+            // 推算範圍：輸入民國年 (YY) 的往後 6 年 (包含 YY 當年)
+            for (let offset = 0; offset <= 5; offset++) {
+                let targetYear = YY + offset;
+                let currentAge = targetYear - XX + 1;
+                
+                let m_calc = M - 6;
+                let startYear_iter, endYear_iter, displayMonth_iter;
+                if (m_calc <= 0) {
+                    displayMonth_iter = m_calc + 12;
+                    startYear_iter = targetYear - 1;
+                    endYear_iter = targetYear;
+                } else {
+                    displayMonth_iter = m_calc;
+                    startYear_iter = targetYear;
+                    endYear_iter = targetYear + 1;
+                }
+                
+                let ageStr = `${currentAge}歲(民國${startYear_iter}年${displayMonth_iter}月-民國${endYear_iter}年${displayMonth_iter}月)`;
+                
+                let diQi = getQi(data.di, targetYear);
+                let zongQi = getQi(data.zong, targetYear);
+                
+                let yearEvents = [];
+                
+                // 1. 夫妻宮發動
+                if (!isBirthRoot5 && currentAge >= (data.di + 1) && (currentAge - (data.di + 1)) % 9 === 0) {
+                    yearEvents.push(`正緣磁場破繭而出，為您注入全新的人生能量，是全生命週期中最適合結婚、備孕與受孕生子的黃金年齡。在個人的流年適婚組合中，這樣的大好時機一輩子通常僅有 2～3 次，相當珍貴，務必好好把握！`);
+                }
+                // 2. 遷移宮發動
+                if (!isBirthRoot5 && currentAge >= (qianYi + 1) && (currentAge - (qianYi + 1)) % 9 === 0) {
+                    yearEvents.push(`此年象徵著環境變遷與居住地的轉換，對女性而言尤為吉利（較不適合男性）。代表著您將因婚姻而步入新家庭、開啟全新的人生篇章，是建立專屬溫馨家庭的極佳契機。`);
+                }
+                // 3. 命宮碰名
+                if (zongQi === "名" && diQi !== "敗") {
+                    yearEvents.push(`此年您的個人氣場與知名度將達到最高點，能自然散發獨特光芒，產生極強的磁場吸引力，進而牽引正緣走入您的生命。特別適合先天婚姻宮緣分較薄（淡象、平雙）的客戶，能在此年順勢突顯個人魅力、牽起良緣，因此非常適合結婚、備孕與受孕生子。`);
+                }
+                // 4. 夫妻宮碰名
+                if (diQi === "名" && zongQi !== "敗") {
+                    yearEvents.push(`流年氣場將直接打開您的心防，使夫妻緣分正式「亮」起來！夫妻宮的吸引力大增，能有效轉化並化解過往在感情上的阻力與波折。特別適合目前感情道路上遭遇瓶頸的人，讓另一半順理成章走進您的生命，極度適合在此年安排結婚、備孕與受孕生子等人生大事。`);
+                }
+                // 5. 夫妻宮碰官
+                if (diQi === "官" && zongQi !== "敗") {
+                    yearEvents.push(`此年夫妻宮磁場極佳，具備「二合一」的和合氣場。單身者極易遇到理想對象；已有伴侶者非常適合步入婚姻、備孕與受孕生子。`);
+                }
+                // 6. 命宮碰官
+                if (zongQi === "官" && diQi !== "敗") {
+                    yearEvents.push(`此年整體磁場極佳，是自我提升與成長的關鍵年份。單身者極易覓得佳偶；已有伴侶者也非常適合談婚論嫁、備孕與迎接新生命。`);
+                }
+                // 7. 夫妻宮碰交
+                if (diQi === "交" && zongQi !== "敗") {
+                    yearEvents.push(`此年夫妻宮迎來磁場轉換的契機。單身者極易遇到合適的另一半；已有伴侶者則非常適合結婚、備孕與受孕生子。`);
+                }
+                // 8. 命宮碰交
+                if (zongQi === "交" && diQi !== "敗") {
+                    yearEvents.push(`此年整體運勢面臨轉機與能量轉換。單身者極有機會共組家庭；已有伴侶者亦非常適合結婚、備孕與受孕生子。`);
+                }
+                // 9. 夫妻宮碰衰
+                if (diQi === "衰" && zongQi !== "敗") {
+                    yearEvents.push(`此年夫妻宮磁場極佳，深受上天祝福。單身者極易遇到良緣（尤以長輩介紹者更佳）；已有伴侶者非常適合攜手步入婚姻、備孕與受孕生子。`);
+                }
+                // 10. 命宮碰衰
+                if (zongQi === "衰" && diQi !== "敗") {
+                    yearEvents.push(`此年整體磁場極佳，深受上天眷顧。單身者極易遇到良緣（尤以長輩介紹者更佳）；已有伴侶者非常適合攜手步入婚姻、備孕與受孕生子。`);
+                }
+                
+                // 若當年度有觸發條件，則輸出畫面
+                if (yearEvents.length > 0) {
+                    foundAny = true;
+                    yearEvents.forEach(event => {
+                        auspiciousDatesHtml += `
+                            <div style="background: #FFF9F9; padding: 15px; border-radius: 8px; border-left: 4px solid #E57373; margin-bottom: 12px; font-size: 15.5px; color: #333; text-align: left;">
+                                <strong style="color: #D32F2F;">${ageStr}：</strong><br>
+                                ${event}
+                            </div>
+                        `;
+                    });
+                }
+            }
+            
+            if (!foundAny) {
+                auspiciousDatesHtml += `<div style="text-align:center; padding: 20px; color:#666; font-weight:normal;">（此六年間暫無特別標註之強烈良緣契機，但只要用心經營，日日皆是好日。）</div>`;
+            }
+            
+            document.getElementById('auspiciousDatesContent').innerHTML = auspiciousDatesHtml;
+            document.getElementById('auspiciousDatesContainer').style.display = "block";
             
             // 顯示下載按鈕
             document.getElementById('downloadContainer').style.display = "block";
