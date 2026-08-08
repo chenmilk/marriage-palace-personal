@@ -501,21 +501,22 @@
             return html;
         }
 
+       
         // 最新版 MBTI 計算邏輯
         function calculateMBTI(typeStr) {
-            let scoreIP = 50, scoreRM = 50, scoreSF = 50, scoreCH = 50; 
+            let scoreIP = 50, scoreRM = 50, scoreHD = 50, scoreLC = 50; 
             
-            if (typeStr === '旺象') { scoreIP = 80; scoreRM = 35; scoreSF = 40; scoreCH = 30; }
-            else if (typeStr === '淡象') { scoreIP = 45; scoreRM = 75; scoreSF = 50; scoreCH = 70; }
-            else if (typeStr === '平雙') { scoreIP = 40; scoreRM = 60; scoreSF = 50; scoreCH = 70; }
-            else if (typeStr === '陰陽雙') { scoreIP = 90; scoreRM = 40; scoreSF = 40; scoreCH = 40; }
-            else if (typeStr.includes('金剋木')) { scoreIP = 70; scoreRM = 70; scoreSF = 80; scoreCH = 25; }
-            else if (typeStr === '木剋土') { scoreIP = 60; scoreRM = 60; scoreSF = 70; scoreCH = 50; }
-            else if (typeStr === '土剋水') { scoreIP = 80; scoreRM = 80; scoreSF = 50; scoreCH = 30; }
-            else if (typeStr === '水剋火') { scoreIP = 50; scoreRM = 30; scoreSF = 20; scoreCH = 50; }
-            else if (typeStr === '火剋金') { scoreIP = 30; scoreRM = 50; scoreSF = 40; scoreCH = 50; }
+            if (typeStr === '旺象') { scoreIP = 80; scoreRM = 35; scoreHD = 40; scoreLC = 30; }
+            else if (typeStr === '淡象') { scoreIP = 45; scoreRM = 75; scoreHD = 50; scoreLC = 70; }
+            else if (typeStr === '平雙') { scoreIP = 40; scoreRM = 60; scoreHD = 50; scoreLC = 70; }
+            else if (typeStr === '陰陽雙') { scoreIP = 90; scoreRM = 40; scoreHD = 40; scoreLC = 40; }
+            else if (typeStr.includes('金剋木')) { scoreIP = 70; scoreRM = 70; scoreHD = 80; scoreLC = 25; }
+            else if (typeStr === '木剋土') { scoreIP = 60; scoreRM = 60; scoreHD = 70; scoreLC = 50; }
+            else if (typeStr === '土剋水') { scoreIP = 80; scoreRM = 80; scoreHD = 50; scoreLC = 30; }
+            else if (typeStr === '水剋火') { scoreIP = 50; scoreRM = 30; scoreHD = 20; scoreLC = 50; }
+            else if (typeStr === '火剋金') { scoreIP = 30; scoreRM = 50; scoreHD = 40; scoreLC = 50; }
 
-            return { scoreIP, scoreRM, scoreSF, scoreCH };
+            return { scoreIP, scoreRM, scoreHD, scoreLC };
         }
 
         function analyzeName() {
