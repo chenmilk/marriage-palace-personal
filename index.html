@@ -714,7 +714,7 @@
             analysisBox.style.display = "block";
             document.getElementById('section3Container').style.display = "block";
 
-            // -----------------------------
+           // -----------------------------
             // 執行 MBTI 圖表資料更新與動畫
             // -----------------------------
             const mbtiResult = calculateMBTI(currentMbtiType);
@@ -727,8 +727,8 @@
 
             const d1 = getMbtiTrait(mbtiResult.scoreIP, 'I', '主動', 'P', '被動');
             const d2 = getMbtiTrait(mbtiResult.scoreRM, 'R', '理性', 'M', '感性');
-            const d3 = getMbtiTrait(mbtiResult.scoreSF, 'S', '穩健', 'F', '顯化'); 
-            const d4 = getMbtiTrait(mbtiResult.scoreCH, 'C', '互補', 'H', '相近');
+            const d3 = getMbtiTrait(mbtiResult.scoreHD, 'H', '猶豫', 'D', '果斷'); 
+            const d4 = getMbtiTrait(mbtiResult.scoreLC, 'L', '主導', 'C', '配合');
 
             const mbtiCodeStr = `${d1.letter}${d2.letter}${d3.letter}${d4.letter}`;
             const mbtiNameStr = `${d1.name}${d2.name}·${d3.name}${d4.name}`;
@@ -742,8 +742,8 @@
             // 寬度歸零重置動畫
             document.getElementById('bar-ip').style.width = `0%`;
             document.getElementById('bar-rm').style.width = `0%`;
-            document.getElementById('bar-sf').style.width = `0%`;
-            document.getElementById('bar-ch').style.width = `0%`;
+            document.getElementById('bar-hd').style.width = `0%`;
+            document.getElementById('bar-lc').style.width = `0%`;
 
             setTimeout(() => {
                 document.getElementById('label-i').innerText = `I 主動 ${mbtiResult.scoreIP}%`;
@@ -754,13 +754,13 @@
                 document.getElementById('label-m').innerText = `${100 - mbtiResult.scoreRM}% M 感性`;
                 document.getElementById('bar-rm').style.width = `${mbtiResult.scoreRM}%`;
 
-                document.getElementById('label-s').innerText = `S 穩定 ${mbtiResult.scoreSF}%`;
-                document.getElementById('label-f').innerText = `${100 - mbtiResult.scoreSF}% F 顯化`;
-                document.getElementById('bar-sf').style.width = `${mbtiResult.scoreSF}%`;
+                document.getElementById('label-h').innerText = `H 猶豫 ${mbtiResult.scoreHD}%`;
+                document.getElementById('label-d').innerText = `${100 - mbtiResult.scoreHD}% D 果斷`;
+                document.getElementById('bar-hd').style.width = `${mbtiResult.scoreHD}%`;
 
-                document.getElementById('label-c').innerText = `C 互補 ${mbtiResult.scoreCH}%`;
-                document.getElementById('label-h').innerText = `${100 - mbtiResult.scoreCH}% H 相近`;
-                document.getElementById('bar-ch').style.width = `${mbtiResult.scoreCH}%`;
+                document.getElementById('label-l').innerText = `L 主導 ${mbtiResult.scoreLC}%`;
+                document.getElementById('label-c2').innerText = `${100 - mbtiResult.scoreLC}% C 配合`;
+                document.getElementById('bar-lc').style.width = `${mbtiResult.scoreLC}%`;
             }, 50);
             
             // -----------------------------
