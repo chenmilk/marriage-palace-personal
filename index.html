@@ -97,14 +97,10 @@
 
         <div class="input-box">
             <div class="name-group">
-                <label>1. 輸入鑑定姓名與性別</label>
+                <label>1. 輸入鑑定姓名</label>
                 <div class="input-row">
                     <input type="text" id="lName" placeholder="姓" maxlength="2">
                     <input type="text" id="fName" placeholder="名" maxlength="4">
-                    <select id="genderSelect">
-                        <option value="女">女</option>
-                        <option value="男">男</option>
-                    </select>
                 </div>
             </div>
             
@@ -118,6 +114,14 @@
                     <input type="number" id="birthMonth" class="short-input" placeholder="月">
                     <span style="font-weight: bold; color: #666; font-size: 14px;">月</span>
                 </div>
+            </div>
+
+            <div class="name-group">
+                <label>3. 性別</label>
+                <select id="genderSelect" class="param-input" style="margin-bottom: 0;">
+                    <option value="女">女</option>
+                    <option value="男">男</option>
+                </select>
             </div>
             
             <button id="btnRun" onclick="analyzeName()" disabled>開始分析</button>
