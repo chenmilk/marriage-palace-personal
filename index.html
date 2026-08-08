@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>姓名婚姻與流年分析 - 甄好運姓名學專用</title>
-    <!-- 引入 html2pdf 函式庫 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         html { -webkit-text-size-adjust: none; text-size-adjust: none; }
         body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; text-align: center; color: #333; margin: 0; padding: 0; }
@@ -13,14 +11,20 @@
         .main-container { padding: 20px 15px; }
 
         .input-box { background: white; border: 1px solid #ddd; border-radius: 15px; padding: 20px; max-width: 450px; margin: 0 auto 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .name-group { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 10px; }
-        .name-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #800000; }
-        input { width: 35%; padding: 12px; margin: 5px; text-align: center; font-size: 18px; border: 1px solid #ccc; border-radius: 8px; }
-        .short-input { width: 30%; } 
-        button { width: 85%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 10px; }
+        .name-group { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 10px; text-align: left; }
+        .name-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #800000; }
+        
+        /* 輸入框排列 */
+        .input-row { display: flex; gap: 5px; justify-content: space-between; }
+        input[type="text"] { flex: 1; padding: 12px; text-align: center; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
+        select { flex: 0.8; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; text-align: center; background-color: #fff; }
+        
+        .param-input { width: 100%; padding: 12px; margin-bottom: 10px; text-align: center; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        .short-input { width: 30%; padding: 12px; text-align: center; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
+        
+        button { width: 100%; padding: 14px; background-color: #800000; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 10px; }
         button:disabled { background-color: #bbb; cursor: not-allowed; }
         
-        /* PDF 擷取區塊：純白底色 */
         #captureArea { background-color: #ffffff; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 520px; box-sizing: border-box; }
         
         .result-container { display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; width: 100%; }
@@ -50,16 +54,12 @@
         /* 分析區塊樣式 */
         .analysis-box { width: 100%; text-align: left; background: #fff; border: 1px solid #800000; border-radius: 10px; padding: 18px; margin-top: 20px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
         .analysis-box h3 { color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 15px; }
-        .analysis-text { font-size: 15.5px; line-height: 1.6; color: #333; font-weight: bold; }
+        .sub-title { font-weight: bold; color: #483D8B; font-size: 16px; margin-top: 20px; margin-bottom: 10px; }
+        .analysis-text { font-size: 15.5px; line-height: 1.6; color: #333; font-weight: normal; }
         
         /* 破象專屬的提示框設計 */
         .warning-box { background-color: #FFF4F4; border: 1px solid #FFD3D3; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin-bottom: 15px; color: #5D4037; font-size: 15px; line-height: 1.5; font-weight: bold; }
         .warning-title { font-size: 17px; color: #D32F2F; margin-bottom: 8px; display: flex; align-items: center; }
-        
-        /* 下載按鈕樣式 */
-        #downloadContainer { display: none; margin-top: 20px; padding-bottom: 30px; }
-        .btn-download { width: 100%; max-width: 450px; margin: 0 auto; padding: 14px; background-color: #2E8B57; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3); display: block; }
-        .btn-download:hover { background-color: #246B43; }
         
         #status { font-size: 13px; color: #888; margin-bottom: 10px; }
 
@@ -72,7 +72,7 @@
             --mbti-bg-card: #fdf2f8;
             --mbti-bar-bg: #e2d9f3;
         }
-        .mbti-container { display: flex; flex-direction: column; gap: 15px; width: 100%; margin-top: 15px; }
+        .mbti-container { display: flex; flex-direction: column; gap: 15px; width: 100%; margin-top: 15px; margin-bottom: 20px; }
         .mbti-card { background-color: var(--mbti-bg-card); border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(88, 51, 133, 0.05); border: 1px solid #f4e8f7; text-align: left; }
         .card-top { display: flex; align-items: center; justify-content: space-between; }
         .side-box { display: flex; flex-direction: column; align-items: center; width: 90px; }
@@ -97,20 +97,26 @@
 
         <div class="input-box">
             <div class="name-group">
-                <label>1. 輸入鑑定姓名</label>
-                <input type="text" id="lName" placeholder="姓" maxlength="2">
-                <input type="text" id="fName" placeholder="名" maxlength="4">
+                <label>1. 輸入鑑定姓名與性別</label>
+                <div class="input-row">
+                    <input type="text" id="lName" placeholder="姓" maxlength="2">
+                    <input type="text" id="fName" placeholder="名" maxlength="4">
+                    <select id="genderSelect">
+                        <option value="女">女</option>
+                        <option value="男">男</option>
+                    </select>
+                </div>
             </div>
             
             <div class="name-group">
                 <label>2. 流年參數設定</label>
-                <input type="number" id="yearCurrent" placeholder="計算民國年 (如 115)" style="width: 80%;">
-                <div style="margin-top: 10px;">
-                    <span style="font-weight: bold; color: #666; font-size: 14px;">出生：民國 </span>
+                <input type="number" id="yearCurrent" class="param-input" placeholder="計算民國年 (如 115)">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 5px;">
+                    <span style="font-weight: bold; color: #666; font-size: 14px;">出生：民國</span>
                     <input type="number" id="birthYear" class="short-input" placeholder="年">
-                    <span style="font-weight: bold; color: #666; font-size: 14px;"> 年 </span>
+                    <span style="font-weight: bold; color: #666; font-size: 14px;">年</span>
                     <input type="number" id="birthMonth" class="short-input" placeholder="月">
-                    <span style="font-weight: bold; color: #666; font-size: 14px;"> 月 </span>
+                    <span style="font-weight: bold; color: #666; font-size: 14px;">月</span>
                 </div>
             </div>
             
@@ -118,12 +124,6 @@
         </div>
 
         <div id="captureArea">
-            <!-- PDF 專屬標題 -->
-            <div id="pdfTitle" style="display:none; text-align:center; margin-bottom:25px; padding-top:10px;">
-                <h2 style="margin: 0; color: #800000; line-height: 1.2; font-size: 26px;">姓名婚姻與流年分析</h2>
-                <div style="font-size: 16px; color: #666; font-weight: normal; margin-top: 5px;">甄好運姓名學專屬報告</div>
-            </div>
-
             <div class="result-container">
                 <div id="mResultFrame" class="result-frame">
                     <div class="result-title">命盤格局</div>
@@ -136,24 +136,36 @@
                 </div>
             </div>
             
-            <!-- 分析結果區塊 -->
+            <!-- 分析結果總區塊 -->
             <div id="analysisBox" class="analysis-box">
-                <!-- 一. 婚姻宮分析簡介 -->
-                <h3 style="color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">一.【婚姻宮分析簡介】</h3>
-                <div style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 25px; text-align: justify; font-weight: normal;">
-                    本分析跳脫傳統命理僅看日子、生剋相合甚至「命定論」的框架，是一份專屬於您的客製化指引。我們從身心靈的視角出發，依據您當前的身心靈狀態及當年所散發的磁場，提供最切合當下的調整建議。<br><br>
-                    甄老師深耕命理界近三十年，經過無數案例的印證，對姓名學與命理的準確度已有深刻信心（精準度達九成以上）。然而，甄老師並未止步於此，反而持續跨足身心靈、音樂療癒等多元領域。因為我們相信，在當前快節奏且注重全人成長的時代，「算得準」已不足以解決問題。我們主張「以天生的命盤為基礎，經由後天的調整來轉化磁場」；同時，唯有「感同身受」、深入內心，才能真正陪伴您認識自我、發揮先天優勢，輕鬆迎向更快樂的人生！
+                
+                <!-- 第一大點：婚姻宮分析簡介 -->
+                <h3>一.【婚姻宮分析簡介】</h3>
+                <div class="analysis-text" style="margin-bottom: 30px; text-align: justify;">
+                    本分析跳脫傳統命理僅看日子、生剋相合與「命定論」的框架，是一份專屬於您的客製化指引。命盤就像是一份『個人生命與情感使用說明書』，它不是用來限定您的未來，而是幫助您更了解自己的性格優勢、溝通盲點，以及當前散發的磁場能量。<br><br>
+                    甄老師深耕命理界近三十年，精準度已經無數案例印證。然而我們相信，在現代快節奏且注重全人成長的時代，「算得準」已不足以解決問題。甄老師持續跨足身心靈與音樂療癒領域，主張「以天生的命盤為基礎，經由後天的調整來轉化磁場」。我們將傳統理論轉化為貼近生活的實用建議，感同身受地陪伴您釐清情感地圖與相處模式，發揮先天優勢，輕鬆迎向更快樂的人生！
                 </div>
 
-                <!-- 二. 婚姻宮分析結果 -->
-                <h3 style="color: #800000; margin-top: 0; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 15px;">二. 婚姻宮分析結果</h3>
-                <div id="analysisContent"></div>
+                <!-- 第二大點：婚姻宮的類型與特質 -->
+                <h3>二. 婚姻宮的類型與特質</h3>
+                
+                <div class="sub-title">1. 簡介</div>
+                <div class="analysis-text" style="margin-bottom: 20px;">
+                    婚姻宮裡的每一種組合，都不是命運的判決，而是生命安排的一堂課。每一種婚姻宮，都代表一個不同的「愛的課題」；每一段關係，都是一面鏡子。婚姻宮的分析，旨在引導您看見：這段關係正在邀請您學習什麼樣的愛。
+                </div>
 
-                <!-- 三. 婚姻 MBTI 圖表區塊 -->
+                <div class="sub-title">2. 類型</div>
+                <div id="analysisContent" style="margin-bottom: 20px;"></div>
+
+                <div class="sub-title">3. 特質</div>
+                <div id="traitsContent" style="margin-bottom: 20px; min-height: 50px;">
+                    <!-- 預留空白 -->
+                </div>
+
+                <div class="sub-title">4. 婚姻 MBTI：你的感情基因密碼</div>
                 <div id="mbtiChartContainer" style="display:none;">
-                    <h3 style="margin-top: 35px; color: #800000; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">三. 婚姻 MBTI：你的感情基因密碼</h3>
-                    <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #483D8B; margin-bottom: 15px;">
-                        <!-- JS 會自動填入「你的感情內在原型：IRSC 型...」 -->
+                    <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #D32F2F; margin-bottom: 10px;">
+                        <!-- JS 動態填入 -->
                     </div>
 
                     <div class="mbti-container">
@@ -275,10 +287,33 @@
                     </div>
                 </div>
 
-                <!-- 四. 良緣時日區塊 (動態產生) -->
-                <div id="auspiciousDatesContainer" style="display:none;">
-                    <h3 style="margin-top: 35px; color: #800000; font-size: 18px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-bottom: 12px;">四. 良緣時日</h3>
-                    <div style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 20px; text-align: left; font-weight: normal;">
+                <!-- 第三大點：最佳選擇 -->
+                <div id="section3Container" style="display:none; margin-top: 30px;">
+                    <h3>三. 最佳選擇(夫妻宮的婚前選擇)</h3>
+                    
+                    <div class="sub-title">1. 簡介</div>
+                    <div class="analysis-text" style="margin-bottom: 20px;">
+                        「婚前重選擇，婚後重經營。」選對了另一半，能讓您在經營婚姻的路上事半功倍；若是選錯了，即便付出再多努力，也難免感到心力交瘁。<br><br>
+                        🔸(婚姻宮)是先天磁場；代表婚後的相處模式。<br>
+                        🔸(夫妻宮)是後天選擇；代表你適合選擇什麼樣的伴侶<br><br>
+                        兩者截然不同，即便是同樣的婚姻宮，有人幸福圓滿，有人卻非常辛苦，關鍵往往就在於「一開始選擇的人不同」。<br>
+                        ✴️婚姻不是從結婚那一天才開始，而是從您做出選擇的那一刻就已經啟程。<br><br>
+                        本章節結合傳統姓名學理與現代身心靈視角，為您梳理出最適合您的擇偶方向。婚姻宮反映了您潛意識中最容易吸引與共振的伴侶特質：<br><br>
+                        若目前的伴侶契合以下特質：恭喜您！您已成功發揮姓名中天生的優勢磁場，只需繼續用心經營，幸福自然水到渠成。<br><br>
+                        若目前的伴侶尚未展現這些特質：也請不必担心！透過理解自己的內在情感藍圖，並在生活中調整互動方式，同樣能逐步活化姓名中的優勢磁場，讓關係越來越順遂。<br><br>
+                        兩人的真實互動能看得很廣、很細緻。若您已有正在考量或交往的對象，想進行更深入的對比與雙人合盤評估，歡迎加入「甄好命」官方 Line，預約甄老師的 1 對 1 精準諮詢。
+                    </div>
+
+                    <div class="sub-title">2. 擇偶建議</div>
+                    <div id="partnerAdvice" style="margin-bottom: 20px; min-height: 50px;">
+                        <!-- 預留空白 -->
+                    </div>
+                </div>
+
+                <!-- 第四大點：良緣時日 -->
+                <div id="auspiciousDatesContainer" style="display:none; margin-top: 30px;">
+                    <h3>四. 良緣時日</h3>
+                    <div class="analysis-text" style="margin-bottom: 20px; text-align: justify;">
                         以下標註的良緣時日，都是極為適合您結婚、或備孕與受孕生子的最佳契機。無論您目前正處於猶豫不決的階段，或是早已開始規劃，都非常推薦您參考這份專屬建議。<br><br>
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px;">
                             <li style="margin-bottom: 8px;"><strong>打破大眾吉日的迷思：</strong> 傳統農民曆上的「好日子」固然好，但未必適合每個人的命盤，有時甚至可能產生衝剋。</li>
@@ -289,10 +324,6 @@
                     <div id="auspiciousDatesContent"></div>
                 </div>
             </div>
-        </div>
-        
-        <div id="downloadContainer">
-            <button id="btnDownload" class="btn-download" onclick="downloadPDF()">📥 下載分析結果 (PDF)</button>
         </div>
     </div>
 
@@ -486,6 +517,7 @@
         function analyzeName() {
             const lNameInput = document.getElementById('lName').value.trim();
             const fNameInput = document.getElementById('fName').value.trim();
+            const gender = document.getElementById('genderSelect').value;
             
             const YY = parseInt(document.getElementById('yearCurrent').value);
             const XX = parseInt(document.getElementById('birthYear').value);
@@ -618,7 +650,7 @@
                         </div>
                     </div>
                     <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
-                        <div style="color:#483D8B; font-size:16px; margin-bottom:12px;">📌 <strong>從婚姻宮進一步解析（${title}）：</strong></div>
+                        <div style="color:#483D8B; font-size:16px; margin-bottom:12px;">📌 <strong>命盤格局：${title}</strong></div>
                         ${detailText}
                     </div>
                 `;
@@ -626,22 +658,22 @@
                 if (renD === diD) {
                     currentMbtiType = "平雙";
                     analysisHtml = `
-                        <div class="analysis-text">
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：平雙</strong></div>
                             從婚姻宮可以看出，您的格局為「平雙」。在感情上您屬於較理性的人，相較於感情，您往往更注重工作與個人發展，愛自己多過於愛對方。<br><br>
                             需要特別注意的是，您的感情與「初戀」或「第一任」較為無緣，即使步入婚姻也容易面臨斷緣的考驗。<br>
-                            <span style="color: #2E8B57;">不過別擔心！若您目前的另一半或婚姻對象已不是第一任，那麼恭喜您，這個破象已經自然化解了。</span><br><br>
+                            <span style="color: #2E8B57; font-weight: bold;">不過別擔心！若您目前的另一半或婚姻對象已不是第一任，那麼恭喜您，這個破象已經自然化解了。</span><br><br>
                             若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理，透過這樣的方式化解，未來的感情之路就會順利順心！
                         </div>
                     `;
                 } else {
                     currentMbtiType = "陰陽雙";
                     analysisHtml = `
-                        <div class="analysis-text">
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：陰陽雙</strong></div>
                             從婚姻宮可以看出，您的格局為「陰陽雙」。在感情上您屬於較感性的人，相較於工作，您更看重感情經營，往往愛對方勝過愛自己。<br><br>
                             需要特別注意的是，您的感情與「初戀」或「第一任」較為無緣，即使步入婚姻也容易面臨斷緣的考驗。<br>
-                            <span style="color: #2E8B57;">若您目前的另一半已經不是第一任，那麼恭喜您，這個破象已自然化解了。</span>若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理來化解。<br><br>
+                            <span style="color: #2E8B57; font-weight: bold;">若您目前的另一半已經不是第一任，那麼恭喜您，這個破象已自然化解了。</span>若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理來化解。<br><br>
                             另外，因您生性較感性，容易因為心軟或一時衝動而早婚。強烈建議您「盡量避免早婚」，以免因衝動而選錯對象；除非您與另一半的命盤契合度極高（歡迎加入甄好命官方Line，找甄老師諮詢或購買「婚姻宮-雙人配對」進行深入了解），掌握好這些關鍵，您的感情就能順利順心！
                         </div>
                     `;
@@ -650,7 +682,7 @@
                 if (marriageRel.dir === "下") {
                     currentMbtiType = "旺象";
                     analysisHtml = `
-                        <div class="analysis-text">
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：旺象 (人格生地格)</strong></div>
                             從婚姻宮可以看出，您的格局為「旺象」。在感情上您屬於較感性的人，比起工作，您往往更看重感情的經營。<br><br>
                             在選擇另一半時，您通常會傾向選擇「自己喜歡的人」，而不是「愛自己比較多的人」。進入關係後，您愛對方會勝過愛自己，總是把對方擺在心上並無微不至地照顧。<br><br>
@@ -660,7 +692,7 @@
                 } else if (marriageRel.dir === "上") {
                     currentMbtiType = "淡象";
                     analysisHtml = `
-                        <div class="analysis-text">
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
                             <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：淡象 (地格生人格)</strong></div>
                             從婚姻宮可以看出，您的格局為「淡象」。在感情上您屬於較理性的人，比起感情，您往往將更多重心放在工作與個人發展上，愛自己多過於愛對方。<br><br>
                             在尋找另一半時，您會傾向選擇「比較愛您、懂得照顧您」的人。不過，由於您在感情方面相對被動，一旦全心投入工作，就非常容易耽誤到婚姻大事。<br><br>
@@ -670,16 +702,18 @@
                 }
             }
 
-            // 更新分析結果
+            // 更新類型分析結果
             analysisContent.innerHTML = analysisHtml;
+            
+            // 顯示主體分析區塊、第三、第四區塊
             analysisBox.style.display = "block";
+            document.getElementById('section3Container').style.display = "block";
 
             // -----------------------------
             // 執行 MBTI 圖表資料更新與動畫
             // -----------------------------
             const mbtiResult = calculateMBTI(currentMbtiType);
             
-            // 根據分數判定 MBTI 的英文字母與名稱 (等於 50 則回傳 N/中立)
             function getMbtiTrait(score, overChar, overName, underChar, underName) {
                 if (score > 50) return { letter: overChar, name: overName };
                 if (score < 50) return { letter: underChar, name: underName };
@@ -688,7 +722,7 @@
 
             const d1 = getMbtiTrait(mbtiResult.scoreIP, 'I', '主動', 'P', '被動');
             const d2 = getMbtiTrait(mbtiResult.scoreRM, 'R', '理性', 'M', '感性');
-            const d3 = getMbtiTrait(mbtiResult.scoreSF, 'S', '穩健', 'F', '顯化'); // 使用穩健作為S的代稱
+            const d3 = getMbtiTrait(mbtiResult.scoreSF, 'S', '穩健', 'F', '顯化'); 
             const d4 = getMbtiTrait(mbtiResult.scoreCH, 'C', '互補', 'H', '相近');
 
             const mbtiCodeStr = `${d1.letter}${d2.letter}${d3.letter}${d4.letter}`;
@@ -698,10 +732,9 @@
 
             // 將結果打在副標題上
             document.getElementById('mbtiResultSubtitle').innerHTML = `你的感情內在原型：${mbtiCodeStr} 型（${mbtiNameStr}型）${neutralNote}`;
-
             document.getElementById('mbtiChartContainer').style.display = "block";
             
-            // 先將寬度歸零 (確保每次點擊都有滑順動畫)
+            // 寬度歸零重置動畫
             document.getElementById('bar-ip').style.width = `0%`;
             document.getElementById('bar-rm').style.width = `0%`;
             document.getElementById('bar-sf').style.width = `0%`;
@@ -729,11 +762,10 @@
             // 執行 四. 良緣時日 (6年推算邏輯)
             // -----------------------------
             const qianYi = data.fStrokes.length > 1 ? data.fStrokes[1] + 1 : 1;
-            const isBirthRoot5 = (reduceToSingleDigit(XX) === 5); // 民國出生年相加為5 (等同除以9餘5，遇到敗)
+            const isBirthRoot5 = (reduceToSingleDigit(XX) === 5);
             let auspiciousDatesHtml = "";
             let foundAny = false;
 
-            // 推算範圍：輸入民國年 (YY) 的往後 6 年 (包含 YY 當年)
             for (let offset = 0; offset <= 5; offset++) {
                 let targetYear = YY + offset;
                 let currentAge = targetYear - XX + 1;
@@ -757,48 +789,38 @@
                 
                 let yearEvents = [];
                 
-                // 1. 夫妻宮發動
                 if (!isBirthRoot5 && currentAge >= (data.di + 1) && (currentAge - (data.di + 1)) % 9 === 0) {
                     yearEvents.push(`正緣磁場破繭而出，為您注入全新的人生能量，是全生命週期中最適合結婚、備孕與受孕生子的黃金年齡。在個人的流年適婚組合中，這樣的大好時機一輩子通常僅有 2～3 次，相當珍貴，務必好好把握！`);
                 }
-                // 2. 遷移宮發動
                 if (!isBirthRoot5 && currentAge >= (qianYi + 1) && (currentAge - (qianYi + 1)) % 9 === 0) {
+                    // 若有勾選性別，可在此針對性別做特別顯示，此處保留原先文字
                     yearEvents.push(`此年象徵著環境變遷與居住地的轉換，對女性而言尤為吉利（較不適合男性）。代表著您將因婚姻而步入新家庭、開啟全新的人生篇章，是建立專屬溫馨家庭的極佳契機。`);
                 }
-                // 3. 命宮碰名
                 if (zongQi === "名" && diQi !== "敗") {
                     yearEvents.push(`此年您的個人氣場與知名度將達到最高點，能自然散發獨特光芒，產生極強的磁場吸引力，進而牽引正緣走入您的生命。特別適合先天婚姻宮緣分較薄（淡象、平雙）的客戶，能在此年順勢突顯個人魅力、牽起良緣，因此非常適合結婚、備孕與受孕生子。`);
                 }
-                // 4. 夫妻宮碰名
                 if (diQi === "名" && zongQi !== "敗") {
                     yearEvents.push(`流年氣場將直接打開您的心防，使夫妻緣分正式「亮」起來！夫妻宮的吸引力大增，能有效轉化並化解過往在感情上的阻力與波折。特別適合目前感情道路上遭遇瓶頸的人，讓另一半順理成章走進您的生命，極度適合在此年安排結婚、備孕與受孕生子等人生大事。`);
                 }
-                // 5. 夫妻宮碰官
                 if (diQi === "官" && zongQi !== "敗") {
                     yearEvents.push(`此年夫妻宮磁場極佳，具備「二合一」的和合氣場。單身者極易遇到理想對象；已有伴侶者非常適合步入婚姻、備孕與受孕生子。`);
                 }
-                // 6. 命宮碰官
                 if (zongQi === "官" && diQi !== "敗") {
                     yearEvents.push(`此年整體磁場極佳，是自我提升與成長的關鍵年份。單身者極易覓得佳偶；已有伴侶者也非常適合談婚論嫁、備孕與迎接新生命。`);
                 }
-                // 7. 夫妻宮碰交
                 if (diQi === "交" && zongQi !== "敗") {
                     yearEvents.push(`此年夫妻宮迎來磁場轉換的契機。單身者極易遇到合適的另一半；已有伴侶者則非常適合結婚、備孕與受孕生子。`);
                 }
-                // 8. 命宮碰交
                 if (zongQi === "交" && diQi !== "敗") {
                     yearEvents.push(`此年整體運勢面臨轉機與能量轉換。單身者極有機會共組家庭；已有伴侶者亦非常適合結婚、備孕與受孕生子。`);
                 }
-                // 9. 夫妻宮碰衰
                 if (diQi === "衰" && zongQi !== "敗") {
                     yearEvents.push(`此年夫妻宮磁場極佳，深受上天祝福。單身者極易遇到良緣（尤以長輩介紹者更佳）；已有伴侶者非常適合攜手步入婚姻、備孕與受孕生子。`);
                 }
-                // 10. 命宮碰衰
                 if (zongQi === "衰" && diQi !== "敗") {
                     yearEvents.push(`此年整體磁場極佳，深受上天眷顧。單身者極易遇到良緣（尤以長輩介紹者更佳）；已有伴侶者非常適合攜手步入婚姻、備孕與受孕生子。`);
                 }
                 
-                // 若當年度有觸發條件，則輸出畫面
                 if (yearEvents.length > 0) {
                     foundAny = true;
                     yearEvents.forEach(event => {
@@ -818,58 +840,6 @@
             
             document.getElementById('auspiciousDatesContent').innerHTML = auspiciousDatesHtml;
             document.getElementById('auspiciousDatesContainer').style.display = "block";
-            
-            // 顯示下載按鈕
-            document.getElementById('downloadContainer').style.display = "block";
-        }
-        
-        function downloadPDF() {
-            const btn = document.getElementById('btnDownload');
-            const captureElement = document.getElementById('captureArea');
-            const pdfTitle = document.getElementById('pdfTitle');
-            
-            btn.innerText = "⏳ PDF 產生中...";
-            btn.disabled = true;
-            
-            const originalScrollY = window.scrollY;
-            const originalScrollX = window.scrollX;
-            
-            window.scrollTo(0, 0);
-            document.body.style.overflow = 'hidden';
-            
-            pdfTitle.style.display = 'block';
-
-            const fullName = document.getElementById('lName').value.trim() + document.getElementById('fName').value.trim();
-            const fileName = fullName ? `${fullName}_婚姻與流年分析.pdf` : '姓名婚姻與流年分析.pdf';
-
-            const elementHeightPx = captureElement.scrollHeight;
-            const elementHeightMm = elementHeightPx * 0.264583; 
-            const finalPdfHeight = Math.max(297, elementHeightMm + 20);
-
-            const opt = {
-                margin:       10,
-                filename:     fileName,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2, 
-                    useCORS: true, 
-                    backgroundColor: '#ffffff',
-                    scrollY: 0,
-                    windowY: 0
-                },
-                jsPDF:        { unit: 'mm', format: [210, finalPdfHeight], orientation: 'portrait' }
-            };
-
-            setTimeout(() => {
-                html2pdf().set(opt).from(captureElement).save().then(() => {
-                    pdfTitle.style.display = 'none';
-                    btn.innerText = "📥 下載分析結果 (PDF)";
-                    btn.disabled = false;
-                    
-                    document.body.style.overflow = '';
-                    window.scrollTo(originalScrollX, originalScrollY);
-                });
-            }, 300);
         }
     </script>
 </body>
