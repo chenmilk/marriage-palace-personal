@@ -314,9 +314,25 @@
                     </div>
                 </div>
 
-                <!-- 第四大點：良緣時日 -->
+                <!-- 第四大點：兩性互動 -->
+                <div id="section4Container" style="display:none; margin-top: 30px;">
+                    <h3>四. 兩性互動</h3>
+                    <div id="interactionContent" style="margin-bottom: 20px; min-height: 50px;">
+                        <!-- 預留空白 -->
+                    </div>
+                </div>
+
+                <!-- 第五大點：身心靈全方位經營指南 -->
+                <div id="section5Container" style="display:none; margin-top: 30px;">
+                    <h3>五. 身心靈全方位經營指南</h3>
+                    <div id="spiritualContent" style="margin-bottom: 20px; min-height: 50px;">
+                        <!-- 預留空白 -->
+                    </div>
+                </div>
+
+                <!-- 第六大點：良緣時日 -->
                 <div id="auspiciousDatesContainer" style="display:none; margin-top: 30px;">
-                    <h3>四. 良緣時日</h3>
+                    <h3>六. 良緣時日</h3>
                     <div class="analysis-text" style="margin-bottom: 20px; text-align: justify;">
                         以下標註的良緣時日，都是極為適合您結婚、或備孕與受孕生子的最佳契機。無論您目前正處於猶豫不決的階段，或是早已開始規劃，都非常推薦您參考這份專屬建議。<br><br>
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px;">
@@ -881,9 +897,145 @@
             }
             document.getElementById('partnerAdvice').innerHTML = partnerAdviceHtml;
             
-            // 顯示主體分析區塊、第三、第四區塊
+            // -----------------------------
+            // 生成 四. 兩性互動 (interactionContent)
+            // -----------------------------
+            let interactionHtml = "";
+            
+            if (currentMbtiType === "熱情付出型") {
+                let maleExtra = "";
+                
+                if (gender === "男") {
+                    maleExtra = `
+                        <div style="background: #FFF4F4; border: 1px solid #FFCDD2; border-radius: 8px; padding: 20px; margin-top: 25px; box-shadow: 0 4px 10px rgba(211,47,47,0.05);">
+                            <div style="color: #D32F2F; font-size: 17px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center;">
+                                <span style="margin-right: 8px;">🟥</span> 專屬男性備註
+                            </div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #800000; font-size: 16px;">1️⃣ 婚姻危機覺察：</strong><br>
+                                因為對伴侶投入深厚的情感，也十分重視親密關係，因此可能會表現出：
+                                <ul style="margin: 8px 0 12px 0; padding-left: 20px; color: #333; line-height: 1.6;">
+                                    <li>對親密互動有較高的需求。</li>
+                                    <li>希望伴侶能更多回應自己的期待。</li>
+                                    <li>在親密關係中，容易不自覺地展現較強的主導性或控制傾向。</li>
+                                </ul>
+                                若雙方缺乏良好的溝通與理解，時間久了，女性伴侶可能因心理壓力或需求差異而感到疲憊，進而影響婚姻品質，甚至造成關係破裂。<br>
+                                <div style="background: #FCE4EC; padding: 12px; border-radius: 6px; margin-top: 10px; color: #880E4F;">
+                                    <strong style="color: #C2185B;">需要特別強調的是：</strong><br>
+                                    這並不代表您不愛伴侶，相反地，大多數【熱情付出型】男性都十分疼愛、照顧、保護自己的另一半，願意為家庭付出，也具有高度的責任感。只是若在親密需求的表達上，忽略了伴侶的感受與節奏，就可能讓原本出於愛的付出，反而成為彼此的壓力。
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #800000; font-size: 16px;">2️⃣ 親密需求需要彼此溝通：</strong><br>
+                                部分【熱情付出型】男性，因為非常重視伴侶，也重視親密關係，因此可能希望另一半有較多回應。若忽略彼此需求與節奏的差異，容易讓伴侶感受到壓力。<br>
+                                <div style="margin-top: 8px;">
+                                    <span style="color: #2E8B57; font-weight: bold; font-size: 15px;">真正的親密，不只是愛，更需要尊重與理解。</span>
+                                </div>
+                            </div>
+
+                            <div style="border-top: 2px dashed #FFCDD2; padding-top: 15px; margin-top: 5px;">
+                                <strong style="color: #D32F2F; font-size: 16px;">♦️ 給【熱情付出型】男人的事業平衡：</strong><br>
+                                您往往對另一半過於在意、將過多心力放在太太身上，這可能會無形中影響到事業發展；建議在選擇對象時，盡量尋找<strong style="color: #D32F2F;">「對您來電、較愛您、較照顧您、彼此價值觀契合的人」</strong>。<br>
+                                若您能把心放在伴侶與事業之間取得平衡，則不限。
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                interactionHtml = `
+                    <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
+                        <div style="background: #FFF9F9; border-left: 4px solid #D32F2F; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="color: #D32F2F; font-size: 17px; font-weight: bold; margin-bottom: 10px;">✦ 【熱情付出型】最大的特質</div>
+                            您的愛，是一種：<strong style="color: #483D8B; font-size: 16px;">「照顧型的愛」</strong><br><br>
+                            您通常會：
+                            <ul style="margin: 5px 0 15px 0; padding-left: 20px; font-weight: bold;">
+                                <li style="margin-bottom: 5px;">關心另一半</li>
+                                <li style="margin-bottom: 5px;">希望對方過得更好</li>
+                                <li style="margin-bottom: 5px;">願意默默付出</li>
+                                <li style="margin-bottom: 5px;">把家庭放在重要的位置</li>
+                            </ul>
+                            因此常給人可靠、有責任感的印象。<br><br>
+                            <strong style="color: #483D8B;">• 著重兩性關係協調</strong><br>
+                            <strong style="color: #D32F2F;">重視經營與連結：</strong>對兩性間的親密關係經營相當重視，並能從中獲得深切的滿足感與歸屬感。
+                        </div>
+
+                        <div style="background: #FFF3E0; border-left: 4px solid #E65100; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="color: #E65100; font-size: 17px; font-weight: bold; margin-bottom: 10px;">☑️ 需要注意的地方</div>
+                            由於您屬於付出型人格，因此也容易出現以下情況：
+                            <ol style="margin: 5px 0 15px 0; padding-left: 20px;">
+                                <li style="margin-bottom: 5px;">太過照顧別人，忽略自己。</li>
+                                <li style="margin-bottom: 5px;">習慣付出，不表達真正需求。</li>
+                                <li style="margin-bottom: 5px;">過度包容，累積委屈。</li>
+                                <li style="margin-bottom: 5px;">一味付出，卻忘了建立健康的界線。</li>
+                            </ol>
+                            <div style="border-top: 1px dashed #FFCC80; padding-top: 12px; margin-top: 5px;">
+                                <strong style="color: #D32F2F;">💡 提醒您：</strong><br>真正幸福的婚姻，是彼此付出，而不是單方面犧牲。
+                            </div>
+                        </div>
+
+                        <div style="background: #F1F8E9; border: 1px solid #C5E1A5; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                            <div style="color: #33691E; font-size: 17px; font-weight: bold; margin-bottom: 10px;">🔸 婚姻幸福的小提醒</div>
+                            <div style="margin-bottom: 10px;">請記得：</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
+                                <span style="background: #DCEDC8; color: #33691E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✔ 多溝通</span>
+                                <span style="background: #DCEDC8; color: #33691E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✔ 多分享感受</span>
+                                <span style="background: #DCEDC8; color: #33691E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✔ 尊重彼此需求</span>
+                                <span style="background: #DCEDC8; color: #33691E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✔ 維持親密互動</span>
+                                <span style="background: #DCEDC8; color: #33691E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✔ 適時表達感謝</span>
+                                <span style="background: #DCEDC8; color: #33691E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✔ 保留自己的空間</span>
+                            </div>
+                            當彼此都願意經營，婚姻便能更加穩固而長久。
+                        </div>
+
+                        <div style="text-align: center; margin-bottom: 25px; padding: 15px; border-radius: 12px; background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 100%);">
+                            <div style="color: #E65100; font-size: 16px; font-weight: bold; margin-bottom: 10px;">🔶 送給您的一句話</div>
+                            <div style="font-size: 17px; color: #800000; font-weight: bold; line-height: 1.5;">
+                                「幸福不是因為完美，而是因為願意一起成長；<br>婚姻不是靠命運維持，而是靠彼此珍惜與經營。」
+                            </div>
+                        </div>
+
+                        <div style="background: #F3E5F5; border-left: 4px solid #8E24AA; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                            <div style="color: #8E24AA; font-size: 17px; font-weight: bold; margin-bottom: 10px;">🌸 能量建議</div>
+                            您的婚姻能量屬於 <strong style="color: #8E24AA; font-size: 16px;">滋養型</strong>。<br>
+                            當您願意在照顧他人的同時，也照顧自己的內在需求，婚姻能量將更加平衡，關係也更容易長久圓滿。
+                        </div>
+
+                        <div style="background: #FAFAFA; border: 1px solid #E0E0E0; border-top: 4px solid #483D8B; padding: 20px; border-radius: 8px;">
+                            <div style="color: #483D8B; font-size: 17px; font-weight: bold; margin-bottom: 15px;">🔺 您婚姻宮需要留意的課題</div>
+                            您普遍具有疼愛伴侶、願意付出、照顧家庭、重視婚姻的特質，但仍有少數情況可能影響婚姻的穩定。<br><br>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #800000; font-size: 16px;">1️⃣ 感情重心轉移</strong><br>
+                                隨著人生階段的改變，若彼此缺乏陪伴、溝通與經營，感情可能逐漸淡化，甚至因新的情感連結而影響原有婚姻。<br>
+                                <div style="background: #F5F5F5; padding: 10px; border-radius: 6px; margin-top: 8px;">
+                                    <span style="color: #483D8B; font-weight: bold;">【如何守護？】</span><br>
+                                    若感情出現變淡的跡象，避免透過轉移目標來取代（例如沈迷其他事物，或過度挑剔對方的小事），應優先處理核心的<strong style="color:#D32F2F;">失衡感</strong>。坦誠且直接溝通，許多感情的惡化源於<strong style="color:#D32F2F;">「不溝通」</strong>，若對伴侶有不滿或需求，應採取直接且尊重的方式討論，切勿將情緒轉化為挑剔或冷暴力。
+                                </div>
+                            </div>
+
+                            <div>
+                                <strong style="color: #800000; font-size: 16px;">2️⃣ 覺察兩性雙方需求落差</strong><br>
+                                兩性親密關係的質量是您滿足感的關鍵，需定期關注雙方對親密關係的需求量與期待，避免因落差過大，導致緣份受損。<br>
+                                <div style="background: #F5F5F5; padding: 10px; border-radius: 6px; margin-top: 8px;">
+                                    <span style="color: #483D8B; font-weight: bold;">【如何守護？】</span><br>
+                                    如何利用您本身的熱情與付出，將感情經營得更加細緻。願您能善用這些天賦，在婚姻中獲得長久的支持與滿足。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${maleExtra}
+                    </div>
+                `;
+            }
+            document.getElementById('interactionContent').innerHTML = interactionHtml;
+
+            // 顯示所有擴充區塊
             analysisBox.style.display = "block";
             document.getElementById('section3Container').style.display = "block";
+            document.getElementById('section4Container').style.display = "block";
+            document.getElementById('section5Container').style.display = "block";
 
            // -----------------------------
             // 執行 MBTI 圖表資料更新與動畫
