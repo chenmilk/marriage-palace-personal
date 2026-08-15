@@ -757,6 +757,129 @@
             // 更新類型與特質分析結果
             analysisContent.innerHTML = analysisHtml;
             document.getElementById('traitsContent').innerHTML = traitsHtml;
+
+            // -----------------------------
+            // 計算局數與生成擇偶建議 (partnerAdvice)
+            // -----------------------------
+            const diTens = Math.floor(data.di / 10);
+            const diUnits = data.di % 10;
+            let diffJu = Math.abs(diTens - diUnits);
+            if (diffJu >= 5) {
+                diffJu = 9 - diffJu; // 超過5用9去減
+            }
+            
+            let partnerAdviceHtml = "";
+            if (gender === "女") {
+                if (diffJu === 0) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            <div style="color:#D32F2F; font-size:16px; font-weight:bold; margin-bottom:8px;">您的配偶與名氣、背景有關</div>
+                            宜找老公在業界具知名度、公司人氣旺，或名氣佳、或具備良好的公家機構、有家族背景，生活穩定者。<br>
+                            | 這非常適合追求穩定生活與良好家庭背景的女性。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的先生與您是「穩固資源型」夥伴～</div>
+                            代表您需要找到強大社會根基與安定氣場的伴侶。<br>
+                            💖請珍惜對方的穩定與保護力，在生活中多給予肯定，雙方能一起建立安心感滿滿的家庭領域。
+                        </div>
+                    `;
+                } else if (diffJu === 1) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            <div style="color:#D32F2F; font-size:16px; font-weight:bold; margin-bottom:8px;">您的配偶與人脈、貴人有關</div>
+                            宜找社交廣人緣極佳、人脈與貴人運旺；<br>
+                            擇偶關鍵： 須確認對方是否真的「貴人旺、人緣好」。若選錯人（如不喜與人交往、人緣差、無貴人、脾氣差），婚姻易破裂，有時甚至還需要替丈夫背負債務。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的先生與您是「能量連結者」夥伴～</div>
+                            伴侶需天生自帶社交吸引力與貴人磁場。<br>
+                            覺察提醒： 觀察對方是「善用人脈的共好型」還是「不懂界線的討好型」。選對夥伴能攜手擴展社交圈；若對方能量渙散，則要避免替對方的無底洞買單。
+                        </div>
+                    `;
+                } else if (diffJu === 2) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            <div style="color:#D32F2F; font-size:16px; font-weight:bold; margin-bottom:8px;">您的配偶與工作事業有關</div>
+                            宜找勤勞務實、對工作熱情、事業企圖心強、不怕辛苦。<br>
+                            擇偶關鍵： 適合尋找務實型伴侶。若選到缺乏動能的「酷哥、帥哥」，屬於選錯配偶，婚姻易失衡。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的先生與您是「高頻行動力」夥伴～</div>
+                            伴侶需具備極強的顯化力與事業熱情。<br>
+                            | 覺察提醒：你需要的是「有夢想並付諸行動」的靈魂伴侶。若吸引到只有外表卻缺乏動能的人，代表你正承擔了不屬於你的負重，需及時調整關係界線。
+                        </div>
+                    `;
+                } else if (diffJu === 3) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            <div style="color:#D32F2F; font-size:16px; font-weight:bold; margin-bottom:8px;">您的配偶與機運佳有關</div>
+                            宜找思考靈活的機會主義者。<br>
+                            機會主義者的意思：天生較不辛苦；有時會給人感覺不夠踏實，但「怎麼做怎麼賺，都能賺到錢」。 <br>💛多給予理解與空間，發揮其靈活應變的賺錢天賦。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的先生與您是「高維靈敏型」夥伴～</div>
+                            伴侶需思維靈動、敏銳，能隨宇宙流動快速抓取財富機會。<br>
+                            擺脫傳統「踏實才是唯一」的框架，🩷欣賞對方的靈活與應變天賦，成為他最好的靈感後盾。
+                        </div>
+                    `;
+                } else if (diffJu === 4) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            <div style="color:#D32F2F; font-size:16px; font-weight:bold; margin-bottom:8px;">您的配偶與眼光遠、格局大有關</div>
+                            宜找講究格調、對事業志向遠大；<br>
+                            但同樣的若你找到志向遠大的另一半，您自己也必須同樣有高目標、願共同奮鬥，才能將夫妻宮的磁場發揮出來！<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的先生與您是「高維願景型」夥伴～</div>
+                            伴侶追求自我實現，對人生志向與美感品質有極高標準。<br>
+                            | 契合關鍵：適合同樣渴望心靈成長與自我超越的你。若你的伴侶追求的是平淡小確幸，容易感到壓迫，找到價值觀共振才是關鍵。
+                        </div>
+                    `;
+                }
+            } else { // 性別為 男
+                if (diffJu === 0) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            宜找性格穩健、溫和；老婆個性穩重踏實，生活穩定，能以老公為中心。<br>
+                            | 適合傳統「男主外、女主內」的穩定家庭模式。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的太太與您是「大地滋養型」伴侶～</div>
+                            老婆能提供溫暖、包容的靜態能量，是心靈的避風港。<br>
+                            🔆學會感恩對方的陪伴，給予足夠的安全感，建立雙向滋養的溫柔關係。
+                        </div>
+                    `;
+                } else if (diffJu === 1) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            宜找人緣佳、配合度高。<br>
+                            若自我意識適中，能配合先生事業腳步、有助家庭；若自我意識過高，則配合度低。 則需多溝通價值觀，尋求事業與家庭腳步的共識。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的太太與您是「鏡像映射型」伴侶～</div>
+                            老婆的配合度取決於兩人的溝通頻率是否對齊。<br>
+                            摒棄「誰要聽誰的」舊思維，以平等的靈魂姿態交流，把對方的社交能力轉化為家庭的助力。
+                        </div>
+                    `;
+                } else if (diffJu === 2) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            宜找能力強、持家有方（偏勞心型）。老婆具備專業技術或管理能力，能整理家務或協助交際。<br>
+                            陰陽平衡關鍵： 建議將老婆的能力重心放在「家庭與小事業」上（如協助先生事業的人際社交或掌家、教導小孩），您的事業則一帆風順。若老婆事業過於強盛，也給予支持與祝福。並雙方協議共同一起經營家庭(固定時間一起交流、度假、培養共同興趣)，婚姻則能長遠。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的太太與您是「高顯化女力型」伴侶～</div>
+                            老婆擁有極強的管理與創造能力。<br>
+                            | 陰陽和諧智慧： 現代婚姻不講求「男尊女卑」。若老婆事業強，男人不必覺得被威脅，發揮優雅的包容力與支持力（陰陽互補），整體運勢會大爆發。
+                        </div>
+                    `;
+                } else if (diffJu === 3) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            宜找喜安逸、享樂；老婆偏向享受生活；而非極度省吃儉用。<br>
+                            若老婆為此類型的，則婚姻和樂；若為極端女強人型，則婚姻較易生摩擦。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的太太與您是「豐盛體驗型」伴侶～</div>
+                            老婆重視生活品質，追求當下的豐盛感。<br>
+                            💝支持對方追求美好的事物，若對方想展現工作個人價值，給予信任與尊重，共創豐盛生活。
+                        </div>
+                    `;
+                } else if (diffJu === 4) {
+                    partnerAdviceHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            宜找高格調、講究規矩，老婆注重生活品質與乾淨規矩。<br>
+                            | 匹配關鍵： 若雙方格調不一致，婚姻較難維持；若雙方皆高格調、愛乾淨，則是端莊合宜的完美配對。<br><br>
+                            <div style="color:#D32F2F; font-weight:bold; margin-bottom:4px;">愛的結語：您的太太與您是「高頻秩序型」伴侶～</div>
+                            老婆對生活儀式感與精神邊界有很高的要求。<br>
+                            會提升自己的生活品味與儀式感，將規矩轉化為生活與個人的質感，打造高頻率的居家空間。
+                        </div>
+                    `;
+                }
+            }
+            document.getElementById('partnerAdvice').innerHTML = partnerAdviceHtml;
             
             // 顯示主體分析區塊、第三、第四區塊
             analysisBox.style.display = "block";
