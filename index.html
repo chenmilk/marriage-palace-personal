@@ -343,6 +343,13 @@
                     </div>
                     <div id="auspiciousDatesContent"></div>
                 </div>
+                <!-- 第七大點：祝福結語 -->
+                    <div id="section7Container" style="display:none; margin-top: 30px; margin-bottom: 30px;">
+                        <h3>七. 祝福結語</h3>
+                        <div id="blessingContent" style="margin-bottom: 20px;">
+                            <!-- 預留空白 -->
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -1031,11 +1038,98 @@
             }
             document.getElementById('interactionContent').innerHTML = interactionHtml;
 
+        // -----------------------------
+            // 生成 五. 身心靈全方位經營指南 (spiritualContent)
+            // -----------------------------
+            let spiritualHtml = "";
+            
+            if (currentMbtiType === "熱情付出型") {
+                spiritualHtml = `
+                    <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
+                        <div style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <div style="color: #4A148C; font-size: 18px; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center;">
+                                <span style="font-size: 20px; margin-right: 6px;">♎️</span> 婚姻中的能量平衡
+                            </div>
+                            <div style="color: #4A148C; font-size: 15px; font-weight: bold; margin-bottom: 10px;">
+                                從內在平衡婚姻，<br>婚姻不僅是兩個人的互動，更是兩種能量場的交融。<br>
+                                婚姻宮<strong style="color: #D32F2F;">「熱情付出型」</strong>代表的是一種豐盛的能量狀態。
+                            </div>
+                            <div style="color: #4A148C; font-weight: normal;">建議您以身心靈層面進行日常維護：</div>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <div style="background: #FAFAFA; border-left: 4px solid #9C27B0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 保持能量頻率的共振</div>
+                                婚姻關係中最怕能量不同步。<br>建議定期與伴侶進行深度對話，分享彼此的內在感悟，這有助於清理潛意識中的情緒積累，避免能量堵塞。
+                            </div>
+
+                            <div style="background: #FAFAFA; border-left: 4px solid #7B1FA2; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 覺察「內斂」背後的能量阻滯</div>
+                                由於文化背景容易導致內斂個性，當感到委屈或不滿時，這股壓抑的能量若不釋放，會形成「情緒垃圾」。<br>建議透過靜心、冥想或書寫，將隱晦的負面情緒轉換為建設性的表達，這對婚姻關係的淨化非常有幫助。
+                            </div>
+
+                            <div style="background: #FAFAFA; border-left: 4px solid #6A1B9A; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 優化親密關係的能量流動</div>
+                                兩性親密關係不僅是生理需求，更是生命能量（Sexual Energy）的互補與流動。若性生活出現不協調，試著將其視為「心靈溝通」的一種形式，而非僅是生理操作；透過溫柔的肢體接觸與真實的意圖傳遞，能有效活化婚姻宮的旺盛磁場。
+                            </div>
+
+                            <div style="background: #FAFAFA; border-left: 4px solid #4A148C; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 培養「轉化」的彈性</div>
+                                當感情感覺變淡時，這往往是靈魂在提醒您「需要為關係注入新能量」。<br>將這種危機感轉換為經營的契機，主動安排共同的成長課程或心靈旅遊，能將原本沉澱的磁場重新喚醒。
+                            </div>
+                        </div>
+
+                        <div style="background: #FFF3E0; border: 1px dashed #FF9800; padding: 18px; border-radius: 8px; text-align: center;">
+                            <div style="color: #E65100; font-size: 17px; font-weight: bold; margin-bottom: 10px;">💝 額外叮嚀</div>
+                            婚姻宮「熱情付出型」的人，天生擁有一份照顧他人的溫暖能量。<br>
+                            請記得，<strong style="color: #D32F2F; font-size: 16px;">這份能量同樣需要留一份給自己。</strong><br><br>
+                            當您的內在感到豐盈與平衡時，您所散發出的磁場自然能吸引伴侶更願意靠近、溝通與配合。
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('spiritualContent').innerHTML = spiritualHtml;
+
+            // -----------------------------
+            // 生成 七. 祝福結語 (blessingContent)
+            // -----------------------------
+            let blessingHtml = "";
+            const blessingGroup1 = ["佛係慢熱型", "理性陪伴型", "人情結合型", "反覆猶豫型"];
+            const blessingGroup2 = ["熱情付出型", "感性配合型", "理念成長型", "快速磨合型", "才華感應型"];
+
+            if (blessingGroup1.includes(currentMbtiType)) {
+                blessingHtml = `
+                    <div class="analysis-text" style="background: linear-gradient(135deg, #FFFBF0 0%, #FFF5E6 100%); padding: 20px; border-radius: 12px; border: 1px solid #FFE0B2; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(230,81,0,0.05);">
+                        <div style="font-size: 17px; color: #E65100; font-weight: bold; margin-bottom: 12px;">
+                            「命盤揭示的是一種趨勢與特質，但愛情的模樣永遠掌握在你自己手上。」
+                        </div>
+                        <div style="color: #5D4037; font-size: 15.5px;">
+                            希望這份分析，能成為你感情路上的一盞小夜燈，指引你更懂自己、也更懂得如何去愛。<br><br>
+                            <strong style="color: #D84315; font-size: 16.5px;">祝你早日找到最舒服的相處節奏，收穫一段雙向奔赴、彼此成就的理想關係！</strong>
+                        </div>
+                    </div>
+                `;
+            } else if (blessingGroup2.includes(currentMbtiType)) {
+                blessingHtml = `
+                    <div class="analysis-text" style="background: linear-gradient(135deg, #FFF4F4 0%, #FFEBEB 100%); padding: 20px; border-radius: 12px; border: 1px solid #FFCDD2; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(198,40,40,0.05);">
+                        <div style="font-size: 17px; color: #C62828; font-weight: bold; margin-bottom: 12px;">
+                            「感情是一場需要智慧經營的雙人舞，<br>知道了自己的優勢與需要注意的地方，就是最好的開始。」
+                        </div>
+                        <div style="color: #4E342E; font-size: 15.5px; margin-top: 10px;">
+                            <strong style="color: #B71C1C; font-size: 16.5px;">祝福你在接下來的日子裡，能夠勇敢擁抱機會、從容面對挑戰，<br>順利遇見那個能陪你成長、共享喜怒哀樂的最佳伴侶！</strong>
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('blessingContent').innerHTML = blessingHtml;
+
             // 顯示所有擴充區塊
             analysisBox.style.display = "block";
             document.getElementById('section3Container').style.display = "block";
             document.getElementById('section4Container').style.display = "block";
             document.getElementById('section5Container').style.display = "block";
+            document.getElementById('auspiciousDatesContainer').style.display = "block"; // 原第六大點
+            document.getElementById('section7Container').style.display = "block";
 
            // -----------------------------
             // 執行 MBTI 圖表資料更新與動畫
