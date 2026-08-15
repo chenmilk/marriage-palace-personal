@@ -997,16 +997,28 @@
                     yearEvents.push(`此年整體磁場極佳，深受上天眷顧。單身者極易遇到良緣（尤以長輩介紹者更佳）；已有伴侶者非常適合攜手步入婚姻、備孕與受孕生子。`);
                 }
                 
+                // 若當年度有觸發條件，則輸出畫面
                 if (yearEvents.length > 0) {
                     foundAny = true;
-                    yearEvents.forEach(event => {
-                        auspiciousDatesHtml += `
-                            <div style="background: #FFF9F9; padding: 15px; border-radius: 8px; border-left: 4px solid #E57373; margin-bottom: 12px; font-size: 15.5px; color: #333; text-align: left;">
-                                <strong style="color: #D32F2F;">${ageStr}：</strong><br>
-                                ${event}
-                            </div>
-                        `;
-                    });
+                    
+                    let eventsDisplay = "";
+                    // 如果只有1個理由，直接印出；如果有多個，則加上 1. 2. 3. 的數字列表
+                    if (yearEvents.length === 1) {
+                        eventsDisplay = yearEvents[0];
+                    } else {
+                        eventsDisplay = "<ol style='margin: 8px 0 0 0; padding-left: 20px;'>";
+                        yearEvents.forEach(event => {
+                            eventsDisplay += `<li style="margin-bottom: 6px;">${event}</li>`;
+                        });
+                        eventsDisplay += "</ol>";
+                    }
+
+                    auspiciousDatesHtml += `
+                        <div style="background: #FFF9F9; padding: 15px; border-radius: 8px; border-left: 4px solid #E57373; margin-bottom: 12px; font-size: 15.5px; color: #333; text-align: left;">
+                            <strong style="color: #D32F2F;">${ageStr}：</strong><br>
+                            ${eventsDisplay}
+                        </div>
+                    `;
                 }
             }
             
