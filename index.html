@@ -87,6 +87,32 @@
         .percent-labels { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: var(--mbti-primary); margin-bottom: 6px; }
         .progress-bar-bg { width: 100%; height: 8px; background-color: var(--mbti-bar-bg); border-radius: 20px; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #a855f7, #6366f1); border-radius: 20px; transition: width 0.8s ease-in-out; }
+        /* -------------------------- */
+        /* PDF 列印專屬排版區塊 */
+        /* -------------------------- */
+        @media print {
+            /* 隱藏網頁上不需要印出來的元素 */
+            .input-box, #btnRun, #status, #downloadContainer, .main-container > h2, .main-container > div:nth-child(2) { 
+                display: none !important; 
+            }
+            /* 重設背景與邊距 */
+            body { background-color: white; margin: 0; padding: 0; }
+            .main-container, #captureArea { padding: 0; margin: 0; max-width: 100%; box-shadow: none; border: none; }
+            
+            /* 強制換頁與防止斷層 */
+            .page-break { page-break-before: always; clear: both; }
+            .avoid-break { page-break-inside: avoid; }
+
+            /* 封面與目錄顯示 */
+            #printTitlePage { display: flex !important; flex-direction: column; height: 100vh; justify-content: center; align-items: center; position: relative; }
+            #printTOC { display: block !important; height: 100vh; padding-top: 50px; }
+            
+            /* 微調卡片框線，讓印出來更清晰 */
+            .analysis-box, .mbti-card, .result-frame { box-shadow: none !important; border: 1.5px solid #ccc !important; }
+        }
+
+        /* 在一般網頁模式下隱藏封面與目錄 */
+        #printTitlePage, #printTOC { display: none; }
     </style>
 </head>
 <body>
@@ -128,7 +154,33 @@
         </div>
 
         <div id="captureArea">
-            <div class="result-container">
+            
+           <div id="captureArea">
+
+            <!-- 第一頁：PDF專屬封面 -->
+            <div id="printTitlePage">
+                <h1 id="pdfUserNameTitle" style="font-size: 36px; color: #800000; letter-spacing: 2px;">個人婚姻宮介紹與分析</h1>
+                <div style="position: absolute; bottom: 50px; right: 30px; font-size: 18px; color: #666; font-style: italic;">
+                    BY 甄好運姓名學
+                </div>
+            </div>
+
+            <!-- 第二頁：大綱目錄 -->
+            <div id="printTOC" class="page-break">
+                <h2 style="color: #800000; font-size: 28px; border-bottom: 2px solid #800000; padding-bottom: 10px; margin-bottom: 30px;">目錄大綱</h2>
+                <div style="font-size: 20px; line-height: 2.2; text-align: left; padding-left: 20px; color: #333; font-weight: bold;">
+                    一. 婚姻宮分析簡介<br>
+                    二. 婚姻宮的類型與特質<br>
+                    三. 最佳選擇 (夫妻宮的婚前選擇)<br>
+                    四. 兩性互動<br>
+                    五. 身心靈全方位經營指南<br>
+                    六. 良緣時日<br>
+                    七. 祝福結語
+                </div>
+            </div>
+
+            <!-- 第三頁：命盤格局 (自動換新頁) -->
+            <div class="result-container page-break">
                 <div id="mResultFrame" class="result-frame">
                     <div class="result-title">命盤格局</div>
                     
@@ -140,8 +192,8 @@
                 </div>
             </div>
             
-            <!-- 分析結果總區塊 -->
-            <div id="analysisBox" class="analysis-box">
+            <!-- 分析結果總區塊 (第四頁開始) -->
+            <div id="analysisBox" class="analysis-box page-break">
                 
                 <!-- 第一大點：婚姻宮分析簡介 -->
                 <h3>一.【婚姻宮分析簡介】</h3>
@@ -149,6 +201,9 @@
                     本分析跳脫傳統命理僅看日子、生剋相合與「命定論」的框架，是一份專屬於您的客製化指引。命盤就像是一份『個人生命與情感使用說明書』，它不是用來限定您的未來，而是幫助您更了解自己的性格優勢、溝通盲點，以及當前散發的磁場能量。<br><br>
                     甄老師深耕命理界近三十年，精準度已經無數案例印證。然而我們相信，在現代快節奏且注重全人成長的時代，「算得準」已不足以解決問題。甄老師持續跨足身心靈與音樂療癒領域，主張「以天生的命盤為基礎，經由後天的調整來轉化磁場」。我們將傳統理論轉化為貼近生活的實用建議，感同身受地陪伴您釐清情感地圖與相處模式，發揮先天優勢，輕鬆迎向更快樂的人生！
                 </div>
+
+                <!-- 自動換新頁 -->
+                <div class="page-break"></div>
 
                 <!-- 第二大點：婚姻宮的類型與特質 -->
                 <h3>二. 婚姻宮的類型與特質</h3>
@@ -166,8 +221,9 @@
                     <!-- 預留空白 -->
                 </div>
 
-                <div class="sub-title">4. 婚姻 MBTI：你的感情基因密碼</div>
-                <div id="mbtiChartContainer" style="display:none;">
+                <!-- 加入 avoid-break 避免圖表被切開 -->
+                <div class="sub-title avoid-break">4. 婚姻 MBTI：你的感情基因密碼</div>
+                <div id="mbtiChartContainer" class="avoid-break" style="display:none;">
                     <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #D32F2F; margin-bottom: 10px;">
                         <!-- JS 動態填入 -->
                     </div>
@@ -291,8 +347,8 @@
                     </div>
                 </div>
 
-                <!-- 第三大點：最佳選擇 -->
-                <div id="section3Container" style="display:none; margin-top: 30px;">
+                <!-- 第三大點：最佳選擇 (自動換新頁) -->
+                <div id="section3Container" class="page-break" style="display:none; margin-top: 30px;">
                     <h3>三. 最佳選擇(夫妻宮的婚前選擇)</h3>
                     
                     <div class="sub-title">1. 簡介</div>
@@ -302,7 +358,7 @@
                         🔸(夫妻宮)是後天選擇；代表你適合選擇什麼樣的伴侶<br><br>
                         兩者截然不同，即便是同樣的婚姻宮，有人幸福圓滿，有人卻非常辛苦，關鍵往往就在於「一開始選擇的人不同」。<br>
                         ✴️婚姻不是從結婚那一天才開始，而是從您做出選擇的那一刻就已經啟程。<br><br>
-                        本章節結合傳統姓名學理與現代身心靈視角，為您梳理出最適合您的擇偶方向。夫妻宮反映了您潛意識中最容易吸引與共振的伴侶特質：<br><br>
+                        本章節結合傳統姓名學理與現代身心靈視角，為您梳理出最適合您的擇偶方向。婚姻宮反映了您潛意識中最容易吸引與共振的伴侶特質：<br><br>
                         若目前的伴侶契合以下特質：恭喜您！您已成功發揮姓名中天生的優勢磁場，只需繼續用心經營，幸福自然水到渠成。<br><br>
                         若目前的伴侶尚未展現這些特質：也請不必担心！透過理解自己的內在情感藍圖，並在生活中調整互動方式，同樣能逐步活化姓名中的優勢磁場，讓關係越來越順遂。<br><br>
                         兩人的真實互動能看得很廣、很細緻。若您已有正在考量或交往的對象，想進行更深入的對比與雙人合盤評估，歡迎加入「甄好命」官方 Line，預約甄老師的 1 對 1 精準諮詢。
@@ -314,24 +370,24 @@
                     </div>
                 </div>
 
-                <!-- 第四大點：兩性互動 -->
-                <div id="section4Container" style="display:none; margin-top: 30px;">
+                <!-- 第四大點：兩性互動 (自動換新頁) -->
+                <div id="section4Container" class="page-break" style="display:none; margin-top: 30px;">
                     <h3>四. 兩性互動</h3>
                     <div id="interactionContent" style="margin-bottom: 20px; min-height: 50px;">
                         <!-- 預留空白 -->
                     </div>
                 </div>
 
-                <!-- 第五大點：身心靈全方位經營指南 -->
-                <div id="section5Container" style="display:none; margin-top: 30px;">
+                <!-- 第五大點：身心靈全方位經營指南 (自動換新頁) -->
+                <div id="section5Container" class="page-break" style="display:none; margin-top: 30px;">
                     <h3>五. 身心靈全方位經營指南</h3>
                     <div id="spiritualContent" style="margin-bottom: 20px; min-height: 50px;">
                         <!-- 預留空白 -->
                     </div>
                 </div>
 
-                <!-- 第六大點：良緣時日 -->
-                <div id="auspiciousDatesContainer" style="display:none; margin-top: 30px;">
+                <!-- 第六大點：良緣時日 (自動換新頁) -->
+                <div id="auspiciousDatesContainer" class="page-break" style="display:none; margin-top: 30px;">
                     <h3>六. 良緣時日</h3>
                     <div class="analysis-text" style="margin-bottom: 20px; text-align: justify;">
                         以下標註的良緣時日，都是極為適合您結婚、或備孕與受孕生子的最佳契機。無論您目前正處於猶豫不決的階段，或是早已開始規劃，都非常推薦您參考這份專屬建議。<br><br>
@@ -343,16 +399,25 @@
                     </div>
                     <div id="auspiciousDatesContent"></div>
                 </div>
-                <!-- 第七大點：祝福結語 -->
-                    <div id="section7Container" style="display:none; margin-top: 30px; margin-bottom: 30px;">
-                        <h3>七. 祝福結語</h3>
-                        <div id="blessingContent" style="margin-bottom: 20px;">
-                            <!-- 預留空白 -->
-                        </div>
+
+                <!-- 第七大點：祝福結語 (自動換新頁) -->
+                <div id="section7Container" class="page-break" style="display:none; margin-top: 30px; margin-bottom: 30px;">
+                    <h3>七. 祝福結語</h3>
+                    <div id="blessingContent" style="margin-bottom: 20px;">
+                        <!-- 預留空白 -->
                     </div>
+                </div>
+
             </div>
         </div>
-    </div>
+
+        <!-- 網頁版專用的下載按鈕區塊 -->
+        <div id="downloadContainer" style="display: none; margin-top: 25px; padding-bottom: 40px;">
+            <button onclick="window.print()" style="max-width: 450px; margin: 0 auto; display: block; background-color: #2E8B57;">📥 下載純文字分析報告 (PDF)</button>
+            <div style="font-size: 13px; color: #666; margin-top: 10px;">
+                💡 點擊後，請在列印畫面選擇「另存為 PDF」。<br>這樣產生的 PDF 文字可以複製，且圖表最清晰！
+            </div>
+        </div>
 
     <script>
         let dictionary = {};
@@ -1130,6 +1195,14 @@
             document.getElementById('section5Container').style.display = "block";
             document.getElementById('auspiciousDatesContainer').style.display = "block"; // 原第六大點
             document.getElementById('section7Container').style.display = "block";
+
+// 將輸入的名字填入 PDF 封面標題
+            const fullName = lNameInput + fNameInput;
+            document.getElementById('pdfUserNameTitle').innerText = `${fullName} 個人婚姻宮介紹與分析`;
+            
+            // 顯示下載按鈕
+            document.getElementById('downloadContainer').style.display = "block";
+
 
            // -----------------------------
             // 執行 MBTI 圖表資料更新與動畫
