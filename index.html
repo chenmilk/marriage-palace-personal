@@ -92,34 +92,56 @@
         /* -------------------------- */
        
        /* ---------- PDF 列印專屬排版區塊 ---------- */
+       /* ---------- PDF 列印專屬排版區塊 ---------- */
         @media print {
-            /* 【關鍵修復】強制邊距歸零，絕對不讓瀏覽器印出網址與時間 */
+            /* 1. 強制隱藏預設的網址與時間 */
             @page { margin: 0; } 
             
-            /* 【關鍵修復】利用 body 的內距把安全邊界補回來，讓文字不黏在頂部 */
-            body { background-color: white; margin: 0; padding: 1.5cm; box-sizing: border-box; }
-            
-            /* 隱藏網頁操作元素 */
+            /* 2. 隱藏網頁版的操作按鈕與輸入框 */
             .input-box, #btnRun, #status, #downloadContainer, .main-container > h2, .main-container > div:nth-child(2) { 
                 display: none !important; 
             }
-            .main-container, #captureArea { padding: 0; margin: 0; max-width: 100%; box-shadow: none; border: none; }
+            body, .main-container, #captureArea { padding: 0; margin: 0; max-width: 100%; background-color: white; }
             
-            /* 換頁與防斷層 */
-            .page-break { page-break-before: always; clear: both; }
-            .avoid-break { page-break-inside: avoid; }
+            /* 3. 【關鍵修復：解決黏在最上方】讓每個新頁面都有 1.5 公分的頂部與左右留白 */
+            .page-break { 
+                page-break-before: always !important; 
+                padding-top: 1.5cm !important; 
+                padding-bottom: 1.5cm !important;
+                padding-left: 1.5cm !important; 
+                padding-right: 1.5cm !important; 
+                box-sizing: border-box; 
+                margin-top: 0 !important; 
+            }
 
-            /* 專屬置中頁面設定 (用於命盤、MBTI) */
-            .print-center-page { display: flex !important; flex-direction: column; height: 90vh; justify-content: center; align-items: center; width: 100%; box-sizing: border-box; }
-            
-            /* 【關鍵修復】封面設定：加回 display: flex !important 讓第一頁顯示出來 */
-            #printTitlePage { display: flex !important; flex-direction: column; height: 90vh; justify-content: center; align-items: center; position: relative; width: 100%; }
-            .title-footer { position: absolute; bottom: 10px; right: 10px; font-size: 18px; color: #666; font-style: italic; font-weight: bold; }
+            /* 4. 【關鍵修復：解決區塊被切成兩半】強制防斷層設定 */
+            .avoid-break, 
+            .analysis-text > div, 
+            .warning-box, 
+            .mbti-card, 
+            #partnerAdvice > div { 
+                page-break-inside: avoid !important; 
+                break-inside: avoid !important; 
+            }
 
-            #printTOC { display: block !important; height: auto; padding-top: 10px; }
+            /* 封面與置中頁面設定 */
+            .print-center-page { 
+                display: flex !important; flex-direction: column; height: 95vh; 
+                justify-content: center; align-items: center; width: 100%; box-sizing: border-box; 
+            }
             
-            /* 邊框微調 */
-            .analysis-box, .mbti-card, .result-frame { box-shadow: none !important; border: 1.5px solid #ccc !important; }
+            #printTitlePage { 
+                display: flex !important; flex-direction: column; height: 95vh; 
+                justify-content: center; align-items: center; position: relative; width: 100%; 
+                padding: 1.5cm; box-sizing: border-box;
+            }
+            .title-footer { position: absolute; bottom: 1.5cm; right: 1.5cm; font-size: 18px; color: #666; font-style: italic; font-weight: bold; }
+
+            #printTOC { display: block !important; padding-top: 1.5cm; }
+            
+            /* 5. 隱藏網頁版的外框，讓 PDF 更像一本專業書籍，且絕對不會有框線黏在頂部 */
+            .analysis-box { border: none !important; box-shadow: none !important; background: transparent !important; }
+            .result-frame { box-shadow: none !important; border: 1.5px solid #800000 !important; }
         }
         #printTitlePage, #printTOC { display: none; }
 
