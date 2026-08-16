@@ -90,26 +90,25 @@
         /* -------------------------- */
         /* PDF 列印專屬排版區塊 */
         /* -------------------------- */
+        /* ---------- PDF 列印專屬排版區塊 ---------- */
         @media print {
-            /* 隱藏網頁上不需要印出來的元素 */
+            @page { margin: 0; } /* 強制隱藏瀏覽器的網址、時間與頁碼 */
+            body { background-color: white; margin: 1.5cm; } /* 補回列印的安全邊界 */
+            
             .input-box, #btnRun, #status, #downloadContainer, .main-container > h2, .main-container > div:nth-child(2) { 
                 display: none !important; 
             }
-            /* 重設背景與邊距 */
-            body { background-color: white; margin: 0; padding: 0; }
             .main-container, #captureArea { padding: 0; margin: 0; max-width: 100%; box-shadow: none; border: none; }
             
-            /* 強制換頁與防止斷層 */
             .page-break { page-break-before: always; clear: both; }
             .avoid-break { page-break-inside: avoid; }
 
-            /* 封面與目錄顯示 */
             #printTitlePage { display: flex !important; flex-direction: column; height: 100vh; justify-content: center; align-items: center; position: relative; }
-            #printTOC { display: block !important; height: 100vh; padding-top: 50px; }
+            #printTOC { display: block !important; height: 100vh; padding-top: 30px; }
             
-            /* 微調卡片框線，讓印出來更清晰 */
             .analysis-box, .mbti-card, .result-frame { box-shadow: none !important; border: 1.5px solid #ccc !important; }
         }
+        #printTitlePage, #printTOC { display: none; }
 
         /* 在一般網頁模式下隱藏封面與目錄 */
         #printTitlePage, #printTOC { display: none; }
@@ -155,12 +154,12 @@
 
         <div id="captureArea">
             
-           <div id="captureArea">
+          <div id="captureArea">
 
             <!-- 第一頁：PDF專屬封面 -->
             <div id="printTitlePage">
                 <h1 id="pdfUserNameTitle" style="font-size: 36px; color: #800000; letter-spacing: 2px;">個人婚姻宮介紹與分析</h1>
-                <div style="position: absolute; bottom: 50px; right: 30px; font-size: 18px; color: #666; font-style: italic;">
+                <div style="position: absolute; bottom: 50px; right: 30px; font-size: 18px; color: #666; font-style: italic; font-weight: bold;">
                     BY 甄好運姓名學
                 </div>
             </div>
@@ -169,6 +168,8 @@
             <div id="printTOC" class="page-break">
                 <h2 style="color: #800000; font-size: 28px; border-bottom: 2px solid #800000; padding-bottom: 10px; margin-bottom: 30px;">目錄大綱</h2>
                 <div style="font-size: 20px; line-height: 2.2; text-align: left; padding-left: 20px; color: #333; font-weight: bold;">
+                    ★ 您的命盤格局<br>
+                    ★ 婚姻 MBTI：你的感情基因密碼<br>
                     一. 婚姻宮分析簡介<br>
                     二. 婚姻宮的類型與特質<br>
                     三. 最佳選擇 (夫妻宮的婚前選擇)<br>
@@ -179,33 +180,140 @@
                 </div>
             </div>
 
-            <!-- 第三頁：命盤格局 (自動換新頁) -->
-            <div class="result-container page-break">
+            <!-- 第三頁：您的命盤格局 -->
+            <div class="result-container page-break" style="display: flex; flex-direction: column; align-items: center;">
+                <h3 style="color: #800000; font-size: 24px; margin-bottom: 20px;">您的命盤格局</h3>
                 <div id="mResultFrame" class="result-frame">
-                    <div class="result-title">命盤格局</div>
-                    
                     <!-- 流年時間軸放置處 -->
                     <div id="fortuneDisplay" class="fortune-display"></div>
-                    
                     <table id="mResultTable"></table>
                     <div id="mTotalBox" class="total-box"></div>
                 </div>
             </div>
             
-            <!-- 分析結果總區塊 (第四頁開始) -->
+            <!-- 第四頁：婚姻 MBTI 獨立出來 -->
+            <div id="mbtiSection" class="page-break" style="display:none; padding: 20px; border: 1px solid #800000; border-radius: 10px; background: #fff;">
+                <h3 style="color: #800000; font-size: 20px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-top: 0; margin-bottom: 15px;">婚姻 MBTI：你的感情基因密碼</h3>
+                <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #D32F2F; margin-bottom: 10px;"></div>
+                <div id="mbtiChartContainer" class="mbti-container">
+                    <!-- 維度 1：情感表達 -->
+                    <div class="mbti-card">
+                        <div class="card-top">
+                            <div class="side-box">
+                                <span class="side-label">主動</span>
+                                <span class="side-letter">I</span>
+                                <span class="side-desc">情感熾熱<br>主動追求</span>
+                            </div>
+                            <div class="center-box">
+                                <div class="axis-title">⬅ 互動拉扯 ➡</div>
+                                <div class="axis-desc">有些人主動出擊，<br>有些人隨緣等待。</div>
+                            </div>
+                            <div class="side-box">
+                                <span class="side-label">被動</span>
+                                <span class="side-letter">P</span>
+                                <span class="side-desc">含蓄內斂<br>等待牽引</span>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="percent-labels">
+                                <span id="label-i">I 主動 --%</span>
+                                <span id="label-p">--% P 被動</span>
+                            </div>
+                            <div class="progress-bar-bg"><div id="bar-ip" class="progress-bar-fill" style="width: 0%;"></div></div>
+                        </div>
+                    </div>
+                    <!-- 維度 2：擇偶取向 -->
+                    <div class="mbti-card">
+                        <div class="card-top">
+                            <div class="side-box">
+                                <span class="side-label">理性</span>
+                                <span class="side-letter">R</span>
+                                <span class="side-desc">看重條件<br>現實基礎</span>
+                            </div>
+                            <div class="center-box">
+                                <div class="axis-title">⬅ 擇偶標準 ➡</div>
+                                <div class="axis-desc">有些人看重務實條件，<br>有些人渴望靈魂共鳴。</div>
+                            </div>
+                            <div class="side-box">
+                                <span class="side-label">感性</span>
+                                <span class="side-letter">M</span>
+                                <span class="side-desc">注重契合<br>心靈感覺</span>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="percent-labels">
+                                <span id="label-r">R 理性 --%</span>
+                                <span id="label-m">--% M 感性</span>
+                            </div>
+                            <div class="progress-bar-bg"><div id="bar-rm" class="progress-bar-fill" style="width: 0%;"></div></div>
+                        </div>
+                    </div>
+                    <!-- 維度 3：決策模式 -->
+                    <div class="mbti-card">
+                        <div class="card-top">
+                            <div class="side-box">
+                                <span class="side-label">猶豫</span>
+                                <span class="side-letter">H</span>
+                                <span class="side-desc">謹慎評估<br>深思熟慮</span>
+                            </div>
+                            <div class="center-box">
+                                <div class="axis-title">⬅ 決策模式 ➡</div>
+                                <div class="axis-desc">有些人深思熟慮，<br>有些人果斷出擊。</div>
+                            </div>
+                            <div class="side-box">
+                                <span class="side-label">果斷</span>
+                                <span class="side-letter">D</span>
+                                <span class="side-desc">快速決斷<br>直覺行動</span>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="percent-labels">
+                                <span id="label-h">H 猶豫 --%</span>
+                                <span id="label-d">--% D 果斷</span>
+                            </div>
+                            <div class="progress-bar-bg"><div id="bar-hd" class="progress-bar-fill" style="width: 0%;"></div></div>
+                        </div>
+                    </div>
+                    <!-- 維度 4：關係定位 -->
+                    <div class="mbti-card">
+                        <div class="card-top">
+                            <div class="side-box">
+                                <span class="side-label">主導</span>
+                                <span class="side-letter">L</span>
+                                <span class="side-desc">掌握節奏<br>引領關係</span>
+                            </div>
+                            <div class="center-box">
+                                <div class="axis-title">⬅ 關係定位 ➡</div>
+                                <div class="axis-desc">有些人喜歡主導關係，<br>有些人樂於配合支持。</div>
+                            </div>
+                            <div class="side-box">
+                                <span class="side-label">配合</span>
+                                <span class="side-letter">C</span>
+                                <span class="side-desc">隨和包容<br>支持陪伴</span>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="percent-labels">
+                                <span id="label-l">L 主導 --%</span>
+                                <span id="label-c2">--% C 配合</span>
+                            </div>
+                            <div class="progress-bar-bg"><div id="bar-lc" class="progress-bar-fill" style="width: 0%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第五頁開始：一與二合併 -->
             <div id="analysisBox" class="analysis-box page-break">
                 
-                <!-- 第一大點：婚姻宮分析簡介 -->
-                <h3>一.【婚姻宮分析簡介】</h3>
-                <div class="analysis-text" style="margin-bottom: 30px; text-align: justify;">
+                <!-- 第一大點 -->
+                <h3 style="margin-top: 0;">一.【婚姻宮分析簡介】</h3>
+                <div class="analysis-text" style="margin-bottom: 25px; text-align: justify;">
                     本分析跳脫傳統命理僅看日子、生剋相合與「命定論」的框架，是一份專屬於您的客製化指引。命盤就像是一份『個人生命與情感使用說明書』，它不是用來限定您的未來，而是幫助您更了解自己的性格優勢、溝通盲點，以及當前散發的磁場能量。<br><br>
                     甄老師深耕命理界近三十年，精準度已經無數案例印證。然而我們相信，在現代快節奏且注重全人成長的時代，「算得準」已不足以解決問題。甄老師持續跨足身心靈與音樂療癒領域，主張「以天生的命盤為基礎，經由後天的調整來轉化磁場」。我們將傳統理論轉化為貼近生活的實用建議，感同身受地陪伴您釐清情感地圖與相處模式，發揮先天優勢，輕鬆迎向更快樂的人生！
                 </div>
 
-                <!-- 自動換新頁 -->
-                <div class="page-break"></div>
-
-                <!-- 第二大點：婚姻宮的類型與特質 -->
+                <!-- 第二大點緊接在後，不換頁 -->
                 <h3>二. 婚姻宮的類型與特質</h3>
                 
                 <div class="sub-title">1. 簡介</div>
@@ -217,196 +325,61 @@
                 <div id="analysisContent" style="margin-bottom: 20px;"></div>
 
                 <div class="sub-title">3. 特質</div>
-                <div id="traitsContent" style="margin-bottom: 20px; min-height: 50px;">
-                    <!-- 預留空白 -->
+                <div id="traitsContent" style="margin-bottom: 20px; min-height: 50px;"></div>
+            </div>
+
+            <!-- 第三大點：最佳選擇 (自動換新頁) -->
+            <div id="section3Container" class="analysis-box page-break" style="display:none; margin-top: 0;">
+                <h3 style="margin-top: 0;">三. 最佳選擇(夫妻宮的婚前選擇)</h3>
+                <div class="sub-title">1. 簡介</div>
+                <div class="analysis-text" style="margin-bottom: 20px;">
+                    「婚前重選擇，婚後重經營。」選對了另一半，能讓您在經營婚姻的路上事半功倍；若是選錯了，即便付出再多努力，也難免感到心力交瘁。<br><br>
+                    🔸(婚姻宮)是先天磁場；代表婚後的相處模式。<br>
+                    🔸(夫妻宮)是後天選擇；代表你適合選擇什麼樣的伴侶<br><br>
+                    兩者截然不同，即便是同樣的婚姻宮，有人幸福圓滿，有人卻非常辛苦，關鍵往往就在於「一開始選擇的人不同」。<br>
+                    ✴️婚姻不是從結婚那一天才開始，而是從您做出選擇的那一刻就已經啟程。<br><br>
+                    本章節結合傳統姓名學理與現代身心靈視角，為您梳理出最適合您的擇偶方向。婚姻宮反映了您潛意識中最容易吸引與共振的伴侶特質：<br><br>
+                    若目前的伴侶契合以下特質：恭喜您！您已成功發揮姓名中天生的優勢磁場，只需繼續用心經營，幸福自然水到渠成。<br><br>
+                    若目前的伴侶尚未展現這些特質：也請不必担心！透過理解自己的內在情感藍圖，並在生活中調整互動方式，同樣能逐步活化姓名中的優勢磁場，讓關係越來越順遂。<br><br>
+                    兩人的真實互動能看得很廣、很細緻。若您已有正在考量或交往的對象，想進行更深入的對比與雙人合盤評估，歡迎加入「甄好命」官方 Line，預約甄老師的 1 對 1 精準諮詢。
                 </div>
+                <div class="sub-title">2. 擇偶建議</div>
+                <div id="partnerAdvice" style="margin-bottom: 20px; min-height: 50px;"></div>
+            </div>
 
-                <!-- 加入 avoid-break 避免圖表被切開 -->
-                <div class="sub-title avoid-break">4. 婚姻 MBTI：你的感情基因密碼</div>
-                <div id="mbtiChartContainer" class="avoid-break" style="display:none;">
-                    <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #D32F2F; margin-bottom: 10px;">
-                        <!-- JS 動態填入 -->
-                    </div>
+            <!-- 第四大點：兩性互動 (自動換新頁) -->
+            <div id="section4Container" class="analysis-box page-break" style="display:none; margin-top: 0;">
+                <h3 style="margin-top: 0;">四. 兩性互動</h3>
+                <div id="interactionContent" style="margin-bottom: 20px; min-height: 50px;"></div>
+            </div>
 
-                    <div class="mbti-container">
-                        <!-- 維度 1：情感表達 -->
-                        <div class="mbti-card">
-                            <div class="card-top">
-                                <div class="side-box">
-                                    <span class="side-label">主動</span>
-                                    <span class="side-letter">I</span>
-                                    <span class="side-desc">情感熾熱<br>主動追求</span>
-                                </div>
-                                <div class="center-box">
-                                    <div class="axis-title">⬅ 互動拉扯 ➡</div>
-                                    <div class="axis-desc">有些人主動出擊，<br>有些人隨緣等待。</div>
-                                </div>
-                                <div class="side-box">
-                                    <span class="side-label">被動</span>
-                                    <span class="side-letter">P</span>
-                                    <span class="side-desc">含蓄內斂<br>等待牽引</span>
-                                </div>
-                            </div>
-                            <div class="progress-section">
-                                <div class="percent-labels">
-                                    <span id="label-i">I 主動 --%</span>
-                                    <span id="label-p">--% P 被動</span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div id="bar-ip" class="progress-bar-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
+            <!-- 第五大點：身心靈全方位經營指南 (自動換新頁) -->
+            <div id="section5Container" class="analysis-box page-break" style="display:none; margin-top: 0;">
+                <h3 style="margin-top: 0;">五. 身心靈全方位經營指南</h3>
+                <div id="spiritualContent" style="margin-bottom: 20px; min-height: 50px;"></div>
+            </div>
 
-                        <!-- 維度 2：擇偶取向 -->
-                        <div class="mbti-card">
-                            <div class="card-top">
-                                <div class="side-box">
-                                    <span class="side-label">理性</span>
-                                    <span class="side-letter">R</span>
-                                    <span class="side-desc">看重條件<br>現實基礎</span>
-                                </div>
-                                <div class="center-box">
-                                    <div class="axis-title">⬅ 擇偶標準 ➡</div>
-                                    <div class="axis-desc">有些人看重務實條件，<br>有些人渴望靈魂共鳴。</div>
-                                </div>
-                                <div class="side-box">
-                                    <span class="side-label">感性</span>
-                                    <span class="side-letter">M</span>
-                                    <span class="side-desc">注重契合<br>心靈感覺</span>
-                                </div>
-                            </div>
-                            <div class="progress-section">
-                                <div class="percent-labels">
-                                    <span id="label-r">R 理性 --%</span>
-                                    <span id="label-m">--% M 感性</span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div id="bar-rm" class="progress-bar-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 維度 3：決策模式 -->
-                        <div class="mbti-card">
-                            <div class="card-top">
-                                <div class="side-box">
-                                    <span class="side-label">猶豫</span>
-                                    <span class="side-letter">H</span>
-                                    <span class="side-desc">謹慎評估<br>深思熟慮</span>
-                                </div>
-                                <div class="center-box">
-                                    <div class="axis-title">⬅ 決策模式 ➡</div>
-                                    <div class="axis-desc">有些人深思熟慮，<br>有些人果斷出擊。</div>
-                                </div>
-                                <div class="side-box">
-                                    <span class="side-label">果斷</span>
-                                    <span class="side-letter">D</span>
-                                    <span class="side-desc">快速決斷<br>直覺行動</span>
-                                </div>
-                            </div>
-                            <div class="progress-section">
-                                <div class="percent-labels">
-                                    <span id="label-h">H 猶豫 --%</span>
-                                    <span id="label-d">--% D 果斷</span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div id="bar-hd" class="progress-bar-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 維度 4：關係定位 -->
-                        <div class="mbti-card">
-                            <div class="card-top">
-                                <div class="side-box">
-                                    <span class="side-label">主導</span>
-                                    <span class="side-letter">L</span>
-                                    <span class="side-desc">掌握節奏<br>引領關係</span>
-                                </div>
-                                <div class="center-box">
-                                    <div class="axis-title">⬅ 關係定位 ➡</div>
-                                    <div class="axis-desc">有些人喜歡主導關係，<br>有些人樂於配合支持。</div>
-                                </div>
-                                <div class="side-box">
-                                    <span class="side-label">配合</span>
-                                    <span class="side-letter">C</span>
-                                    <span class="side-desc">隨和包容<br>支持陪伴</span>
-                                </div>
-                            </div>
-                            <div class="progress-section">
-                                <div class="percent-labels">
-                                    <span id="label-l">L 主導 --%</span>
-                                    <span id="label-c2">--% C 配合</span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div id="bar-lc" class="progress-bar-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- 第六大點：良緣時日 (自動換新頁) -->
+            <div id="auspiciousDatesContainer" class="analysis-box page-break" style="display:none; margin-top: 0;">
+                <h3 style="margin-top: 0;">六. 良緣時日</h3>
+                <div class="analysis-text" style="margin-bottom: 20px; text-align: justify;">
+                    以下標註的良緣時日，都是極為適合您結婚、或備孕與受孕生子的最佳契機。無論您目前正處於猶豫不決的階段，或是早已開始規劃，都非常推薦您參考這份專屬建議。<br><br>
+                    <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px;">
+                        <li style="margin-bottom: 8px;"><strong>打破大眾吉日的迷思：</strong> 傳統農民曆上的「好日子」固然好，但未必適合每個人的命盤，有時甚至可能產生衝剋。</li>
+                        <li style="margin-bottom: 8px;"><strong>為您量身打造的時機：</strong> 本報告的所有時節演算，皆是完全依據您的個人命盤特別精算而成。</li>
+                    </ul>
+                    請放寬心參考，願這份專屬指引陪伴您在人生最重要的婚姻與求子大事上，走得更踏實、更順心圓滿！
                 </div>
+                <div id="auspiciousDatesContent"></div>
+            </div>
 
-                <!-- 第三大點：最佳選擇 (自動換新頁) -->
-                <div id="section3Container" class="page-break" style="display:none; margin-top: 30px;">
-                    <h3>三. 最佳選擇(夫妻宮的婚前選擇)</h3>
-                    
-                    <div class="sub-title">1. 簡介</div>
-                    <div class="analysis-text" style="margin-bottom: 20px;">
-                        「婚前重選擇，婚後重經營。」選對了另一半，能讓您在經營婚姻的路上事半功倍；若是選錯了，即便付出再多努力，也難免感到心力交瘁。<br><br>
-                        🔸(婚姻宮)是先天磁場；代表婚後的相處模式。<br>
-                        🔸(夫妻宮)是後天選擇；代表你適合選擇什麼樣的伴侶<br><br>
-                        兩者截然不同，即便是同樣的婚姻宮，有人幸福圓滿，有人卻非常辛苦，關鍵往往就在於「一開始選擇的人不同」。<br>
-                        ✴️婚姻不是從結婚那一天才開始，而是從您做出選擇的那一刻就已經啟程。<br><br>
-                        本章節結合傳統姓名學理與現代身心靈視角，為您梳理出最適合您的擇偶方向。婚姻宮反映了您潛意識中最容易吸引與共振的伴侶特質：<br><br>
-                        若目前的伴侶契合以下特質：恭喜您！您已成功發揮姓名中天生的優勢磁場，只需繼續用心經營，幸福自然水到渠成。<br><br>
-                        若目前的伴侶尚未展現這些特質：也請不必担心！透過理解自己的內在情感藍圖，並在生活中調整互動方式，同樣能逐步活化姓名中的優勢磁場，讓關係越來越順遂。<br><br>
-                        兩人的真實互動能看得很廣、很細緻。若您已有正在考量或交往的對象，想進行更深入的對比與雙人合盤評估，歡迎加入「甄好命」官方 Line，預約甄老師的 1 對 1 精準諮詢。
-                    </div>
+            <!-- 第七大點：祝福結語 (自動換新頁) -->
+            <div id="section7Container" class="analysis-box page-break" style="display:none; margin-top: 0; margin-bottom: 30px;">
+                <h3 style="margin-top: 0;">七. 祝福結語</h3>
+                <div id="blessingContent" style="margin-bottom: 20px;"></div>
+            </div>
 
-                    <div class="sub-title">2. 擇偶建議</div>
-                    <div id="partnerAdvice" style="margin-bottom: 20px; min-height: 50px;">
-                        <!-- 預留空白 -->
-                    </div>
-                </div>
-
-                <!-- 第四大點：兩性互動 (自動換新頁) -->
-                <div id="section4Container" class="page-break" style="display:none; margin-top: 30px;">
-                    <h3>四. 兩性互動</h3>
-                    <div id="interactionContent" style="margin-bottom: 20px; min-height: 50px;">
-                        <!-- 預留空白 -->
-                    </div>
-                </div>
-
-                <!-- 第五大點：身心靈全方位經營指南 (自動換新頁) -->
-                <div id="section5Container" class="page-break" style="display:none; margin-top: 30px;">
-                    <h3>五. 身心靈全方位經營指南</h3>
-                    <div id="spiritualContent" style="margin-bottom: 20px; min-height: 50px;">
-                        <!-- 預留空白 -->
-                    </div>
-                </div>
-
-                <!-- 第六大點：良緣時日 (自動換新頁) -->
-                <div id="auspiciousDatesContainer" class="page-break" style="display:none; margin-top: 30px;">
-                    <h3>六. 良緣時日</h3>
-                    <div class="analysis-text" style="margin-bottom: 20px; text-align: justify;">
-                        以下標註的良緣時日，都是極為適合您結婚、或備孕與受孕生子的最佳契機。無論您目前正處於猶豫不決的階段，或是早已開始規劃，都非常推薦您參考這份專屬建議。<br><br>
-                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px;">
-                            <li style="margin-bottom: 8px;"><strong>打破大眾吉日的迷思：</strong> 傳統農民曆上的「好日子」固然好，但未必適合每個人的命盤，有時甚至可能產生衝剋。</li>
-                            <li style="margin-bottom: 8px;"><strong>為您量身打造的時機：</strong> 本報告的所有時節演算，皆是完全依據您的個人命盤特別精算而成。</li>
-                        </ul>
-                        請放寬心參考，願這份專屬指引陪伴您在人生最重要的婚姻與求子大事上，走得更踏實、更順心圓滿！
-                    </div>
-                    <div id="auspiciousDatesContent"></div>
-                </div>
-
-                <!-- 第七大點：祝福結語 (自動換新頁) -->
-                <div id="section7Container" class="page-break" style="display:none; margin-top: 30px; margin-bottom: 30px;">
-                    <h3>七. 祝福結語</h3>
-                    <div id="blessingContent" style="margin-bottom: 20px;">
-                        <!-- 預留空白 -->
-                    </div>
-                </div>
+        </div>
 
             </div>
         </div>
@@ -1106,49 +1079,53 @@
         // -----------------------------
             // 生成 五. 身心靈全方位經營指南 (spiritualContent)
             // -----------------------------
+            // -----------------------------
+            // 生成 五. 身心靈全方位經營指南 (極致壓縮版面)
+            // -----------------------------
             let spiritualHtml = "";
             
             if (currentMbtiType === "熱情付出型") {
                 spiritualHtml = `
-                    <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
-                        <div style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                            <div style="color: #4A148C; font-size: 18px; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center;">
-                                <span style="font-size: 20px; margin-right: 6px;">♎️</span> 婚姻中的能量平衡
+                    <div class="analysis-text" style="text-align: left; line-height: 1.45; color: #333;">
+                        <div style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 12px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <div style="color: #4A148C; font-size: 16px; font-weight: bold; margin-bottom: 5px; display: flex; align-items: center;">
+                                <span style="font-size: 18px; margin-right: 6px;">♎️</span> 婚姻中的能量平衡
                             </div>
-                            <div style="color: #4A148C; font-size: 15px; font-weight: bold; margin-bottom: 10px;">
-                                從內在平衡婚姻，<br>婚姻不僅是兩個人的互動，更是兩種能量場的交融。<br>
+                            <div style="color: #4A148C; font-size: 14px; font-weight: bold; margin-bottom: 5px;">
+                                從內在平衡婚姻，婚姻不僅是兩個人的互動，更是兩種能量場的交融。<br>
                                 婚姻宮<strong style="color: #D32F2F;">「熱情付出型」</strong>代表的是一種豐盛的能量狀態。
                             </div>
-                            <div style="color: #4A148C; font-weight: normal;">建議您以身心靈層面進行日常維護：</div>
+                            <div style="color: #4A148C; font-size: 14px; font-weight: normal;">建議您以身心靈層面進行日常維護：</div>
                         </div>
 
-                        <div style="margin-bottom: 20px;">
-                            <div style="background: #FAFAFA; border-left: 4px solid #9C27B0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 保持能量頻率的共振</div>
-                                婚姻關係中最怕能量不同步。<br>建議定期與伴侶進行深度對話，分享彼此的內在感悟，這有助於清理潛意識中的情緒積累，避免能量堵塞。
+                        <div style="margin-bottom: 12px;">
+                            <div style="background: #FAFAFA; border-left: 4px solid #9C27B0; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="color: #6A1B9A; font-size: 15px; font-weight: bold; margin-bottom: 4px;">✨ 保持能量頻率的共振</div>
+                                <div style="font-size: 14px;">婚姻關係中最怕能量不同步。建議定期與伴侶進行深度對話，分享彼此的內在感悟，有助清理潛意識情緒積累。</div>
                             </div>
 
-                            <div style="background: #FAFAFA; border-left: 4px solid #7B1FA2; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 覺察「內斂」背後的能量阻滯</div>
-                                由於文化背景容易導致內斂個性，當感到委屈或不滿時，這股壓抑的能量若不釋放，會形成「情緒垃圾」。<br>建議透過靜心、冥想或書寫，將隱晦的負面情緒轉換為建設性的表達，這對婚姻關係的淨化非常有幫助。
+                            <div style="background: #FAFAFA; border-left: 4px solid #7B1FA2; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="color: #6A1B9A; font-size: 15px; font-weight: bold; margin-bottom: 4px;">✨ 覺察「內斂」背後的能量阻滯</div>
+                                <div style="font-size: 14px;">文化背景易導致內斂，壓抑能量若不釋放會形成情緒垃圾。建議透過靜心或書寫，將負面情緒轉換為建設性表達。</div>
                             </div>
 
-                            <div style="background: #FAFAFA; border-left: 4px solid #6A1B9A; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 優化親密關係的能量流動</div>
-                                兩性親密關係不僅是生理需求，更是生命能量（Sexual Energy）的互補與流動。若性生活出現不協調，試著將其視為「心靈溝通」的一種形式，而非僅是生理操作；透過溫柔的肢體接觸與真實的意圖傳遞，能有效活化婚姻宮的旺盛磁場。
+                            <div style="background: #FAFAFA; border-left: 4px solid #6A1B9A; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="color: #6A1B9A; font-size: 15px; font-weight: bold; margin-bottom: 4px;">✨ 優化親密關係的能量流動</div>
+                                <div style="font-size: 14px;">性生活不僅是生理需求，更是生命能量的互補流動。將其視為「心靈溝通」，透過溫柔接觸傳遞真實意圖，活化旺盛磁場。</div>
                             </div>
 
-                            <div style="background: #FAFAFA; border-left: 4px solid #4A148C; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <div style="color: #6A1B9A; font-size: 16px; font-weight: bold; margin-bottom: 5px;">✨ 培養「轉化」的彈性</div>
-                                當感情感覺變淡時，這往往是靈魂在提醒您「需要為關係注入新能量」。<br>將這種危機感轉換為經營的契機，主動安排共同的成長課程或心靈旅遊，能將原本沉澱的磁場重新喚醒。
+                            <div style="background: #FAFAFA; border-left: 4px solid #4A148C; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="color: #6A1B9A; font-size: 15px; font-weight: bold; margin-bottom: 4px;">✨ 培養「轉化」的彈性</div>
+                                <div style="font-size: 14px;">感情變淡是靈魂提醒「需注入新能量」。將危機感轉換為契機，主動安排共同成長課程或心靈旅遊，重新喚醒沉澱磁場。</div>
                             </div>
                         </div>
 
-                        <div style="background: #FFF3E0; border: 1px dashed #FF9800; padding: 18px; border-radius: 8px; text-align: center;">
-                            <div style="color: #E65100; font-size: 17px; font-weight: bold; margin-bottom: 10px;">💝 額外叮嚀</div>
-                            婚姻宮「熱情付出型」的人，天生擁有一份照顧他人的溫暖能量。<br>
-                            請記得，<strong style="color: #D32F2F; font-size: 16px;">這份能量同樣需要留一份給自己。</strong><br><br>
-                            當您的內在感到豐盈與平衡時，您所散發出的磁場自然能吸引伴侶更願意靠近、溝通與配合。
+                        <div style="background: #FFF3E0; border: 1px dashed #FF9800; padding: 12px; border-radius: 8px; text-align: center;">
+                            <div style="color: #E65100; font-size: 16px; font-weight: bold; margin-bottom: 6px;">💝 額外叮嚀</div>
+                            <div style="font-size: 14.5px;">
+                                婚姻宮「熱情付出型」的人，天生擁有一份照顧他人的溫暖能量。<strong style="color: #D32F2F;">這份能量同樣需要留一份給自己。</strong><br>
+                                當您的內在感到豐盈與平衡時，所散發的磁場自然能吸引伴侶更願意靠近、溝通與配合。
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1165,9 +1142,7 @@
             if (blessingGroup1.includes(currentMbtiType)) {
                 blessingHtml = `
                     <div class="analysis-text" style="background: linear-gradient(135deg, #FFFBF0 0%, #FFF5E6 100%); padding: 20px; border-radius: 12px; border: 1px solid #FFE0B2; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(230,81,0,0.05);">
-                        <div style="font-size: 17px; color: #E65100; font-weight: bold; margin-bottom: 12px;">
-                            「命盤揭示的是一種趨勢與特質，但愛情的模樣永遠掌握在你自己手上。」
-                        </div>
+                        <div style="font-size: 17px; color: #E65100; font-weight: bold; margin-bottom: 12px;">「命盤揭示的是一種趨勢與特質，但愛情的模樣永遠掌握在你自己手上。」</div>
                         <div style="color: #5D4037; font-size: 15.5px;">
                             希望這份分析，能成為你感情路上的一盞小夜燈，指引你更懂自己、也更懂得如何去愛。<br><br>
                             <strong style="color: #D84315; font-size: 16.5px;">祝你早日找到最舒服的相處節奏，收穫一段雙向奔赴、彼此成就的理想關係！</strong>
@@ -1177,9 +1152,7 @@
             } else if (blessingGroup2.includes(currentMbtiType)) {
                 blessingHtml = `
                     <div class="analysis-text" style="background: linear-gradient(135deg, #FFF4F4 0%, #FFEBEB 100%); padding: 20px; border-radius: 12px; border: 1px solid #FFCDD2; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(198,40,40,0.05);">
-                        <div style="font-size: 17px; color: #C62828; font-weight: bold; margin-bottom: 12px;">
-                            「感情是一場需要智慧經營的雙人舞，<br>知道了自己的優勢與需要注意的地方，就是最好的開始。」
-                        </div>
+                        <div style="font-size: 17px; color: #C62828; font-weight: bold; margin-bottom: 12px;">「感情是一場需要智慧經營的雙人舞，<br>知道了自己的優勢與需要注意的地方，就是最好的開始。」</div>
                         <div style="color: #4E342E; font-size: 15.5px; margin-top: 10px;">
                             <strong style="color: #B71C1C; font-size: 16.5px;">祝福你在接下來的日子裡，能夠勇敢擁抱機會、從容面對挑戰，<br>順利遇見那個能陪你成長、共享喜怒哀樂的最佳伴侶！</strong>
                         </div>
@@ -1188,17 +1161,18 @@
             }
             document.getElementById('blessingContent').innerHTML = blessingHtml;
 
+            // 將輸入的名字填入 PDF 封面標題
+            const fullName = lNameInput + fNameInput;
+            document.getElementById('pdfUserNameTitle').innerText = `${fullName} 個人婚姻宮介紹與分析`;
+
             // 顯示所有擴充區塊
+            document.getElementById('mbtiSection').style.display = "block"; // 顯示 MBTI 獨立頁
             analysisBox.style.display = "block";
             document.getElementById('section3Container').style.display = "block";
             document.getElementById('section4Container').style.display = "block";
             document.getElementById('section5Container').style.display = "block";
-            document.getElementById('auspiciousDatesContainer').style.display = "block"; // 原第六大點
+            document.getElementById('auspiciousDatesContainer').style.display = "block";
             document.getElementById('section7Container').style.display = "block";
-
-// 將輸入的名字填入 PDF 封面標題
-            const fullName = lNameInput + fNameInput;
-            document.getElementById('pdfUserNameTitle').innerText = `${fullName} 個人婚姻宮介紹與分析`;
             
             // 顯示下載按鈕
             document.getElementById('downloadContainer').style.display = "block";
