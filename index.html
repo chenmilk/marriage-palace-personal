@@ -92,9 +92,10 @@
         /* -------------------------- */
         /* ---------- PDF 列印專屬排版區塊 ---------- */
         /* ---------- PDF 列印專屬排版區塊 ---------- */
+        /* ---------- PDF 列印專屬排版區塊 ---------- */
         @media print {
-            /* 強制隱藏瀏覽器的網址、時間與頁碼 */
-            @page { margin: 0; } 
+            /* 恢復正常的 A4 紙張邊界，解決黏在最上方的問題 */
+            @page { margin: 1.5cm; } 
             body { background-color: white; margin: 0; padding: 0; }
             
             /* 隱藏網頁操作元素 */
@@ -103,13 +104,16 @@
             }
             .main-container, #captureArea { padding: 0; margin: 0; max-width: 100%; box-shadow: none; border: none; }
             
-            /* 每頁開頭強制換頁，並留出上方 40px 空白，避免黏在邊緣 */
-            .page-break { page-break-before: always; clear: both; padding-top: 40px; padding-left: 20px; padding-right: 20px; }
+            /* 換頁與防斷層 */
+            .page-break { page-break-before: always; clear: both; }
             .avoid-break { page-break-inside: avoid; }
 
-            /* 封面設定：高度設為 95vh 避免擠出空白頁 */
-            #printTitlePage { display: flex !important; flex-direction: column; height: 95vh; justify-content: center; align-items: center; position: relative; box-sizing: border-box; }
-            .title-footer { position: absolute; bottom: 40px; right: 40px; font-size: 18px; color: #666; font-style: italic; font-weight: bold; }
+            /* 專屬置中頁面設定 (用於封面、命盤、MBTI) */
+            .print-center-page { display: flex !important; flex-direction: column; height: 90vh; justify-content: center; align-items: center; width: 100%; box-sizing: border-box; }
+            
+            /* 封面設定 */
+            #printTitlePage { position: relative; }
+            .title-footer { position: absolute; bottom: 10px; right: 10px; font-size: 18px; color: #666; font-style: italic; font-weight: bold; }
 
             #printTOC { display: block !important; height: auto; }
             
@@ -118,8 +122,7 @@
         }
         #printTitlePage, #printTOC { display: none; }
 
-        /* 在一般網頁模式下隱藏封面與目錄 */
-        #printTitlePage, #printTOC { display: none; }
+        
     </style>
 </head>
 <body>
@@ -184,20 +187,21 @@
                 </div>
             </div>
 
-            <!-- 第三頁：命盤格局與 MBTI (置中對齊) -->
-            <div class="page-break" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                
-                <!-- 上半部：命盤格局 -->
-                <h3 style="color: #800000; font-size: 24px; margin-top: 0; margin-bottom: 20px;">您的命盤格局</h3>
-                <div id="mResultFrame" class="result-frame" style="margin: 0 auto;">
+            <!-- 第三頁：命盤格局 (獨立一頁，完全置中) -->
+            <div class="page-break print-center-page">
+                <h3 style="color: #800000; font-size: 26px; margin-top: 0; margin-bottom: 30px;">您的命盤格局</h3>
+                <div id="mResultFrame" class="result-frame" style="margin: 0 auto; width: 100%; max-width: 350px;">
+                    <!-- 流年時間軸放置處 -->
                     <div id="fortuneDisplay" class="fortune-display"></div>
                     <table id="mResultTable"></table>
                     <div id="mTotalBox" class="total-box"></div>
                 </div>
-                
-                <!-- 下半部：婚姻 MBTI -->
-                <div id="mbtiSection" style="display:none; width: 100%; max-width: 450px; margin-top: 40px; padding: 20px; border: 1.5px solid #800000; border-radius: 12px; background: #fff; box-sizing: border-box;">
-                    <h3 style="color: #800000; font-size: 20px; border-bottom: 2px solid #800000; padding-bottom: 8px; margin-top: 0; margin-bottom: 15px;">婚姻 MBTI：你的感情基因密碼</h3>
+            </div>
+            
+            <!-- 第四頁：婚姻 MBTI (獨立一頁，完全置中) -->
+            <div id="mbtiSection" class="page-break print-center-page" style="display:none;">
+                <div style="width: 100%; max-width: 480px; padding: 20px; border: 1.5px solid #800000; border-radius: 12px; background: #fff; box-sizing: border-box;">
+                    <h3 style="color: #800000; font-size: 22px; border-bottom: 2px solid #800000; padding-bottom: 10px; margin-top: 0; margin-bottom: 15px; text-align: center;">婚姻 MBTI：你的感情基因密碼</h3>
                     <div id="mbtiResultSubtitle" style="text-align: left; font-size: 16px; font-weight: bold; color: #D32F2F; margin-bottom: 15px;"></div>
                     <div id="mbtiChartContainer" class="mbti-container" style="margin-top: 0;">
                         <!-- 維度 1：情感表達 -->
