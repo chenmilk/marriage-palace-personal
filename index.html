@@ -762,14 +762,77 @@
                         </div>
                     `;
 
-                } else if (marriageRel.dir === "上") {
-                    currentMbtiType = "佛係慢熱型";
+               } else if (marriageRel.dir === "上") {
+                    currentMbtiType = "佛係慢熱型"; // 維持變數名稱以便抓取MBTI
+                    
+                    // 針對第三部曲的男女差異結語
+                    let genderOutcome = "";
+                    if (gender === "女") {
+                        genderOutcome = "而是建立在安逸滿足與配合另一半的基礎上，成為讓家庭相處和諧、溫暖穩固的賢內助。";
+                    } else {
+                        genderOutcome = "而是建立在安穩與伴侶的悉心配合上，讓您能無後顧之憂地在事業上全力衝刺。";
+                    }
+
+                    // 特製 2.類型的排版內容 (置中、紅字)
                     analysisHtml = `
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
-                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：佛係慢熱型</strong></div>
-                            從婚姻宮可以看出，您的格局為「佛係慢熱型」。在感情上您屬於較理性的人，比起感情，您往往將更多重心放在工作與個人發展上，愛自己多過於愛對方。<br><br>
-                            在尋找另一半時，您會傾向選擇「比較愛您、懂得照顧您」的人。不過，由於您在感情方面相對被動，一旦全心投入工作，就非常容易耽誤到婚姻大事。<br><br>
-                            因此，建議您在感情上可以考慮「早婚」（約35歲以前把握機會），否則未來較容易出現晚婚，甚至是不婚的現象。
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #D32F2F; text-align: center;">
+                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【佛系慢熱型】</div>
+                            <div style="font-size:16px; color:#333; font-weight:bold;">精神上的契合，是愛的橋樑；安逸穩定的相處，是愛的糧食。</div>
+                        </div> 
+                    `;
+                    
+                    // 特製 3.特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心能量與愛情觀</div>
+                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
+                                <li style="margin-bottom: 8px;"><strong>核心能量（被滋養的幸運磁場）：</strong>在您的婚姻宮軌道中，呈現的是「被滋養」的五行能量。您天生帶有一種吸引別人來疼您、照顧您的幸運磁場，伴侶會情不自禁地將能量轉移給您，願意主動為您付出與配合。您們之間的愛，不是驚天動地的暴風雨，而是一種溫和能量流動、細水長流的平淡美感。</li>
+                                <li style="margin-bottom: 8px;"><strong>主要概念（順其自然與慢熱真相）：</strong>
+                                    <ul style="margin-top: 5px; padding-left: 20px; list-style-type: circle;">
+                                        <li style="margin-bottom: 4px;"><strong>順其自然，給予極大自由：</strong>對感情不強求、不極端控制，習慣給彼此充分的靈魂自由。</li>
+                                        <li style="margin-bottom: 4px;"><strong>高自我價值感，極具吸引力：</strong>懂得照顧自己，在感情裡屬於「被寵、被愛、被滋養」的一方，天生具備吸引伴侶主動付出的幸運能量。</li>
+                                        <li style="margin-bottom: 4px;"><strong>異性緣好，易成「一輩子的好朋友」：</strong>心思細膩、顧慮較多，感情升溫慢。不會一見鍾情也不盲目衝動，需要長時間相處觀察，往往把潛在對象相處成知己好友。</li>
+                                        <li style="margin-bottom: 4px;"><strong>愛在心裡口難開：</strong>在兩性互動中較為被動，習慣被選擇、被追求。加上重形象、愛面子、害怕被拒絕，常把喜歡的心思藏在心底，較難主動追到第一眼相中的對象。</li>
+                                        <li style="margin-bottom: 4px;"><strong>精神契合遠大於肉體關係：</strong>比起肉體或短暫激情，您更看重兩人在靈魂與思想上的深度交流。</li>
+                                        <li><strong>慢熱的真正本質：</strong>慢熱絕不代表沒有愛或感情淡薄，您只是習慣用理性、被動、重精神交流的方式來愛人。外界常覺得您冷靜、獨立、不易靠近，但您內心非常重感情，比起轟轟烈烈，更在乎心靈契合、長久陪伴的踏實安全感、責任感與相處舒適度。</li>
+                                    </ul>
+                                </li>
+                                <li><strong>愛情觀念（重視精神契合與相處舒適）：</strong><br>外貌與激情固然重要，但真正讓您決定走入婚姻的，永遠是「共同價值觀、人生理念、思想交流與相處舒服」。只有心靈真正契合，您才願意慢慢打開自己。習慣用「實際行動」默默表達關懷，而不是甜言蜜語。因此，您非常適合選擇「比較愛您、懂得疼您、照顧您」的對象。伴侶通常對您極為專一；若關係出現危機，通常不是因為外遇，而是因為您習慣性將心思全投入工作，或對感情過於冷淡而忽略了對方。</li>
+                            </ul>
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 個人優勢（相處特長）</div>
+                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
+                                <li style="margin-bottom: 8px;"><strong>忠誠專一，極重承諾：</strong>一旦認定了一個人，展現出的愛無比珍貴且深沉，專注且高度信守諾言。</li>
+                                <li style="margin-bottom: 8px;"><strong>理性成熟，情緒穩定：</strong>在親密關係中極具理性與成熟度，情緒非常穩定，不隨意起伏或無理取鬧。</li>
+                                <li style="margin-bottom: 8px;"><strong>責任感強，長久陪伴：</strong>具備深厚的家庭與關係責任感，非常耐得住歲月平淡，適合長期相守與陪伴。</li>
+                                <li style="margin-bottom: 8px;"><strong>充分信任與空間：</strong>若配偶因工作需要聚少離多，您能給予充分的信任與個人自由空間，完全不影響彼此的感情品質。</li>
+                                <li><strong>傷痛復原力佳：</strong>因為理性高於感性，當面對分手或離異等關係變故時，挫折感與殺傷力相對較低，能夠很快找到適合自己的療癒方式，迅速縮短情傷時間。</li>
+                            </ul>
+
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 感情發展三部曲</div>
+                            <div style="margin-bottom: 15px; color: #333;">
+                                <strong style="color: #483D8B;">① 開始（動心與建立）</strong>
+                                <div style="margin-top: 5px; line-height: 1.6; padding-left: 10px;">
+                                    因自身態度較淡薄、被動等待，您的緣份大多來自外部牽線，例如：<br>
+                                    親友介紹、工作場合、婚友社、社交圈、或異地緣分。比起自己盲目尋找，透過第三方牽線的成功率最高。
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px; color: #333;">
+                                <strong style="color: #483D8B;">② 經營（相處與責任）</strong>
+                                <div style="margin-top: 5px; line-height: 1.6; padding-left: 10px;">
+                                    您不容易閃婚，感情需要時間的沉澱。必須經過：<br>
+                                    長時間的相處、深入了解與建立信任，慢慢確認彼此適合後，才會邁入下一階段。
+                                </div>
+                            </div>
+                            <div style="color: #333;">
+                                <strong style="color: #483D8B;">③ 緣成（結果與展望）</strong>
+                                <div style="margin-top: 5px; line-height: 1.6; padding-left: 10px;">
+                                    <strong style="color: #333;">平淡中的幸福：</strong>婚姻最大的維繫不是短暫的激情，<br>
+                                    <span style="color: #800000; font-weight: bold;">${genderOutcome}</span><br>
+                                    婚後關係極為穩定、衝突少、風波低，彼此在深厚的精神契合與互相陪伴中，共同走向長久安定的婚姻生活。
+                                </div>
+                            </div>
                         </div>
                     `;
                 }
