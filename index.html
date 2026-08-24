@@ -1097,6 +1097,76 @@
                     </div>
                 `;
             }
+
+            else if (currentMbtiType === "佛係慢熱型") {
+                let genderExtra = "";
+                
+                if (gender === "女") {
+                    genderExtra = `
+                        <div class="avoid-break" style="background: #FDF4F5; border: 1px solid #F8BBD0; border-radius: 8px; padding: 16px; margin-top: 15px; box-shadow: 0 4px 10px rgba(194,24,91,0.05);">
+                            <div style="color: #C2185B; font-size: 16px; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center;">
+                                <span style="margin-right: 6px;">👩‍💼</span> 女性專屬備註
+                            </div>
+                            <div style="color: #333; line-height: 1.6; font-size: 15px;">
+                                若將心思過度投入工作，容易導致情感與性生活<strong style="color: #D32F2F;">「過於冷淡」</strong>（甚至走向無性婚姻），最終讓婚姻能量失衡。<br>
+                                <span style="color: #C2185B; font-weight: bold;">如何在婚姻與事業取得平衡，是您一生重要的課題。</span>
+                            </div>
+                        </div>
+                    `;
+                } else if (gender === "男") {
+                    genderExtra = `
+                        <div class="avoid-break" style="background: #F0F8FF; border: 1px solid #BBDEFB; border-radius: 8px; padding: 16px; margin-top: 15px; box-shadow: 0 4px 10px rgba(21,101,192,0.05);">
+                            <div style="color: #1565C0; font-size: 16px; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center;">
+                                <span style="margin-right: 6px;">👨‍💼</span> 男性專屬備註
+                            </div>
+                            <div style="color: #333; line-height: 1.6; font-size: 15px;">
+                                由於心思不會被兩性關係鎖死及愛情困住，您極具成為企業家或事業高手的潛力。<br>
+                                但要小心別因<strong style="color: #D32F2F;">「極端投入事業」</strong>而冷落伴侶，導致感情停滯。<br>
+                                <span style="color: #1565C0; font-weight: bold;">如何在事業與婚姻取得平衡，是您重要的功課。</span><br>
+                                <span style="font-size: 13.5px; color: #666; margin-top: 4px; display: block;">註：（固定上班族、公務人員影響較小）</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                interactionHtml = `
+                    <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
+                        
+                        <div class="avoid-break" style="background: #F8F9FA; border-left: 4px solid #3F51B5; padding: 18px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="color: #3F51B5; font-size: 17px; font-weight: bold; margin-bottom: 15px;">✦ 【佛系慢熱型】的互動特質</div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #1A237E; font-size: 15.5px;">1. 無話不談是您的熱情動力：</strong><br>
+                                如果兩人在理想、興趣、話題上高度一致，感情會越陳越香；但如果話不投機，您會漸漸覺得無趣而敷衍回應，交談越來越少，最後兩人可能冷淡得像室友。
+                            </div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #1A237E; font-size: 15.5px;">2. 默默付出的溫柔：</strong><br>
+                                雖然是被愛的一方，您也會在健康、生活、工作上默默關注與叮嚀對方。
+                            </div>
+
+                            <div>
+                                <strong style="color: #1A237E; font-size: 15.5px;">3. 事業與婚姻的平衡點：</strong><br>
+                                您婚後較不會被性關係鎖住，也不會沉溺在你儂我儂愛情裡，若將心思全力投入事業，很容易取代對兩性關係的需求。
+                            </div>
+                            
+                            ${genderExtra}
+                        </div>
+
+                        <div class="avoid-break" style="background: #FFF8E1; border-left: 4px solid #FF8F00; padding: 18px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="color: #E65100; font-size: 17px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center;">
+                                <span style="font-size: 20px; margin-right: 6px;">‼️</span> 特別注意：冷漠比爭吵更可怕
+                            </div>
+                            <div style="font-size: 15.5px; color: #4E342E;">
+                                讓您斷緣的最大原因不是爭吵，而是<strong style="color: #D32F2F;">缺乏交流、缺乏表達、缺乏陪伴</strong>。<br><br>
+                                很多關係不是因為不愛了，而是因為太忙、太理性，不知不覺中讓彼此越走越遠。
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+            }
+            
             document.getElementById('interactionContent').innerHTML = interactionHtml;
 
         // -----------------------------
