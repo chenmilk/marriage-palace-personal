@@ -1221,6 +1221,95 @@
                     </div>
                 `;
             }
+
+            else if (currentMbtiType === "佛係慢熱型") {
+                let femaleExtra = "";
+                if (gender === "女") {
+                    femaleExtra = `
+                        <div style="background: #FCE4EC; padding: 8px 12px; border-radius: 6px; color: #880E4F; font-size: 13.5px; margin-top: 8px; border-left: 3px solid #C2185B;">
+                            <strong style="font-size: 14.5px;">👩‍💼 女性特別留意：</strong><br>
+                            更容易因為事業、學業、家庭責任，而延後婚姻規畫。如何在婚姻與事業取得平衡，是您一生重要的課題。
+                        </div>
+                    `;
+                }
+
+                spiritualHtml = `
+                    <div class="analysis-text" style="text-align: left; line-height: 1.5; color: #333;">
+                        
+                        <!-- 1. 能量平衡 -->
+                        <div class="avoid-break" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); padding: 12px 15px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <div style="color: #0D47A1; font-size: 16px; font-weight: bold; margin-bottom: 4px; display: flex; align-items: center;">
+                                <span style="font-size: 18px; margin-right: 6px;">♎️</span> 婚姻中的能量平衡
+                            </div>
+                            <div style="color: #0D47A1; font-size: 14.5px; font-weight: bold; margin-bottom: 4px;">
+                                慢熱，不是缺少愛，而是愛得安靜。
+                            </div>
+                            <div style="color: #0D47A1; font-size: 14px;">
+                                您的功課，不是改變自己，而是學會：<strong style="color: #D32F2F;">主動表達、接受愛、相信自己值得、放下過度理性、勇敢跨出第一步</strong>。<br>
+                                愛，並不是等待，而是流動。
+                            </div>
+                        </div>
+
+                        <!-- 2. 覺察能量阻滯 -->
+                        <div class="avoid-break" style="background: #FAFAFA; border-left: 4px solid #1976D2; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px;">
+                            <div style="color: #1565C0; font-size: 15px; font-weight: bold; margin-bottom: 4px;">✨ 覺察表達背後的能量阻滯</div>
+                            <div style="font-size: 14px;">
+                                由於個性理性被動，常<strong style="color: #D32F2F;">想太多、觀察太久、不敢主動</strong>，容易「明明有好感，最後卻錯過」。<br>
+                                您責任感極強，工作常排在感情前。能量最大阻塞是把愛藏在心裡，您不是不愛，而是不善表達。
+                            </div>
+                            ${femaleExtra}
+                            <div style="font-size: 14px; margin-top: 8px; border-top: 1px dashed #BBDEFB; padding-top: 6px;">
+                                💡 <strong style="color: #1565C0;">優化建議：</strong>建議把愛❤️與關懷說出口，讓對方感受到溫暖；靜下來問自己：「我真正渴望的關係，是什麼樣子？」
+                            </div>
+                        </div>
+
+                        <!-- 3. 五大能量練習 (雙欄網格設計省空間) -->
+                        <div class="avoid-break" style="background: #F1F8E9; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #C5E1A5;">
+                            <div style="color: #33691E; font-size: 15px; font-weight: bold; margin-bottom: 6px; text-align: center;">🌿 五大愛的能量練習</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                <div style="flex: 1 1 48%; background: #fff; padding: 6px 8px; border-radius: 4px; border: 1px solid #DCEDC8;">
+                                    <strong style="color: #558B2F; font-size: 13.5px;">(1) 愛的表達</strong><br><span style="font-size: 13px;">每天睡前對重要的人說：謝謝你、辛苦了。讓愛流動出來。</span>
+                                </div>
+                                <div style="flex: 1 1 48%; background: #fff; padding: 6px 8px; border-radius: 4px; border: 1px solid #DCEDC8;">
+                                    <strong style="color: #558B2F; font-size: 13.5px;">(2) 主動一步</strong><br><span style="font-size: 13px;">每週主動傳訊、邀約或分享心情。打破被動等待的模式。</span>
+                                </div>
+                                <div style="flex: 1 1 48%; background: #fff; padding: 6px 8px; border-radius: 4px; border: 1px solid #DCEDC8;">
+                                    <strong style="color: #558B2F; font-size: 13.5px;">(3) 靜心書寫</strong><br><span style="font-size: 13px;">每天寫下真實感受與期望，建立與自己內心的深層連結。</span>
+                                </div>
+                                <div style="flex: 1 1 48%; background: #fff; padding: 6px 8px; border-radius: 4px; border: 1px solid #DCEDC8;">
+                                    <strong style="color: #558B2F; font-size: 13.5px;">(4) 幸福接收</strong><br><span style="font-size: 13px;">被稱讚或關心時，微笑說「我願意接受這份愛」，坦然接受。</span>
+                                </div>
+                                <div style="flex: 1 1 100%; background: #fff; padding: 6px 8px; border-radius: 4px; border: 1px solid #DCEDC8;">
+                                    <strong style="color: #558B2F; font-size: 13.5px;">(5) 靈魂共振</strong><span style="font-size: 13px;"> 每週安排一小時做平靜喜悅的事（聽音樂、散步、冥想等）。</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. 身心靈處方 -->
+                        <div class="avoid-break" style="margin-bottom: 12px;">
+                            <div style="background: #FAFAFA; border-left: 4px solid #00796B; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px;">
+                                <strong style="color: #00695C; font-size: 14.5px;">【身】</strong><span style="font-size: 13.5px;"> 透過雙人瑜伽、按摩、每日眼神與肢體連結，打破過度理性帶來的體感冰牆。</span>
+                            </div>
+                            <div style="background: #FAFAFA; border-left: 4px solid #00796B; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px;">
+                                <strong style="color: #00695C; font-size: 14.5px;">【心】</strong><span style="font-size: 13.5px;"> 建立下班儀式感，切換事業理性，避免將心力全卡在工作導致無感婚姻。</span>
+                            </div>
+                            <div style="background: #FAFAFA; border-left: 4px solid #00796B; padding: 8px 12px; border-radius: 6px;">
+                                <strong style="color: #00695C; font-size: 14.5px;">【靈】</strong><span style="font-size: 13.5px;"> 放下過度挑剔的防衛，將「自賞」升華為「靈魂陪伴」，敞開心房接受緣分。</span>
+                            </div>
+                        </div>
+
+                        <!-- 5. 總結叮嚀 -->
+                        <div class="avoid-break" style="background: #FFF3E0; border: 1.5px dashed #FF9800; padding: 12px 15px; border-radius: 8px; text-align: center;">
+                            <div style="color: #E65100; font-size: 15.5px; font-weight: bold; margin-bottom: 6px;">☀️ 能量處方箋：❤️ 主動與表達 ❤️</div>
+                            <div style="font-size: 14px; color: #4E342E; line-height: 1.6;">
+                                把愛的能量一點一滴活出來、說出口，讓幸福真正「生生不息」。<br>
+                                您不是冷淡，而是慢熱。您不是無情，而是深情。<br>
+                                <strong style="color: #D32F2F;">真正的婚姻，不是找到完美的人，而是找到願意一起成長的人。</strong>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
             document.getElementById('spiritualContent').innerHTML = spiritualHtml;
 
             // -----------------------------
