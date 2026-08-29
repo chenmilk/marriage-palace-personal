@@ -686,16 +686,63 @@
             } else if (marriageRel.type === "無") {
                 if (renD === diD) {
                     currentMbtiType = "理性陪伴型";
+                    
+                    // 特製 2.類型的排版內容 (置中、紅字)
                     analysisHtml = `
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
-                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：理性陪伴型</strong></div>
-                            從婚姻宮可以看出，您的格局為「理性陪伴型」。在感情上您屬於較理性的人，相較於感情，您往往更注重工作與個人發展，愛自己多過於愛對方。<br><br>
-                            需要特別注意的是，您的感情與「初戀」或「第一任」較為無緣，即使步入婚姻也容易面臨斷緣的考驗。<br>
-                            <span style="color: #2E8B57; font-weight: bold;">不過別擔心！若您目前的另一半或婚姻對象已不是第一任，那麼恭喜您，這個破象已經自然化解了。</span><br><br>
-                            若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理，透過這樣的方式化解，未來的感情之路就會順利順心！
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #D32F2F; text-align: center;">
+                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【理性陪伴型】</div>
+                            <div style="font-size:16px; color:#333; font-weight:bold;">互相尊重是良藥，空間距離是美感。</div>
+                        </div> 
+                    `;
+                    
+                    // 特製 3.特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心能量與愛情觀</div>
+                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
+                                <li style="margin-bottom: 8px;"><strong>核心能量：</strong>您在婚姻宮軌道中，呈現的是「平起平坐、雙向互動」的五行能量。比起盲目的激情衝動，您更看重精神層面的契合、個人的獨立成長與事業發展，屬於先理性觀察、再慢慢投入的感情模式。</li>
+                                <li style="margin-bottom: 8px;"><strong>主要概念：</strong>在感情中，您理性獨立、慎重慢熱，重視精神契合與自我成長。您對自己的現狀較為滿意，不會把全部人生寄託在伴侶身上，追求健康平等的心理邊界。您真正想要的不是一個單方面很愛自己的人，而是一個彼此欣賞、互相信任且願意長久陪伴的人生夥伴。</li>
+                                <li><strong>愛情觀念：</strong>愛要適合，更要能長久。您追求的是能在關係中舒適做自己、彼此互相尊重、有共同價值觀且能一起成長的關係。感情推進步調為「觀察 → 認識 → 理解 → 信任 → 投入 → 陪伴」，不追求短暫的轟轟烈烈，更看重細水長流的精神共鳴。</li>
+                            </ul>
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 個人優勢（相處特長）</div>
+                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
+                                <li style="margin-bottom: 8px;"><strong>理性成熟不衝動：</strong>做選擇時冷靜思考，不易被一時激情牽著走，能有效避開不適合的關係與爛桃花。</li>
+                                <li style="margin-bottom: 8px;"><strong>獨立自主無負擔：</strong>進入婚姻仍保有健全的自我與生活圈，彼此相處自在，不容易產生窒息感或過度依賴。</li>
+                                <li style="margin-bottom: 8px;"><strong>慢熱慎選重責任：</strong>雖然感情投入步調較慢，但經過充分觀察與確認後，具備高度責任感，極具經營長久穩定關係的定力。</li>
+                                <li><strong>靈魂共鳴伴侶感：</strong>重視精神交流，一旦遇到頻率契合的對象，能將男女之愛昇華為攜手成長的高維度人生夥伴。</li>
+                            </ul>
+
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 感情發展三部曲</div>
+                            <div style="margin-bottom: 15px; color: #333;">
+                                <strong style="color: #483D8B;">① 開始（動心與建立）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
+                                    <li style="margin-bottom: 6px;"><strong>慎重慢熱：</strong>眼光較為挑剔、顧慮較多，對婚姻抱持平常心，不易一見鍾情，也不太會盲目主動追求。</li>
+                                    <li style="margin-bottom: 6px;"><strong>朋友起步：</strong>適合經由旁人介紹、工作場合或社交圈相識，先從朋友做起，透過長時間深入相處與觀察再決定投入。</li>
+                                    <li><strong>破象化解：</strong>傳統命盤中與「初戀」或「第一任」緣分較淺；若目前對象已非第一任，此斷緣考驗在冥冥之中早已自然化解。</li>
+                                </ul>
+                            </div>
+                            <div style="margin-bottom: 15px; color: #333;">
+                                <strong style="color: #483D8B;">② 經營（相處與責任）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
+                                    <li style="margin-bottom: 6px;"><strong>責任支持：</strong>不太會說甜言蜜語，習慣透過生活照顧、物質穩定、支持對方夢想與承擔責任來表達愛意。</li>
+                                    <li style="margin-bottom: 6px;"><strong>心理邊界：</strong>夫妻間宜相敬如賓並保持適度空間感；若生活趨於平淡，容易將精神重心轉移至事業或個人興趣。</li>
+                                    <li><strong>刻意交流：</strong>需注意「穩定不能變成習慣，習慣不能取代愛」，婚姻中需刻意保留專屬兩人的約會時間與情感對話，將生活的夥伴轉化為心靈的伴侶。</li>
+                                </ul>
+                            </div>
+                            <div style="color: #333;">
+                                <strong style="color: #483D8B;">③ 緣成（結果與展望）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
+                                    <li style="margin-bottom: 6px;"><strong>互相理解支持：</strong>雙方能真正理解彼此的個性與差異，尊重彼此的空間並全力支持對方的夢想。</li>
+                                    <li><strong>終極人生夥伴：</strong>婚姻昇華為深度的靈魂支撐與長期陪伴，形成「我願意陪你走過人生，而你也願意陪我成為自己」的圓滿境界。</li>
+                                </ul>
+                            </div>
                         </div>
                     `;
-                } else {
+                }
+                    
+                else {
                     currentMbtiType = "感性配合型";
                     analysisHtml = `
                         <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
