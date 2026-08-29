@@ -740,17 +740,127 @@
                             </div>
                         </div>
                     `;
-                }
+                }else {
+                    currentMbtiType = "感性配合型"; // MBTI 計算錨點
                     
-                else {
-                    currentMbtiType = "感性配合型";
+                    // 針對第三部曲的男女差異提醒
+                    let genderOutcome = "";
+                    if (gender === "女") {
+                        genderOutcome = `
+                            <div class="avoid-break" style="background: #FDF4F5; border: 1px solid #F8BBD0; border-radius: 8px; padding: 14px; margin-top: 15px;">
+                                <div style="color: #C2185B; font-size: 15.5px; font-weight: bold; margin-bottom: 6px;">👩‍💼 女性專屬愛的提醒：</div>
+                                <div style="font-size: 14.5px; line-height: 1.6; color: #4A148C;">
+                                    您通常比較容易從感情出發，在選擇伴侶時容易重視：感覺、浪漫、體貼、被照顧、情感交流與心靈契合，有時理想與感受會先於現實條件。<br>
+                                    <strong style="color: #D32F2F;">提醒自己：「喜歡」與「適合」是兩件事。</strong>喜歡一個人是感情；選擇與一個人共度人生，則需要加入智慧。若能在感情之外多觀察對方的人品、責任感、價值觀與生活能力，婚姻幸福度會大幅提升。
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        genderOutcome = `
+                            <div class="avoid-break" style="background: #F0F8FF; border: 1px solid #BBDEFB; border-radius: 8px; padding: 14px; margin-top: 15px;">
+                                <div style="color: #1565C0; font-size: 15.5px; font-weight: bold; margin-bottom: 6px;">👨‍💼 男性專屬愛的提醒：</div>
+                                <div style="font-size: 14.5px; line-height: 1.6; color: #0D47A1;">
+                                    您除了精神與情感需求之外，通常也比較重視親密關係中的需求與滿足。若婚姻中長期缺乏親密交流，容易感受到失落或不滿。<br>
+                                    <strong style="color: #D32F2F;">您需要學習的是把需求說出來，而不是讓需求變成情緒或距離。</strong>真正成熟的親密關係不只是生理滿足，更包含信任、理解、尊重與彼此接納。若能與伴侶建立良好溝通，能讓親密感更加深厚。
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // 特製 2. 類型的排版內容 (置中、紅字)
                     analysisHtml = `
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
-                            <div style="color:#483D8B; font-size:16px; margin-bottom:10px;">📌 <strong>命盤格局：感性配合型</strong></div>
-                            從婚姻宮可以看出，您的格局為「感性配合型」。在感情上您屬於較感性的人，相較於工作，您更看重感情經營，往往愛對方勝過愛自己。<br><br>
-                            需要特別注意的是，您的感情與「初戀」或「第一任」較為無緣，即使步入婚姻也容易面臨斷緣的考驗。<br>
-                            <span style="color: #2E8B57; font-weight: bold;">若您目前的另一半已經不是第一任，那麼恭喜您，這個破象已自然化解了。</span>若是第一任也無需灰心，建議可以試著「假分手」（雙方完全不聯絡、不接觸達一個禮拜以上）後再復合，或是「假離婚」（辦理實質簽字手續）後再重新結連理來化解。<br><br>
-                            另外，因您生性較感性，容易因為心軟或一時衝動而早婚。強烈建議您「盡量避免早婚」，以免因衝動而選錯對象；除非您與另一半的命盤契合度極高（歡迎加入甄好命官方Line，找甄老師諮詢或購買「婚姻宮-雙人配對」進行深入了解），掌握好這些關鍵，您的感情就能順利順心！
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #D32F2F; text-align: center;">
+                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【感性配合型】</div>
+                            <div style="font-size:15px; color:#333; font-weight:bold; line-height:1.6;">
+                                愛是我的天性，智慧是我的方向；<br>感性是我的天賦，理性是我的保護。
+                            </div>
+                        </div> 
+                    `;
+                    
+                    // 特製 3. 特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心特質與愛情觀</div>
+                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333; line-height: 1.6;">
+                                <li style="margin-bottom: 8px;">
+                                    <strong>核心特質（濃烈的陰陽雙向能量）：</strong>在面對感情時，通常比較容易投入，也願意為愛付出與奉獻。感性力量較強，容易受到情感、感覺與心動的影響，屬於感情能量濃烈的婚姻型態。感情來時，感性往往走在理性之前。
+                                </li>
+                                <li style="margin-bottom: 8px;">
+                                    <strong>豐富的緣分軌道：</strong>人生中較容易遇到感情緣分，感情生命豐富。有些人早年便有深刻感情經驗，也有人會經歷幾段重要關係；但這絕不代表必然二次婚姻。重點在於：<strong>婚前如何選擇，婚後如何經營</strong>，讓感性成為愛的力量，讓理性成為愛的方向。
+                                </li>
+                                <li>
+                                    <strong>愛情觀念（深情與敏銳感受）：</strong>一旦認定一個人，便真心投入、照顧家庭。在婚姻中展現熱情、體貼、奉獻與重情。您具備極強的情感感受力，能敏銳察覺伴侶的眼神、話語與微小情緒；同時也渴望遇到懂得溫柔回應的人，共同提升婚姻的幸福濃度。
+                                </li>
+                            </ul>
+
+                            <!-- 感性 vs 理性 面向精美對照表 -->
+                            <div class="avoid-break" style="background: #fff; border: 1px solid #E0E0E0; border-radius: 8px; padding: 12px; margin-bottom: 20px;">
+                                <div style="font-weight: bold; color: #483D8B; font-size: 14.5px; margin-bottom: 8px; text-align: center;">❖ 「感性配合型」特質對照表</div>
+                                <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: center;">
+                                    <tr style="background: #F3E5F5; color: #4A148C; font-weight: bold;">
+                                        <th style="padding: 6px; border: 1px solid #E1BEE7;">面向</th>
+                                        <th style="padding: 6px; border: 1px solid #E1BEE7;">特質表現</th>
+                                        <th style="padding: 6px; border: 1px solid #E1BEE7;">幸福關鍵</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px; border: 1px solid #eee; font-weight: bold;">情感 / 戀愛</td>
+                                        <td style="padding: 6px; border: 1px solid #eee;">感性力量強、容易心動投入</td>
+                                        <td style="padding: 6px; border: 1px solid #eee; color: #D32F2F;" rowspan="3"><strong>愛中有智慧<br>感性與理性平衡</strong></td>
+                                    </tr>
+                                    <tr style="background: #FAFAFA;">
+                                        <td style="padding: 6px; border: 1px solid #eee; font-weight: bold;">付出 / 選擇</td>
+                                        <td style="padding: 6px; border: 1px solid #eee;">全心奉獻、受感覺影響大</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px; border: 1px solid #eee; font-weight: bold;">婚姻狀態</td>
+                                        <td style="padding: 6px; border: 1px solid #eee;">情感濃度高、渴望深度連結</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 幸福的個人優勢</div>
+                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
+                                <li style="margin-bottom: 6px;"><strong>深情投入：</strong>感情豐富、愛的能力強，能毫無保留地全心投入一段關係。</li>
+                                <li style="margin-bottom: 6px;"><strong>熱情升溫：</strong>天生自帶溫暖，能為家庭與伴侶關係注入源源不絕的生命力。</li>
+                                <li style="margin-bottom: 6px;"><strong>無私奉獻：</strong>極度願意照顧另一半，具備深厚的家庭承擔與照料意願。</li>
+                                <li><strong>敏銳共情：</strong>能細膩覺察伴侶的情緒與需要，極易建立起靈魂深處的情感共鳴。</li>
+                            </ul>
+
+                            <div class="avoid-break" style="background: #FFF8E1; border-left: 4px solid #FFA000; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
+                                <div style="color: #E65100; font-size: 15.5px; font-weight: bold; margin-bottom: 8px;">💡 幸福經營的五大心法</div>
+                                <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: #4E342E; line-height: 1.6;">
+                                    <li style="margin-bottom: 4px;"><strong>感情可以快，婚姻決定要慢：</strong>有感覺可以開始認識，但步入婚姻請給彼此沉澱觀察的時間。</li>
+                                    <li style="margin-bottom: 4px;"><strong>看「行動」而非只看「感覺」：</strong>重點觀察責任感、人品、價值觀、生活習慣與問題處理能力。</li>
+                                    <li style="margin-bottom: 4px;"><strong>保有自己的獨立生活：</strong>不要因為愛而放棄原本的朋友、事業與自我成長。愛要更有智慧。</li>
+                                    <li style="margin-bottom: 4px;"><strong>有需求請溫柔表達：</strong>不要期待對方「應該要知道」，成熟的關係仰賴主動且清晰的溝通。</li>
+                                    <li><strong>衝突時不急著做決定：</strong>給彼此情緒冷卻的時間，也給感情一個修復與理解的契機。</li>
+                                </ol>
+                            </div>
+
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 婚姻發展三部曲</div>
+                            <div style="margin-bottom: 15px; color: #333;">
+                                <strong style="color: #483D8B;">① 開始（心動與建立）</strong>
+                                <div style="margin-top: 5px; line-height: 1.6; padding-left: 10px; font-size: 14.5px;">
+                                    感性的您往往從「感覺」啟程，易因心動、感動、被理解與體貼而迅速墜入愛河，年輕時較易早戀或早婚。<br>
+                                    <span style="color: #D32F2F; font-weight: bold;">【關鍵提醒】：</span>不要只因「有感覺」就認定是唯一。心動是緣起，深入了解才是真正的選擇。
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px; color: #333;">
+                                <strong style="color: #483D8B;">② 經營（相處與責任）</strong>
+                                <div style="margin-top: 5px; line-height: 1.6; padding-left: 10px; font-size: 14.5px;">
+                                    戀愛需要心動，婚姻需要經營。學會在感情中融入責任、信任、包容與共同成長。<br>
+                                    <span style="color: #483D8B; font-weight: bold;">【思考轉化】：</span>不只問「我愛不愛他」，更要問「我們適不適合一起生活」。
+                                </div>
+                            </div>
+                            <div style="color: #333;">
+                                <strong style="color: #483D8B;">③ 緣成（結果與展望）</strong>
+                                <div style="margin-top: 5px; line-height: 1.6; padding-left: 10px; font-size: 14.5px;">
+                                    真正的緣成，是歷經生活磨合後依然堅定選擇彼此。心動 ➔ 相愛 ➔ 理解 ➔ 包容 ➔ 陪伴 ➔ 成長。讓濃烈的愛昇華為成熟穩固的生命力量。<br>
+                                    <strong style="color: #800000;">「愛，是在看見彼此真實的樣子之後，依然願意攜手同行。」</strong>
+                                    ${genderOutcome}
+                                </div>
+                            </div>
                         </div>
                     `;
                 }
