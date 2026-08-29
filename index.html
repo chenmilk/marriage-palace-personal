@@ -163,16 +163,39 @@
             
             /* 2. 背景與質感升級 (讓報告看起來像一張高級的實體紙張) */
             body {
-                /* 網頁底色改為非常淡的微暖色漸層 */
                 background: linear-gradient(135deg, #F8F5F5 0%, #FDFCFB 100%);
             }
             #captureArea {
                 background-color: #ffffff;
                 border-radius: 12px;
-                /* 加上一層淡淡的酒紅色高級陰影，產生懸浮立體感 */
                 box-shadow: 0 15px 35px rgba(128, 0, 0, 0.08); 
                 padding: 40px 30px;
                 margin: 20px auto 60px auto;
+                
+                /* 【新增】設定相對定位，讓浮水印能準確放在卡片內 */
+                position: relative; 
+                z-index: 1;
+                overflow: hidden; /* 防止浮水印超出白底卡片 */
+            }
+
+            /* 【新增】高級純文字浮水印 */
+            #captureArea::before {
+                content: "甄好運姓名學"; /* 這裡可以自由更改您的品牌名稱 */
+                position: fixed; /* 固定在螢幕中央，滑動時浮水印不會跑掉 */
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-30deg); /* 置中並傾斜 30 度 */
+                font-size: 80px; /* 超大字體 */
+                font-weight: bold;
+                letter-spacing: 10px;
+                
+                /* 【關鍵】極度透明的酒紅色 (透明度僅 3%)，保證不影響閱讀 */
+                color: rgba(128, 0, 0, 0.03); 
+                
+                z-index: -1; /* 墊在文字的最後面 */
+                pointer-events: none; /* 讓滑鼠點不到它，不會干擾複製文字 */
+                user-select: none; /* 禁止反白選取 */
+                white-space: nowrap;
             }
         }
 
