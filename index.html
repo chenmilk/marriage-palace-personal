@@ -346,13 +346,13 @@
             </div>
         </div>
 
-        <!-- 網頁版專用的下載按鈕區塊 -->
+        <!-- 網頁版專用的操作按鈕區塊 -->
         <div id="downloadContainer" style="display: none; margin-top: 25px; padding-bottom: 40px;">
-            <button onclick="window.print()" style="max-width: 450px; margin: 0 auto; display: block; background-color: #2E8B57;">📥 下載純文字分析報告 (PDF)</button>
-            <div style="font-size: 13px; color: #666; margin-top: 10px;">
-                💡 點擊後，請在列印畫面選擇「另存為 PDF」。<br>這樣產生的 PDF 文字可以複製，且圖表最清晰！
-            </div>
+            <button onclick="generateShareLink()" style="max-width: 450px; margin: 0 auto 15px auto; display: block; background-color: #1E90FF; font-weight: bold; border-radius: 8px; border: none; padding: 14px; color: white; font-size: 18px; cursor: pointer;">🔗 複製專屬網址 (傳給客戶)</button>
+            <button onclick="window.print()" style="max-width: 450px; margin: 0 auto; display: block; background-color: #2E8B57; font-weight: bold; border-radius: 8px; border: none; padding: 14px; color: white; font-size: 18px; cursor: pointer;">📥 下載分析報告 (備用 PDF)</button>
         </div>
+
+    
 
     <script>
         let dictionary = {};
@@ -2005,6 +2005,82 @@ else if (currentMbtiType === "感性配合型") {
             
             document.getElementById('auspiciousDatesContent').innerHTML = auspiciousDatesHtml;
             document.getElementById('auspiciousDatesContainer').style.display = "block";
+        }
+
+        // ==========================================
+        // 專屬網址生成與自動讀取系統 (客戶專用)
+        // ==========================================
+
+        // 1. 甄老師點擊的按鈕：產生並複製加密網址
+        function generateShareLink() {
+            const lName = document.getElementById('lName').value;
+            const fName = document.getElementById('fName').value;
+            const YY = document.getElementById('yearCurrent').value;
+            const XX = document.getElementById('birthYear').value;
+            const M = document.getElementById('birthMonth').value;
+            const gender = document.getElementById('genderSelect').value;
+
+            // 將資料打包
+            const dataObj = { l: lName, f: fName, y: YY, x: XX, m: M, g: gender };
+            
+            // 進行 Base64 加密 (讓網址看起來像專業的亂碼)
+            const encodedData = btoa(encodeURIComponent(JSON.stringify(dataObj)));
+            
+            // 組合出專屬網址
+            const shareUrl = window.location.origin + window.location.pathname + "?data=" + encodedData;
+
+            // 自動複製到剪貼簿
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert("✅ 專屬網址已成功複製！\n\n您可以直接貼到 Line 傳給客戶了。\n\n客戶點開後不會看到輸入框，也不會看到下載按鈕，只會看到純報告！");
+            }).catch(err => {
+                alert("複製失敗，請手動複製以下網址：\n\n" + shareUrl);
+            });
+        }
+
+        // 2. 客戶打開網頁時：自動攔截網址、解碼並顯示報告
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+
+            // 如果網址有帶 data 參數，代表是客戶點進來的
+            if (dataParam) {
+                try {
+                    // 解密資料
+                    const decodedStr = decodeURIComponent(atob(dataParam));
+                    const dataObj = JSON.parse(decodedStr);
+
+                    // 自動把資料填入隱藏的格子中
+                    document.getElementById('lName').value = dataObj.l;
+                    document.getElementById('fName').value = dataObj.f;
+                    document.getElementById('yearCurrent').value = dataObj.y;
+                    document.getElementById('birthYear').value = dataObj.x;
+                    document.getElementById('birthMonth').value = dataObj.m;
+                    document.getElementById('genderSelect').value = dataObj.g;
+
+                    // 【核心魔法】把頂部的「輸入框」與文字隱藏起來
+                    document.querySelector('.input-box').style.display = 'none';
+                    document.querySelector('.main-container > h2').style.display = 'none';
+                    document.querySelector('.main-container > div:nth-child(2)').style.display = 'none';
+                    document.getElementById('status').style.display = 'none';
+
+                    // 執行分析前，確保字典已經載入
+                    checkDictAndRun();
+                } catch(e) {
+                    console.error("網址解析失敗", e);
+                }
+            }
+        };
+
+        // 確認字典載入完畢才執行分析 (防止客戶手機網速慢導致出錯)
+        function checkDictAndRun() {
+            if (Object.keys(dictionary).length > 0) {
+                // 執行產生報告
+                analyzeName();
+                // 【核心魔法】把最下方的所有「按鈕」隱藏起來，讓客戶無法操作
+                document.getElementById('downloadContainer').style.display = 'none';
+            } else {
+                setTimeout(checkDictAndRun, 100);
+            }
         }
     </script>
 </body>
