@@ -92,7 +92,7 @@
         /* -------------------------- */
        
        /* ---------- PDF 列印專屬排版區塊 ---------- */
-       /* ---------- PDF 列印專屬排版區塊 ---------- */
+       
         @media print {
             /* 1. 強制隱藏預設的網址與時間 */
             @page { margin: 0; } 
@@ -145,6 +145,36 @@
             .result-frame { box-shadow: none !important; border: 1.5px solid #800000 !important; }
         }
         #printTitlePage, #printTOC { display: none; }
+
+        /* ========================================== */
+        /* 網頁版專屬美化與間距設定 (絕對不影響 PDF 列印) */
+        /* ========================================== */
+        @media screen {
+            /* 1. 統一所有大題的間距，強制拉開呼吸空間 */
+            .print-center-page {
+                margin-bottom: 50px !important;
+                padding-bottom: 30px;
+                border-bottom: 2px dashed #f0e6e6; /* 在命盤與 MBTI 下方加一條優雅的淡色分隔線 */
+            }
+            .analysis-box {
+                margin-top: 40px !important;
+                margin-bottom: 40px !important;
+            }
+            
+            /* 2. 背景與質感升級 (讓報告看起來像一張高級的實體紙張) */
+            body {
+                /* 網頁底色改為非常淡的微暖色漸層 */
+                background: linear-gradient(135deg, #F8F5F5 0%, #FDFCFB 100%);
+            }
+            #captureArea {
+                background-color: #ffffff;
+                border-radius: 12px;
+                /* 加上一層淡淡的酒紅色高級陰影，產生懸浮立體感 */
+                box-shadow: 0 15px 35px rgba(128, 0, 0, 0.08); 
+                padding: 40px 30px;
+                margin: 20px auto 60px auto;
+            }
+        }
 
         
     </style>
