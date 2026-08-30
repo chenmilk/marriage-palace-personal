@@ -806,19 +806,12 @@
                 }
                 
                 analysisHtml = `
-                    <div class="warning-box">
-                        <div class="warning-title">⚠️ 婚姻宮帶「破象」</div>
-                        <div style="font-weight: normal;">
-                            若以姓名學專用的術語來看，您的婚姻宮為「剋宮」，格局帶有破象。<br>
-                            這代表在進入婚姻前或過程中，較容易遇到一些波折與特殊狀況，故稱為破象。<br>
-                            <span style="color:#D32F2F; font-weight:bold;">但不用因為看到破象就覺得不好或是緊張！</span><br>只要提早了解、用對方法並好好經營，您的感情之路依然可以順利圓滿。
-                        </div>
-                    </div>
                     <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #483D8B;">
                         <div style="color:#483D8B; font-size:16px; margin-bottom:12px;">📌 <strong>命盤格局：${title}</strong></div>
                         ${detailText}
                     </div>
                 `;
+                
             } else if (marriageRel.type === "無") {
                 if (renD === diD) {
                     currentMbtiType = "理性陪伴型";
