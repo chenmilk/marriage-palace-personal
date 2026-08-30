@@ -667,16 +667,99 @@
                 
                 if ((renWx === "金" && diWx === "木") || (renWx === "木" && diWx === "金")) {
                     title = "理念成長型"; currentMbtiType = "理念成長型";
+                    
+                    // 覆寫 2.類型的文字內容
                     detailText = `
-                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
-                            <li style="margin-bottom: 8px;">你的緣分往往來自工作上或事業夥伴，因此建議可以往職場上尋找有共同理念的人。</li>
-                            <li>或與另一半年紀相差大於5歲以上也很適合，但若另一半是年紀較小的，容易遇到長輩的阻礙，建議可以公證結婚減少阻礙。</li>
-                        </ul>
-                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
-                            <strong>💡 總結：</strong>因此若找到職場上認識的，以及年紀相差大於5歲的對象最好，若符合其中一項也非常不錯！
+                        <div style="font-size:15px; color:#333; line-height:1.6; margin-bottom: 12px; margin-top: 8px;">
+                            在您婚姻宮的軌道中，呈現的是<strong style="color:#D32F2F;">「金木相剋；衝突、改造、磨合、成長」</strong>的五行能量。<br>
+                            <span style="color:#483D8B; font-weight:bold;">金木核心精神：</span>金，是原則、理性、決斷與力量；木，是成長、理想、生命力與發展。
+                        </div>
+                        <div style="background: #FFF4F4; padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #D32F2F; margin-bottom: 10px;">
+                            <strong style="color:#D32F2F; font-size: 15.5px;">愛情核心句</strong><br>
+                            <span style="font-weight: bold; color: #333;">「愛，不是要求彼此相同，而是在不同中找到共同的方向。」</span>
                         </div>
                     `;
-                } else if ((renWx === "木" && diWx === "土") || (renWx === "土" && diWx === "木")) {
+
+                    // 特製 3.特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #483D8B; margin-top: 15px;">
+                            
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心特質與愛情觀</div>
+                            
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                                <strong style="color: #483D8B; font-size: 15px;">🔅 最溫和的雕琢家</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    您的婚姻宮雖是相剋的改造力量，但它<strong style="color: #D32F2F;">不具破壞性</strong>，反而像細心的園丁，透過溫和的修剪與琢磨，讓伴侶展現出更精緻的高貴姿態。您具備開創與突破傳統的特質，重視原則、能力、事業與實際成果，喜歡有能力、有想法的伴侶。
+                                </div>
+                            </div>
+
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                                <strong style="color: #483D8B; font-size: 15px;">🔅 年齡差距：互補與包容</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    <strong style="color: #D32F2F;">老夫少妻 / 女大男小：</strong>年齡的差距能天然化解金木相剋的銳氣，帶來包容與疼愛，讓緣分走得更長久。或是對方心智成熟度明顯不同，容易被成熟、有歷練的人吸引。
+                                </div>
+                            </div>
+
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                                <strong style="color: #483D8B; font-size: 15px;">🔅 伴侶也是人生夥伴</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    兩個人不只是談戀愛，也可能一起工作、創業、投資與規劃家庭。金木相剋不是單純的衝突，而是<strong style="color: #D32F2F;">透過磨合彼此理念，在關係中共同成長</strong>。關鍵不是誰改變誰，而是能否找到兩個人共同相信的人生方向。
+                                </div>
+                            </div>
+
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px; margin-top: 20px;">✦ 幸福的個人優勢</div>
+                            <div style="font-size: 14.5px; margin-bottom: 10px; color: #333;">您有非常好的婚姻能力：</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                                <span style="background: #E8EAF6; color: #1A237E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">① 有責任感</span>
+                                <span style="background: #E8EAF6; color: #1A237E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">② 有成長力</span>
+                                <span style="background: #E8EAF6; color: #1A237E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">③ 有事業能力</span>
+                                <span style="background: #E8EAF6; color: #1A237E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">④ 重視理念</span>
+                                <span style="background: #E8EAF6; color: #1A237E; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">⑤ 夥伴型婚姻</span>
+                            </div>
+
+                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 婚姻發展三部曲</div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #483D8B; font-size: 15px;">① 開始（心動與建立）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li style="margin-bottom: 6px;"><strong style="color: #333;">與眾不同的情感共鳴：</strong>對年齡相仿者較難觸電，反而易被<strong style="color: #D32F2F;">「年長很多（戀父情結）」或「年齡比自己小很多」</strong>的對象強烈吸引。</li>
+                                    <li style="margin-bottom: 6px;"><strong style="color: #333;">長輩牽線、工作結緣：</strong>緣分常在連結中自然發生。容易透過長輩介紹或事業合作認識。因您重視成熟度與責任感，長輩介紹的對象往往已具備條件，結果更佳。</li>
+                                    <li><strong style="color: #333;">事業能力欣賞：</strong>工作能力強、對人生有想法的人極具吸引力，工作上的欣賞容易逐漸轉化為感情上的欣賞。</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #483D8B; font-size: 15px;">② 經營（相處與責任）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li style="margin-bottom: 6px;"><strong style="color: #333;">理念相同，關係自然延續：</strong>不僅是價值觀，還包含家庭觀、金錢觀、教養觀。若方向一致，個性不同也能長久；若方向完全不同，即使感情好也容易產生摩擦。</li>
+                                    <li><strong style="color: #333;">事業共同體：</strong>非常適合「伴侶＋夥伴」關係。若夫妻能成為職場夥伴，或擁有相同的事業投資理念，相剋的力量就會轉化為「近水樓台」的深厚情誼。</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #483D8B; font-size: 15px;">③ 緣成（結果與展望）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li><strong style="color: #333;">正式承諾，建立共同人生：</strong>追求將關係落實到人生（如訂婚、結婚、家人認可、共同經營事業）。當確認理念相同後，<strong style="color: #D32F2F;">宜把關係落實，不宜長期處於模糊狀態</strong>，以免受外在因素影響。</li>
+                                </ul>
+                            </div>
+
+                            <!-- 愛的提醒：化解妙方 -->
+                            <div class="avoid-break" style="background: #FFF8E1; border-left: 4px solid #FF8F00; padding: 16px; border-radius: 8px;">
+                                <div style="color: #E65100; font-size: 16px; font-weight: bold; margin-bottom: 8px;">⭐️ 愛的提醒：化解妙方</div>
+                                <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                    因為感情模式（年齡差距、職場強勢）往往突破傳統，在結婚或相處過程中極容易碰到來自家庭或長輩的阻力與反對。當面對外在干擾時，<strong style="color: #D32F2F;">切記要找尋強而有力的「靠山」：</strong>
+                                    <ol style="margin: 8px 0 0 0; padding-left: 20px;">
+                                        <li style="margin-bottom: 6px;"><strong>運用公權力（公證結婚）：</strong>想盡辦法辦理法院公證，借用法規與國家的公權力作為婚姻最堅實的法定靠山。</li>
+                                        <li><strong>尋求明理的長輩支持：</strong>主動尋找身邊通情達理、說話有分量的長輩幫忙出面協調，或在交往初期引薦。借用長輩的力量自然能化解外來阻力。</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                        </div>
+                    `;
+                }
+                    
+                else if ((renWx === "木" && diWx === "土") || (renWx === "土" && diWx === "木")) {
                     title = "人情結合型"; currentMbtiType = "人情結合型";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
