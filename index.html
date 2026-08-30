@@ -2136,7 +2136,7 @@ else if (currentMbtiType === "理念成長型") {
                         </div>
                     </div>
                 `;
-            } else if (blessingGroup2.includes(currentMbtiType)) {
+           } else if (blessingGroup2.includes(currentMbtiType)) {
                 blessingHtml = `
                     <div class="analysis-text avoid-break" style="background: linear-gradient(135deg, #FFF4F4 0%, #FFEBEB 100%); padding: 20px; border-radius: 12px; border: 1px solid #FFCDD2; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(198,40,40,0.05);">
                         <div style="font-size: 17px; color: #C62828; font-weight: bold; margin-bottom: 12px;">「感情是一場需要智慧經營的雙人舞，<br>知道了自己的優勢與需要注意的地方，就是最好的開始。」</div>
@@ -2146,8 +2146,26 @@ else if (currentMbtiType === "理念成長型") {
                     </div>
                 `;
             }
-            document.getElementById('blessingContent').innerHTML = blessingHtml;
 
+            // 【新增】強制攔截！如果是金剋木，就覆蓋成專屬的「靈魂花園」祝福
+            if (currentMbtiType === "理念成長型") {
+                blessingHtml = `
+                    <div class="analysis-text avoid-break" style="background: linear-gradient(135deg, #F9FBE7 0%, #E8F5E9 100%); padding: 20px; border-radius: 12px; border: 1px solid #C8E6C9; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(46,125,50,0.05);">
+                        <div style="font-size: 17px; color: #004D40; font-weight: bold; margin-bottom: 12px;">「感情是一場需要智慧經營的雙人舞，<br>知道了自己的優勢與需要注意的地方，就是最好的開始。」</div>
+                        
+                        <div style="background: rgba(255,255,255,0.7); padding: 12px; border-radius: 8px; margin: 15px 0; color: #00695C; font-weight: bold; font-size: 15.5px; border-left: 4px solid #2E7D32; border-right: 4px solid #F57F17;">
+                            當理性的「金」學會溫柔修剪，當感性的「木」學會順應秩序，<br>
+                            婚姻就不再是相剋的戰場，而是一座四季長青、彼此滋養的靈魂花園。
+                        </div>
+                        
+                        <div style="color: #4E342E; font-size: 15.5px; margin-top: 10px;">
+                            <strong style="color: #BF360C; font-size: 16.5px;">祝福您在開創與雕琢的旅程中，勇敢擁抱機會、從容面對挑戰，<br>順利遇見那位能與您並肩成長的最佳伴侶，<br>收穫最圓滿落地、溫暖踏實的幸福！</strong>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('blessingContent').innerHTML = blessingHtml;
             // 將輸入的名字填入 PDF 封面標題
             const fullName = lNameInput + fNameInput;
             document.getElementById('pdfUserNameTitle').innerText = `${fullName} 個人婚姻宮介紹與分析`;
