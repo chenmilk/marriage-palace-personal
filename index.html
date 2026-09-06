@@ -589,7 +589,7 @@
             else if (typeStr.includes('理念成長型')) { scoreIP = 70; scoreRM = 70; scoreHD = 80; scoreLC = 25; }
             else if (typeStr === '人情結合型') { scoreIP = 60; scoreRM = 60; scoreHD = 70; scoreLC = 50; }
             else if (typeStr.includes('才華') || typeStr.includes('財氣')) { scoreIP = 80; scoreRM = 80; scoreHD = 50; scoreLC = 30; }
-            else if (typeStr === '快速磨合型') { scoreIP = 50; scoreRM = 30; scoreHD = 20; scoreLC = 50; }
+            else if (typeStr === '快速結合型') { scoreIP = 50; scoreRM = 30; scoreHD = 20; scoreLC = 50; }
             else if (typeStr === '反覆猶豫型') { scoreIP = 30; scoreRM = 50; scoreHD = 40; scoreLC = 50; }
 
             return { scoreIP, scoreRM, scoreHD, scoreLC };
@@ -949,7 +949,7 @@
                     `;
                 }
                 else if ((renWx === "水" && diWx === "火") || (renWx === "火" && diWx === "水")) {
-                    title = "快速磨合型"; currentMbtiType = "快速磨合型";
+                    title = "快速結合型"; currentMbtiType = "快速結合型";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li style="margin-bottom: 8px;">你的緣分往往來自於瞬間接觸的火花，較容易走向閃電結婚。</li>
@@ -2660,7 +2660,7 @@ else if (currentMbtiType === "人情結合型") {
             // -----------------------------
             let blessingHtml = "";
             const blessingGroup1 = ["佛係慢熱型", "理性陪伴型", "人情結合型", "反覆猶豫型"];
-            const blessingGroup2 = ["熱情付出型", "感性配合型", "理念成長型", "快速磨合型", "才華感應型"];
+            const blessingGroup2 = ["熱情付出型", "感性配合型", "理念成長型", "快速結合型", "才華感應型"];
 
             if (blessingGroup1.includes(currentMbtiType)) {
                 blessingHtml = `
