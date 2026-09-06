@@ -853,18 +853,102 @@
                         </div>
                     `;
                 }
-                else if ((renWx === "土" && diWx === "水") || (renWx === "水" && diWx === "土")) {
-                    title = "才華感應型"; currentMbtiType = "才華感應型";
+                if ((renWx === "土" && diWx === "水") || (renWx === "水" && diWx === "土")) {
+                    title = "才華 × 財氣感應型"; currentMbtiType = "財氣感應型";
+                    
+                    // 覆寫 2.類型的文字內容
                     detailText = `
-                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
-                            <li style="margin-bottom: 8px;">你的緣分往往來自於「才」或「財」，代表你的潛意識喜歡有才能或具備經濟實力的另一半。</li>
-                            <li>容易因為身邊對象太多導致難以選擇，因此不建議早婚，慢慢挑選較好。</li>
-                        </ul>
-                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
-                            <strong>💡 總結：</strong>不建議早婚，慢慢挑選對象對您較好，除非您已經遇到各方面都非常出色的理想對象。
+                        <div style="font-size:15px; color:#333; line-height:1.6; margin-bottom: 12px; margin-top: 8px;">
+                            在您婚姻宮的軌道中，呈現的是<strong style="color:#D32F2F;">「土水相剋：結合、凝聚、成就」</strong>的五行能量。<br>
+                            <span style="color:#1565C0; font-weight:bold;">土水核心精神：</span>土具有承載、穩定、聚集的力量；水則象徵流動、智慧、資源與財富。<br>
+                            靈性視角中，土是結構，水是豐盛。土地吸納限制了水的方向，卻能將水中的財氣與才華牢牢鎖住。這在傳統命理雖稱「土剋水」，但在婚姻與財富領域裡，卻是一種<strong style="color:#D32F2F;">「凝聚財富」</strong>的絕佳格局，冥冥中容易吸引到優質、富有的伴侶。<br>
+                            <span style="color:#E65100; font-weight:bold;">💎 築岸引水，豐盛聚寶盆：</span>您不需要去壓制情感，而是要為自己汪洋般的情感與好人緣，修築一座美麗的「堤岸」。有了堅固的土石建築（理智與邊界），才能把奔騰的江水轉化為源源不絕的電力與財富。
+                        </div>
+                        <div style="background: #E3F2FD; padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #1976D2; margin-bottom: 10px;">
+                            <strong style="color:#0D47A1; font-size: 15.5px;">愛情核心句</strong><br>
+                            <span style="font-weight: bold; color: #333;">「我容易遇見優秀的人；而我的幸福，是學會珍惜真正適合我的人。」<br>「緣分給我選擇，珍惜讓愛留下。」</span>
                         </div>
                     `;
-                } else if ((renWx === "水" && diWx === "火") || (renWx === "火" && diWx === "水")) {
+
+                    // 特製 3.特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #1565C0; margin-top: 15px;">
+                            
+                            <div style="color:#0D47A1; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心特質與愛情觀</div>
+                            
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                                <strong style="color: #1976D2; font-size: 15px;">🔅 容易被優秀的人吸引</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    您對另一半的條件通常比較有感受，容易欣賞才華、能力、經濟或社會地位。尤其<strong style="color: #D32F2F;">女性的婚姻磁場</strong>對「才華」與「財富」感應往往更加明顯，容易遇到有才華的丈夫或具良好家庭資源的對象。
+                                </div>
+                            </div>
+
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                                <strong style="color: #1976D2; font-size: 15px;">🔅 選擇多，反而容易難選</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    有時您的煩惱不是沒有對象，而是對象太多，容易覺得「這個不錯，那個也好」。您感情真正的考驗不是「選不到」，而是<strong style="color: #D32F2F;">能否做出成熟而穩定的選擇</strong>。
+                                </div>
+                            </div>
+
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                                <strong style="color: #1976D2; font-size: 15px;">🔅 愛情觀：從欣賞到成就彼此</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    初階：「我要找一個條件最好的人。」<br>
+                                    成熟：「我要找一個與我價值觀相合、能彼此成就的人。」<br>
+                                    <span style="color: #D32F2F; font-weight: bold;">高頻：「我不再尋找最完美的人，而是與對的人一起創造更完整的生命。」</span>
+                                </div>
+                            </div>
+
+                            <div style="color:#0D47A1; font-size:16.5px; font-weight:bold; margin-bottom:12px; margin-top: 20px;">✦ 幸福的個人優勢</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                                <span style="background: #E3F2FD; color: #0D47A1; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">💎 有辨識價值的能力</span>
+                                <span style="background: #E3F2FD; color: #0D47A1; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">💎 易吸引有能力伴侶</span>
+                                <span style="background: #E3F2FD; color: #0D47A1; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">💎 婚後易共創豐盛</span>
+                            </div>
+
+                            <div style="color:#0D47A1; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 婚姻發展三部曲</div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #1565C0; font-size: 15px;">① 開始（心動與建立）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li><strong style="color: #333;">異性緣佳的幸福起點：</strong>散發獨特魅力，往往緣起於欣賞對方的才華與能力。彷彿上天安排，命運會特別把條件極佳的配偶送到身邊。</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #1565C0; font-size: 15px;">② 經營（相處與責任）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li><strong style="color: #333;">從選擇走向珍惜：</strong>婚前可以比較，婚後需要選擇。緣續的關鍵是「欣賞 ➔ 感恩 ➔ 信任 ➔ 承諾」。因容易受異性吸引，婚後更需守住界線與承諾。</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #1565C0; font-size: 15px;">③ 緣成（結果與展望）</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li><strong style="color: #333;">從「選對人」到「成就彼此」：</strong>最高境界是「兩個優秀的人，願意把力量放在同一個方向」。土承載水，水滋養土，婚姻便從條件結合升華為生命共創。</li>
+                                </ul>
+                            </div>
+
+                            <!-- 愛的提醒：化解妙方 -->
+                            <div class="avoid-break" style="background: #FFF8E1; border-left: 4px solid #FF8F00; padding: 16px; border-radius: 8px;">
+                                <div style="color: #E65100; font-size: 16px; font-weight: bold; margin-bottom: 10px;">⭐️ 愛的提醒：化解妙方</div>
+                                <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                    <ol style="margin: 0; padding-left: 20px;">
+                                        <li style="margin-bottom: 8px;"><strong style="color: #D32F2F;">弱水三千，只取一瓢飲：</strong>面對旺盛桃花與物質回饋，這句話是此格局最重要的修練。用感恩的心回應付出，不被外界誘惑動搖。</li>
+                                        <li style="margin-bottom: 8px;"><strong>甜蜜的煩惱：</strong>面對結婚抉擇時易陷困境，可將對方的才氣、氣質或財務能力作為考量，做出最適合自己的選擇。</li>
+                                        <li style="margin-bottom: 8px;"><strong>不宜過早定下來：</strong>在價值觀與選擇能力未成熟前，與其急著進入婚姻，不如先認識自己。「不是晚婚才幸福，而是成熟後才知自己要什麼。」</li>
+                                        <li><strong>調和對立：</strong>真正的安全感來自「內在豐盛」。不單看條件，而是去欣賞伴侶靈魂的才華，土才能穩固地承接水。</li>
+                                    </ol>
+                                    <div style="background: #FFE0B2; color: #E65100; font-weight: bold; padding: 8px; border-radius: 4px; text-align: center; margin-top: 10px;">
+                                        👫 化解密碼：「主動表達感恩，將對方的付出視為禮物而非理所當然。」
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    `;
+                }
+                else if ((renWx === "水" && diWx === "火") || (renWx === "火" && diWx === "水")) {
                     title = "快速磨合型"; currentMbtiType = "快速磨合型";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
