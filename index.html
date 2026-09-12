@@ -244,23 +244,30 @@
             
           <div id="captureArea">
 
-            <!-- 第一頁：PDF專屬封面 -->
+            <!-- 第一頁：專屬封面 (PDF與客戶網頁版共用) -->
             <div id="printTitlePage">
-                <h1 id="pdfUserNameTitle" style="font-size: 38px; color: #800000; letter-spacing: 2px;">個人婚姻宮介紹與分析</h1>
-                <div class="title-footer">BY 甄好運姓名學</div>
+                <!-- 這裡放您的 Logo 圖片 (請將 src 替換成您實際圖片的網址或相對路徑) -->
+                <img src="logo.jpg" alt="甄好命姓名學院" style="width: 180px; height: auto; margin-bottom: 20px; object-fit: contain;">
+                
+                <h1 id="pdfUserNameTitle" style="font-size: 32px; color: #800000; letter-spacing: 2px; text-align: center; line-height: 1.4; margin-bottom: 10px;">個人婚姻宮介紹與分析</h1>
+                
+                <div class="title-footer">BY 甄好命姓名學院</div>
             </div>
 
-            <!-- 第二頁：大綱目錄 -->
+            <!-- 第二頁：大綱目錄 (PDF與客戶網頁版共用) -->
             <div id="printTOC" class="page-break">
-                <h2 style="color: #800000; font-size: 28px; border-bottom: 2px solid #800000; padding-bottom: 10px; margin-bottom: 30px;">目錄大綱</h2>
-                <div style="font-size: 20px; line-height: 2.2; text-align: left; padding-left: 20px; color: #333; font-weight: bold;">
-                    一. 婚姻宮分析簡介<br>
-                    二. 婚姻宮的類型與特質<br>
-                    三. 最佳選擇 (夫妻宮的婚前選擇)<br>
-                    四. 兩性互動<br>
-                    五. 身心靈全方位經營指南<br>
-                    六. 良緣時日<br>
-                    七. 祝福結語
+                <h2 style="color: #800000; font-size: 26px; border-bottom: 2px solid #800000; padding-bottom: 10px; margin-bottom: 25px;">目錄大綱</h2>
+                <!-- 加一個外層 div 讓大綱在手機上能完美置中對齊 -->
+                <div style="text-align: center;">
+                    <div style="font-size: 18px; line-height: 2.2; text-align: left; color: #333; font-weight: bold; display: inline-block;">
+                        一. 婚姻宮分析簡介<br>
+                        二. 婚姻宮的類型與特質<br>
+                        三. 最佳選擇 (夫妻宮的婚前選擇)<br>
+                        四. 兩性互動<br>
+                        五. 身心靈全方位經營指南<br>
+                        六. 良緣時日<br>
+                        七. 祝福結語
+                    </div>
                 </div>
             </div>
 
