@@ -179,6 +179,43 @@
             }
 
             /* 【新增】高級純文字浮水印 */
+
+/* ========================================== */
+            /* 客戶手機版專屬網址模式 (Client View) 的排版 */
+            /* ========================================== */
+            .client-view #printTitlePage {
+                display: flex !important;
+                flex-direction: column;
+                min-height: 70vh; /* 讓封面佔滿手機大半螢幕 */
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                padding: 30px 20px;
+                border-bottom: 2px dashed #f0e6e6;
+                box-sizing: border-box;
+                margin-bottom: 20px;
+            }
+            .client-view #printTitlePage h1 {
+                font-size: 28px !important; /* 手機上字體微調防破版 */
+            }
+            .client-view .title-footer {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 40px;
+                font-size: 16px;
+                color: #888;
+                font-weight: bold;
+                font-style: italic;
+            }
+            .client-view #printTOC {
+                display: block !important;
+                padding: 30px 20px;
+                border-bottom: 2px dashed #f0e6e6;
+                margin-bottom: 30px;
+            }
+
+            
             #captureArea::before {
                 content: "甄好運姓名學"; /* 這裡可以自由更改您的品牌名稱 */
                 position: fixed; /* 固定在螢幕中央，滑動時浮水印不會跑掉 */
@@ -3718,6 +3755,9 @@ else if (currentMbtiType === "反覆戀合型") {
                     document.querySelector('.main-container > h2').style.display = 'none';
                     document.querySelector('.main-container > div:nth-child(2)').style.display = 'none';
                     document.getElementById('status').style.display = 'none';
+
+                    // 👇 加入這行！啟動客戶專屬顯示模式 (顯示封面與大綱) 👇
+                    document.body.classList.add('client-view');
 
                     // 執行分析前，確保字典已經載入
                     checkDictAndRun();
