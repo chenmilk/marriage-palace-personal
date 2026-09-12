@@ -1042,14 +1042,92 @@
                     `;
                 }
                     
-                else if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
+                if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
                     title = "反覆戀合型"; currentMbtiType = "反覆戀合型";
+                    
+                    // 覆寫 2.類型的文字內容
                     detailText = `
-                        <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
-                            <li>你的緣分往往來自於最後認識的那個人（步入禮堂的對象）。</li>
-                        </ul>
-                        <div style="border-top: 1px dashed #ccc; padding-top: 12px; color: #800000;">
-                            <strong>💡 總結：</strong>您結婚後通常不容易離婚，但若是辦理了離婚，雙方的緣分就徹底斷了，因此不管任何原因，千萬不能隨便答應「假離婚」。
+                        <div style="font-size:15px; color:#333; line-height:1.6; margin-bottom: 12px; margin-top: 8px;">
+                            在您婚姻宮的軌道中，呈現的是<strong style="color:#D32F2F;">「火金淬煉：改造、融合、思考、反覆」</strong>的五行能量。<br>
+                            <span style="color:#E65100; font-weight:bold;">五行本質與特性：</span>當火來淬煉金時，會使其失去原本穩定的型態。婚姻宮「反覆戀合型」，是一種<strong style="color:#D32F2F;">「愛與決定彼此拉扯」</strong>的能量，感情容易出現「想靠近，又想退後」的內在拉扯。<br>
+                            <span style="color:#C62828; font-weight:bold;">🔥 烈火淬真金，靈魂的自由歸宿：</span>您的反覆與猶豫不是不愛，而是靈魂在慎重地尋找能挺過烈火高溫的「真金伴侶」。婚前的反覆是內在防衛機制；但只要時機成熟、心甘情願定型，那份承諾就會如同真金般永不褪色。
+                        </div>
+                        <div style="background: linear-gradient(135deg, #FFF3E0 0%, #FFEBEE 100%); padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #FF8F00; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <strong style="color:#D32F2F; font-size: 15.5px;">愛情核心句</strong><br>
+                            <span style="font-weight: bold; color: #4E342E;">「愛，讓我心動；選擇，讓我安定。」<br>「不是沒有愛，而是要學會相信自己的選擇。」</span>
+                        </div>
+                    `;
+
+                    // 特製 3.特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #D32F2F; margin-top: 15px;">
+                            
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心特質與愛情觀</div>
+                            
+                            <div style="background: #fff; border: 1px solid #FFE0B2; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                                <strong style="color: #E65100; font-size: 15px;">🔅 感情反覆，容易想很多</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    容易出現「一下想要、一下不要」的情況。您不是沒感覺，而是感覺後會開始分析。越在乎越思考，越接近婚姻反而越慎重。這也容易導致<strong style="color: #D32F2F;">「回頭緣」</strong>，繞了一圈又遇見曾經認識的人。
+                                </div>
+                            </div>
+
+                            <div style="background: #fff; border: 1px solid #FFE0B2; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                                <strong style="color: #E65100; font-size: 15px;">🔅 婚姻真正需要的是「定」</strong>
+                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
+                                    有時因為猶豫太久而錯過適合的緣分。真正適合自己的婚姻，往往不是不斷比較找最完美的人，而是<strong style="color: #D32F2F;">在成熟之後，願意對關係做出承諾</strong>。<br>
+                                    <span style="background: #FFF8E1; padding: 2px 6px; font-weight: bold; color: #F57F17;">愛情觀轉化：</span>感情可以聽心，但婚姻要用成熟的心做選擇。
+                                </div>
+                            </div>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px; margin-top: 20px;">✦ 幸福的個人優勢</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+                                <span style="background: #FFF3E0; color: #E65100; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 感受力強</span>
+                                <span style="background: #FFF3E0; color: #E65100; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 對婚姻極慎重</span>
+                                <span style="background: #FFF3E0; color: #E65100; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 具備修正能力</span>
+                                <span style="background: #FFF3E0; color: #E65100; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 感情深度高</span>
+                                <span style="background: #FFF3E0; color: #E65100; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 婚後極具安定可能</span>
+                            </div>
+                            <div style="background: #FFEBEE; color: #C62828; padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 14.5px;">
+                                🌈 幸福密碼：「以平常心給予空間，在成熟的天時裡，勇敢交付甘願的承諾。」
+                            </div>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 婚姻發展三部曲</div>
+                            
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #D32F2F; font-size: 15px;">① 開始（心動與建立）：緣分從心動開始</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li>緣起帶著明顯的感受與吸引。但您不一定一開始就能確定，最後真正走入婚姻的人，<strong style="color: #E65100;">往往是人生最後認識、最後確認的對象</strong>。</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #D32F2F; font-size: 15px;">② 經營（相處與責任）：從反覆走向確認</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li>感情可能經歷：靠近 ➔ 猶豫 ➔ 分開 ➔ 回頭 ➔ 重新認識。這是在幫助自己確認真正想要什麼。當答案清楚，就能<strong style="color: #E65100;">從「比較」走向「選擇」</strong>。</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #D32F2F; font-size: 15px;">③ 緣成（結果與展望）：踏入禮堂後的定海神針</strong>
+                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
+                                    <li>當您主動提出想結婚，就代表「終於定型了」。<br>
+                                    <strong style="color: #C62828;">💕 愛的轉化【烈火淬真金】：</strong>火成為愛的溫度，金成為婚姻的承諾。讓您從「反覆戀合」走向有愛、有定、有熱情、有責任的穩定婚姻。</li>
+                                </ul>
+                            </div>
+
+                            <!-- 愛的提醒：化解妙方 -->
+                            <div class="avoid-break" style="background: linear-gradient(135deg, #FFF8E1 0%, #FFF3E0 100%); border-left: 4px solid #FF8F00; padding: 16px; border-radius: 8px;">
+                                <div style="color: #E65100; font-size: 16px; font-weight: bold; margin-bottom: 10px;">⭐️ 愛的提醒：化解妙方</div>
+                                <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                    <div style="margin-bottom: 8px;"><strong>調和「自由與承諾」的對立：</strong>常把「承諾」等同「失去自由」，在想結婚與逃跑間反覆折磨。請看清：反覆不定是因為對未知的恐懼，不敢為選擇承擔責任。</div>
+                                    <div style="margin-bottom: 8px;"><strong style="color: #D32F2F;">意識擴展：</strong>真正的自由，是擁有承諾的能力。當心甘情願定型時，婚姻不是牢籠，而是保護烈火持續燃燒的壁爐。</div>
+                                    <div style="margin-bottom: 10px;"><strong>藉由強大外力催化：</strong>論及婚嫁時，可藉由「適婚年齡」的最佳時機點，突破不容易結婚的魔咒。</div>
+                                    <div style="background: rgba(255,255,255,0.8); color: #C62828; font-weight: bold; padding: 10px; border-radius: 6px; text-align: center;">
+                                        👩‍❤️‍👨 化解密碼：「順應適婚年齡的天時速戰速決，婚後與伴侶約定好『保有彈性結構』的相處模式（例如各自的興趣與財務空間）。」
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     `;
                 }
