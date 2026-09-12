@@ -590,7 +590,7 @@
             else if (typeStr === '人情結合型') { scoreIP = 60; scoreRM = 60; scoreHD = 70; scoreLC = 50; }
             else if (typeStr.includes('才華') || typeStr.includes('財氣')) { scoreIP = 80; scoreRM = 80; scoreHD = 50; scoreLC = 30; }
             else if (typeStr === '快速結合型') { scoreIP = 75; scoreRM = 30; scoreHD = 20; scoreLC = 65; }
-            else if (typeStr === '反覆猶豫型') { scoreIP = 30; scoreRM = 50; scoreHD = 40; scoreLC = 50; }
+            else if (typeStr === '反覆戀合型') { scoreIP = 30; scoreRM = 50; scoreHD = 40; scoreLC = 50; }
 
             return { scoreIP, scoreRM, scoreHD, scoreLC };
         }
@@ -1043,7 +1043,7 @@
                 }
                     
                 else if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
-                    title = "反覆猶豫型"; currentMbtiType = "反覆猶豫型";
+                    title = "反覆戀合型"; currentMbtiType = "反覆戀合型";
                     detailText = `
                         <ul style="margin: 0; padding-left: 20px; margin-bottom: 15px; color:#333;">
                             <li>你的緣分往往來自於最後認識的那個人（步入禮堂的對象）。</li>
@@ -2907,7 +2907,7 @@ else if (currentMbtiType === "快速結合型") {
             // 生成 七. 祝福結語 (blessingContent)
             // -----------------------------
             let blessingHtml = "";
-            const blessingGroup1 = ["佛係慢熱型", "理性陪伴型", "人情結合型", "反覆猶豫型"];
+            const blessingGroup1 = ["佛係慢熱型", "理性陪伴型", "人情結合型", "反覆戀合型"];
             const blessingGroup2 = ["熱情付出型", "感性配合型", "理念成長型", "快速結合型", "才華感應型"];
 
             if (blessingGroup1.includes(currentMbtiType)) {
