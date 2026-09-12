@@ -3366,8 +3366,51 @@ else if (currentMbtiType === "快速結合型") {
                     </div>
                 `;
             }
+
+else if (currentMbtiType === "反覆戀合型") {
+                // 火剋金 專屬融合版祝福 (炙熱紅與香檳金)
+                blessingHtml = `
+                    <div class="analysis-text avoid-break" style="background: linear-gradient(135deg, #FFF8E1 0%, #FFEBEE 100%); padding: 25px 20px; border-radius: 12px; border: 1px solid #FFCDD2; text-align: center; line-height: 1.8; box-shadow: 0 4px 15px rgba(211,47,47,0.05);">
+                        
+                        <div style="color: #4E342E; font-size: 15.5px; text-align: left; line-height: 1.7; margin-bottom: 15px;">
+                            <strong style="color: #D32F2F; font-size: 16.5px;">「命盤揭示的是一種趨勢與特質，但愛情的模樣永遠掌握在您自己手上。」</strong><br><br>
+                            婚姻宮「反覆戀合型」的您，不是沒有幸福的能力，而是需要一點時間，學會相信自己的心。生命可能讓您經歷幾次靠近與離開，讓您比較、思考、甚至重新選擇。但這些經歷，並不是為了證明您「婚姻不好」，而是在幫助您越來越清楚：<br>
+                            <span style="color: #E65100; font-weight: bold;">「什麼是愛，什麼是依戀；什麼是害怕，什麼是真正的不適合；什麼是心動，什麼是值得共度一生的選擇。」</span>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 8px; margin: 15px 0; color: #4E342E; font-size: 15.5px; border-left: 4px solid #FF8F00; border-right: 4px solid #D32F2F; text-align: left;">
+                            當您不再害怕選錯，不再不停尋找更好的答案，而開始相信自己的心，就能從內心的彼此衝突，轉化為彼此成就。最後，您會明白：<br>
+                            <div style="text-align: center; color: #C62828; font-weight: bold; margin-top: 10px; font-size: 16px;">
+                                「真正的愛，不是永遠沒有疑惑；<br>而是在理解自己之後，依然願意選擇彼此。」
+                            </div>
+                        </div>
+
+                        <div style="color: #4E342E; font-size: 15.5px; text-align: left; margin-bottom: 20px;">
+                            希望這份分析，能成為您感情路上的一盞小夜燈，指引您更懂自己、也更懂得如何去愛。祝您早日找到最舒服的相處節奏，收穫一段雙向奔赴、彼此成就的理想關係！
+                        </div>
+
+                        <div style="color: #D32F2F; font-size: 15.5px; font-weight: bold; background: #FFF4F4; display: inline-block; padding: 12px 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #EF9A9A; text-align: center;">
+                            <span style="color: #E65100;">願您從反覆中找到覺察，從猶豫中找到智慧，</span><br>
+                            <span style="color: #C62828;">從選擇中找到安定，最後讓愛❤️成為一個可以安心停靠的地方。</span>
+                        </div>
+
+                        <div style="color: #C62828; font-size: 15px; margin-bottom: 15px; text-align: center; font-weight: bold;">
+                            不是要改變自己，而是接納自己；<br>當自己被真正接納，能量開始轉化，命運也就開始轉化。
+                        </div>
+
+                        <div style="color: #D32F2F; font-size: 16.5px; font-weight: bold; line-height: 1.8; background: #FFF8E1; padding: 10px; border-radius: 8px;">
+                            🔥 愛，是心的溫度；<br>
+                            ✨ 選擇，是愛的承諾；<br>
+                            🛡️ 安定，是婚姻最深的幸福。
+                        </div>
+                    </div>
+                `;
+            }
+
             
             document.getElementById('blessingContent').innerHTML = blessingHtml;
+
+            
             // 將輸入的名字填入 PDF 封面標題
             const fullName = lNameInput + fNameInput;
             document.getElementById('pdfUserNameTitle').innerText = `${fullName} 個人婚姻宮介紹與分析`;
