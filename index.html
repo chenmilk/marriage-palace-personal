@@ -1406,99 +1406,211 @@
                     
                     // 覆寫 2.類型的文字內容
                     detailText = `
-
-
                     <div style="text-align: center; margin: 10px 0 20px 0;">
-    <img src="https://images.unsplash.com/photo-1599147945530-c730a88c9207?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="極光星空" style="width: 100%; max-width: 600px; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(106,27,154,0.15);">
-</div>
-                        <div style="font-size:15px; color:#333; line-height:1.6; margin-bottom: 12px; margin-top: 8px;">
-                            在您婚姻宮的軌道中，呈現的是<strong style="color:#D32F2F;">「水火相剋：破壞、快速、熱情、行動」</strong>的五行能量。<br>
-                            <span style="color:#0277BD; font-weight:bold;">五行本質：</span>「水」代表情感與流動；「火」代表熱情與行動。水與火的接觸本質上破壞性極強，但在相遇時，卻容易產生極強烈的吸引力。<br>
-                            <span style="color:#C62828; font-weight:bold;">婚姻宮特性：</span>冰水與烈火的瞬間碰撞，能量極大、發展極快，但也容易因熱情燃盡而快速冷卻。這是一種波折變化最大的緣分，因此<strong style="color:#D32F2F;">「慎選配偶是第一要務」</strong>，藉由彼此適合的命格來穩定先天多變的氣場。<br>
-                            <span style="color:#6A1B9A; font-weight:bold;">✨ 璀璨極光，幸福控溫師：</span>水火交融如同「極光」般絢麗、浪漫且充滿爆發力。這註定是一場絢麗、激進、需要高超智慧來駕馭的生命之歌。
-                        </div>
-                        <div style="background: linear-gradient(135deg, #E1F5FE 0%, #FFEBEE 100%); padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #9C27B0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                            <strong style="color:#6A1B9A; font-size: 15.5px;">愛情核心句</strong><br>
-                            <span style="font-weight: bold; color: #4A148C;">「愛，可以很快開始；幸福，需要慢慢經營。」<br>「我有快速愛人的能力，也要學會讓愛慢慢長大。」</span>
-                        </div>
-                    `;
+                        <img src="https://images.unsplash.com/photo-1599147945530-c730a88c9207?q=80&w=1170&auto=format&fit=crop" 
+                             alt="極光星空" 
+                             style="width: 100%; max-width: 600px; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(106,27,154,0.15);">
+                    </div>
+                    
+                    <div style="font-size:15px; color:#333; line-height:1.6; margin-bottom: 15px; margin-top: 8px;">
+                        <div style="color: #6A1B9A; font-weight: bold; font-size: 16px; margin-bottom: 8px;">⭐️ 您的愛情密碼類型 <span style="color:#D32F2F;">［快速結合型］</span></div>
+                        在您婚姻宮的軌道中，呈現的是<strong style="color:#D32F2F;">【水火交融：快速、熱情、破壞、行動】</strong>的五行能量。<br>
+                        水火既濟的動態平衡，煉化出璀璨熱烈的生命火花。
+                    </div>
 
-                    // 特製 3.特質的排版內容
-                    traitsHtml = `
-                        <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #6A1B9A; margin-top: 15px;">
-                            
-                            <div style="color:#6A1B9A; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心特質與愛情觀</div>
-                            
-                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
-                                <strong style="color: #0277BD; font-size: 15px;">🔅 瞬間接觸的強烈吸引</strong>
-                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
-                                    緣分容易來自瞬間接觸，容易一見鍾情或迅速產生「就是這個人」的直覺。感情進展速度極快，只要喜歡就會主動靠近，對拖拖拉拉、曖昧不明的關係較無耐性。<br>
-                                    <span style="color: #D32F2F; font-weight: bold;">並非您「沒有愛」，而是愛的速度很快，而婚姻需要的是愛的深度。</span>
+                    <div style="background: #FAFAFA; border: 1px solid #E0E0E0; border-left: 4px solid #0277BD; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color:#0277BD; font-size: 15.5px; margin-bottom: 8px; display: block;">🔅 五行本質</strong>
+                        <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                            從大自然的自然道理來看，水與火的接觸，本質上是一種「兩者無法共存、破壞性極強」的五行關係。<br>
+                            在婚姻宮裡，<strong style="color: #1976D2;">「水」</strong>代表情感、感受與流動；<strong style="color: #C62828;">「火」</strong>代表熱情、行動與愛的表達。水火相遇時，容易產生強烈的吸引力。
+                        </div>
+                    </div>
+
+                    <div style="background: #FAFAFA; border: 1px solid #E0E0E0; border-left: 4px solid #C62828; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color:#C62828; font-size: 15.5px; margin-bottom: 8px; display: block;">🌺 婚姻宮特性</strong>
+                        <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                            冰水與烈火的瞬間碰撞，能量極大、發展極快，但也容易因為熱情燃盡而快速冷卻、產生波折。<br>
+                            所以當「水火相遇」這種能量落在婚姻宮時，它便演變成一種<strong style="color: #D32F2F;">「波折變化較大」</strong>的婚姻緣分。<br>
+                            因此在邁向婚姻道路的過程中，波折通常會比一般人多一些。<br>
+                            <span style="color: #AD1457; font-weight: bold; margin-top: 6px; display: block;">
+                                ❣️ 故慎選配偶是第一要務，因為磁場本身帶有較大的動盪，建議搭配彼此命格上適合的組合，藉此來穩定先天多變的氣場。
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="background: #F3E5F5; border: 1px solid #CE93D8; border-left: 4px solid #6A1B9A; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color:#6A1B9A; font-size: 16px; margin-bottom: 8px; display: block;">💦 水火核心精神：【 璀璨極光，幸福控溫師 】</strong>
+                        <div style="font-size: 14.5px; color: #4A148C; line-height: 1.6;">
+                            看見水火交融時，如同「極光」般絢麗、浪漫且充滿爆發力的愛情。<br>
+                            水火相遇，註定是一場絢麗、激進、需要高超智慧來駕馭的生命之歌。
+                        </div>
+                    </div>
+
+                    <div style="background: #FFEBEE; padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #C62828; margin-bottom: 10px;">
+                        <strong style="color:#C62828; font-size: 15.5px;">❤️ 愛情核心句</strong><br>
+                        <span style="font-weight: bold; color: #880E4F; font-size: 14.5px; display: block; margin-top: 6px;">
+                            「愛，可以很快開始；幸福，需要慢慢經營。」<br>
+                            「我有快速愛人的能力，也要學會讓愛慢慢長大。」
+                        </span>
+                    </div>
+                `;
+
+                // -----------------------------
+                // 生成 三. 特質 (traitsHtml)
+                // -----------------------------
+                traitsHtml = `
+                    <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #6A1B9A; margin-top: 15px;">
+                        
+                        <div style="color:#6A1B9A; font-size:17px; font-weight:bold; margin-bottom:15px; border-bottom: 1px solid #CE93D8; padding-bottom: 8px;">⭐️ 核心特質</div>
+                        
+                        <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 15px; margin-bottom: 12px;">
+                            <ul style="margin: 0; padding-left: 20px; color: #333; font-size: 14.5px; line-height: 1.6;">
+                                <li style="margin-bottom: 6px;">緣分容易來自<strong style="color: #D32F2F;">瞬間的接觸與強烈吸引</strong>。</li>
+                                <li style="margin-bottom: 6px;">容易一見鍾情，或很快產生「就是這個人」的感覺。</li>
+                                <li style="margin-bottom: 6px;">感情進展速度快，容易迅速確認關係。</li>
+                                <li style="margin-bottom: 6px;">屬於比較重感覺、重直覺的情感模式。</li>
+                                <li style="margin-bottom: 6px;">喜歡某人時，容易快速投入。</li>
+                                <li style="margin-bottom: 6px;">行動力強，喜歡就會主動靠近。</li>
+                                <li style="margin-bottom: 6px;">感情熱度來得快，也容易因情緒與相處狀況而產生冷熱變化。</li>
+                                <li>對於拖拖拉拉、曖昧不明的關係較沒有耐性。</li>
+                            </ul>
+                            <div style="background: #F3E5F5; color: #6A1B9A; padding: 10px; border-radius: 6px; margin-top: 12px; font-weight: bold; text-align: center;">
+                                💡 並非您「沒有愛」，而是：<br>
+                                愛的速度很快，而婚姻需要的是愛的深度。
+                            </div>
+                        </div>
+
+                        <div style="color:#6A1B9A; font-size:17px; font-weight:bold; margin-bottom:15px; border-bottom: 1px solid #CE93D8; padding-bottom: 8px;">🌹 愛情觀</div>
+                        
+                        <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+                            <div style="font-size: 14.5px; line-height: 1.6; color: #333;">
+                                您是相信感覺的。<br>
+                                遇到有感覺的人，很容易快速投入，不喜歡過度分析，也不喜歡把感情拖得太久。<br>
+                                因此，戀愛容易呈現：<strong style="color: #C62828;">心動 ➔ 靠近 ➔ 確認 ➔ 結合</strong>。<br>
+                                有時甚至還沒有真正了解彼此，就已經進入很深的關係。<br><br>
+                                <span style="background: #FFFDE7; color: #E65100; font-weight: bold; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px;">
+                                    🔅 這也是婚姻宮「快速結合型」需要特別留意的地方：
+                                </span><br>
+                                <strong style="color: #D32F2F;">「不要因為一時的強烈心動，就急著把一生交給一個還沒有真正了解的人。」</strong><br>
+                                真正適合自己的伴侶，不只是「讓自己心動的人」，更是能夠與自己一起生活、一起成長、一起面對人生的人。
+                            </div>
+                        </div>
+
+                        <div style="color:#6A1B9A; font-size:17px; font-weight:bold; margin-bottom:15px; border-bottom: 1px solid #CE93D8; padding-bottom: 8px;">🌸 幸福的個人優勢</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;">
+                            <div style="background: #F3E5F5; color: #4A148C; padding: 10px 12px; border-radius: 6px; font-size: 14.5px;">
+                                <strong>① 感情直覺敏銳：</strong><br>
+                                <span style="color: #333; font-size: 14px;">容易感受到兩人之間的火花與吸引力，因此在感情中具有很強的感受能力。</span>
+                            </div>
+                            <div style="background: #F3E5F5; color: #4A148C; padding: 10px 12px; border-radius: 6px; font-size: 14.5px;">
+                                <strong>② 敢愛敢行動：</strong><br>
+                                <span style="color: #333; font-size: 14px;">遇到喜歡的人，不容易一直停留在觀望，而願意主動表達與靠近。</span>
+                            </div>
+                            <div style="background: #F3E5F5; color: #4A148C; padding: 10px 12px; border-radius: 6px; font-size: 14.5px;">
+                                <strong>③ 熱情與感染力：</strong><br>
+                                <span style="color: #333; font-size: 14px;">投入感情時具有熱度，能讓伴侶感受到被愛、被重視。</span>
+                            </div>
+                            <div style="background: #F3E5F5; color: #4A148C; padding: 10px 12px; border-radius: 6px; font-size: 14.5px;">
+                                <strong>④ 關係建立速度快：</strong><br>
+                                <span style="color: #333; font-size: 14px;">只要遇到喜歡的人，兩人很容易迅速建立親密感。</span>
+                            </div>
+                            <div style="background: #F3E5F5; color: #4A148C; padding: 10px 12px; border-radius: 6px; font-size: 14.5px;">
+                                <strong>⑤ 具有重新點燃感情的能力：</strong><br>
+                                <span style="color: #333; font-size: 14px;">只要願意調整自己，其實您很懂得創造浪漫與新鮮感，可以為平淡的婚姻重新注入熱情。</span>
+                            </div>
+                        </div>
+
+                        <div style="background: #FFF4F4; color: #C62828; padding: 12px; border-radius: 6px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 14.5px;">
+                            所以，這類型真正需要學習的不是「不要愛」，而是：<br>
+                            <span style="font-size: 15.5px; display: block; margin-top: 6px;">「愛得很深之前，先看得夠清楚；愛得很快之後，願意走得長久。」</span>
+                        </div>
+
+                        <div style="background: #E8F5E9; border: 1px dashed #A5D6A7; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
+                            <strong style="color: #2E7D32; font-size: 15.5px;">🌈 幸福密碼</strong><br>
+                            <span style="font-size: 15px; color: #1B5E20; font-weight: bold; display: block; margin-top: 6px;">「在日常的平凡裡，牽手創造源源不絕的微型閃戀與驚奇。」</span>
+                        </div>
+
+                        <div style="color:#6A1B9A; font-size:17px; font-weight:bold; margin-bottom:15px; border-bottom: 1px solid #CE93D8; padding-bottom: 8px;">⭐️ 婚姻發展三部曲</div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: #6A1B9A; font-size: 16px;">1、開始（心動與建立）</strong>
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-top: 8px; margin-bottom: 8px;">
+                                <strong style="color: #6A1B9A;">☘️ 瞬間心動的電光石火⚡️</strong><br>
+                                <div style="font-size: 14px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                    緣分大多來自於「瞬間接觸」，進而讓戀情以驚人的速度快速發展。<br>
+                                    因為「火也代表光」，在兩人短暫相處、越快結合時，最能保留彼此眼中的美好。<br>
+                                    您的緣起可能只是：一次見面、一次眼神交流、一次談話、一次短暫接觸，就產生強烈的吸引。因此容易出現：「很快就知道自己喜歡他。」<br><br>
+                                    這是您很珍貴的能力——能感受愛，也敢於靠近愛。但緣起越快，越需要提醒自己：<br>
+                                    <strong style="color: #D32F2F; text-align: center; display: block; margin-top: 6px;">「心動是緣分的開始，不等於已經看懂彼此。」</strong>
                                 </div>
                             </div>
+                        </div>
 
-                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
-                                <strong style="color: #C62828; font-size: 15px;">🔅 愛情觀：相信感覺，快速投入</strong>
-                                <div style="margin-top: 4px; font-size: 14.5px; line-height: 1.6; color: #333;">
-                                    戀愛常呈現：<strong style="color: #6A1B9A;">心動 ➔ 靠近 ➔ 確認 ➔ 結合</strong>。有時還沒真正了解彼此，就已進入很深的關係。<br>
-                                    <span style="background: #FFFDE7; padding: 2px 6px; font-weight: bold; color: #F57F17;">⚠️ 特別留意：</span>「不要因為一時的強烈心動，就急著把一生交給一個還沒有真正了解的人。」真正適合的伴侶，是能與您一起生活、成長、面對人生的人。
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: #6A1B9A; font-size: 16px;">2、經營（相處與責任）</strong>
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-top: 8px; margin-bottom: 8px;">
+                                <strong style="color: #6A1B9A;">☘️ 極熱之後的保溫智慧</strong><br>
+                                <div style="font-size: 14px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                    在兩人接觸的初期，很容易一瞬間就釋放出排山倒海的感情與熱情。然而，這種強烈的投入，往往也比一般人更容易熱情燃盡，快速冷卻到冰點。<br>
+                                    情感來得快、去得快。想要讓這段婚姻緣分長久延續，是您人生的課題。<br>
+                                    這不是一種「不能幸福」的婚姻型態，而是一段提醒自己學習慢下來、看清楚、持續經營的生命功課。
                                 </div>
                             </div>
-
-                            <div style="color:#6A1B9A; font-size:16.5px; font-weight:bold; margin-bottom:12px; margin-top: 20px;">✦ 幸福的個人優勢</div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
-                                <span style="background: #F3E5F5; color: #6A1B9A; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 感情直覺敏銳</span>
-                                <span style="background: #F3E5F5; color: #6A1B9A; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 敢愛敢行動</span>
-                                <span style="background: #F3E5F5; color: #6A1B9A; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 具熱情與感染力</span>
-                                <span style="background: #F3E5F5; color: #6A1B9A; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 關係建立速度快</span>
-                                <span style="background: #F3E5F5; color: #6A1B9A; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">✨ 能重新點燃感情</span>
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px;">
+                                <strong style="color: #6A1B9A;">☘️ 讓熱情變成溫度</strong><br>
+                                <div style="font-size: 14px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                    進入婚姻後，最大的課題就是「續」。戀愛時的熱情會受到生活、工作、家庭與責任影響。<br>
+                                    如果只依賴激情，感情容易隨著熱度下降而產生失落。<br>
+                                    因此緣續的關鍵是：<strong style="color: #D32F2F;">多溝通、多理解、多欣賞、多製造驚奇有趣生活、多創造共同回憶、保留彼此的空間、持續經營兩人的關係。</strong><br>
+                                    <strong style="color: #4A148C; display: block; text-align: center; margin-top: 6px;">「戀愛靠心動，婚姻靠經營。」</strong>
+                                </div>
                             </div>
-                            <div style="background: #FFF4F4; color: #C62828; padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 14.5px;">
-                                真正需要學習的不是「不要愛」，而是：<br>「愛得很深之前，先看得夠清楚；愛得很快之後，願意走得長久。」<br>
-                                <span style="color: #6A1B9A;">🌈 幸福密碼：「在日常的平凡裡，牽手創造源源不絕的微型閃戀與驚奇。」</span>
-                            </div>
+                        </div>
 
-                            <div style="color:#6A1B9A; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 婚姻發展三部曲</div>
+                        <div style="margin-bottom: 25px;">
+                            <strong style="color: #6A1B9A; font-size: 16px;">3、緣成（結果與展望）</strong>
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px; margin-top: 8px; margin-bottom: 8px;">
+                                <strong style="color: #6A1B9A;">☘️ 快速結合</strong><br>
+                                <div style="font-size: 14px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                    當您確認適合的伴侶時，建議採取「速戰速決」、「閃電結婚」的方式最為理想。以免夜長夢多、橫生枝節。<br>
+                                    <span style="color: #C2185B; font-weight: bold;">🔅「快速結合型」的您不適合「青梅竹馬或長期抗戰」的感情。</span>
+                                </div>
+                            </div>
+                            <div style="background: #fff; border: 1px solid #E0E0E0; border-radius: 6px; padding: 12px;">
+                                <strong style="color: #6A1B9A;">💕 愛的轉化：☘️ 從激情走向深情</strong><br>
+                                <div style="font-size: 14px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                    真正成熟的婚姻，不是永遠維持熱戀，而是：<br>
+                                    即使激情退去，依然願意理解；即使生活平淡，依然願意陪伴；即使彼此不同，依然願意一起成長。<br>
+                                    當兩人能夠從「快速愛上」走向「穩定相愛」。<br>
+                                    <strong style="color: #D32F2F;">🔅 如此便完成了自己的婚姻轉化。</strong><br>
+                                    <strong style="color: #4A148C; display: block; text-align: center; margin-top: 6px;">「緣成，不是愛一直燃燒，而是讓愛成為生命裡持續的溫度。」</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 🩷 化解妙方 -->
+                        <div class="avoid-break" style="background: linear-gradient(135deg, #FFEBEE 0%, #FCE4EC 100%); border-left: 4px solid #E91E63; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="color: #C2185B; font-size: 16.5px; font-weight: bold; margin-bottom: 12px;">🩷 化解妙方</div>
                             
                             <div style="margin-bottom: 15px;">
-                                <strong style="color: #6A1B9A; font-size: 15px;">① 開始（心動與建立）：瞬間心動的電光石火 ⚡️</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
-                                    <li>緣起可能只是一次眼神交流或短暫接觸。因為火代表光，越快結合越能保留彼此眼中的美好。「很快就知道自己喜歡他」是您珍貴的能力。<br>
-                                    <strong style="color: #D32F2F;">提醒：</strong>心動是緣分的開始，不等於已經看懂彼此。</li>
+                                <strong style="color: #AD1457; font-size: 15px;">調和「激情與平淡」的對立</strong>
+                                <ul style="margin: 6px 0 0 0; padding-left: 20px; font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                    <li style="margin-bottom: 4px;"><strong style="color: #D81B60;">🔅（二元對立）的盲點：</strong>在「渴望轟轟烈烈」與「恐懼平淡枯燥」之間擺盪挑剔。認為婚姻要麼是「轟轟烈烈的愛（但容易燒盡）」，要麼是「死水一般的平淡（讓人窒息）」，在兩極之間擺盪、挑剔。</li>
+                                    <li style="margin-bottom: 4px;"><strong style="color: #D81B60;">🔅 看清自己：</strong>自己恐懼的不是伴侶變心，而是恐懼「生活變得索然無味」，因此常在關係中習慣性地挑剔或自我破壞。</li>
+                                    <li><strong style="color: #D32F2F;">😄 化解妙方：</strong>平凡的柴米油鹽不等於枯燥。當你容許內在的激情在日常中以「創意、共同目標」的形式流露時，水火便能共存。</li>
                                 </ul>
                             </div>
-
-                            <div style="margin-bottom: 15px;">
-                                <strong style="color: #6A1B9A; font-size: 15px;">② 經營（相處與責任）：極熱之後的保溫智慧 🌡️</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
-                                    <li>初期容易瞬間釋放排山倒海的熱情，但也容易燃盡冷卻。想要緣分長久，緣續的關鍵是：多溝通、多欣賞、多創造驚奇與共同回憶，並保留彼此空間。<br>
-                                    <strong style="color: #0277BD;">「戀愛靠心動，婚姻靠經營。」</strong></li>
-                                </ul>
-                            </div>
-
-                            <div style="margin-bottom: 20px;">
-                                <strong style="color: #6A1B9A; font-size: 15px;">③ 緣成（結果與展望）：快速結合 💍</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6; font-size: 14.5px;">
-                                    <li>當確認適合的伴侶時，採取<strong style="color: #D32F2F;">「速戰速決、閃電結婚」</strong>最為理想。您不適合青梅竹馬或長期抗戰。<br>
-                                    <strong style="color: #C62828;">💕 愛的轉化（從激情走向深情）：</strong>即使激情退去依然願意理解；即使生活平淡依然願意陪伴。緣成不是愛一直燃燒，而是讓愛成為生命裡持續的溫度。</li>
-                                </ul>
-                            </div>
-
-                            <!-- 愛的提醒：化解妙方 -->
-                            <div class="avoid-break" style="background: linear-gradient(135deg, #FFEBEE 0%, #FCE4EC 100%); border-left: 4px solid #E91E63; padding: 16px; border-radius: 8px;">
-                                <div style="color: #C2185B; font-size: 16px; font-weight: bold; margin-bottom: 10px;">⭐️ 愛的提醒：化解妙方</div>
-                                <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
-                                    <div style="margin-bottom: 8px;"><strong>調和「激情與平淡」的對立：</strong>容易認為婚姻要麼轟轟烈烈，要麼死水一灘。看清自己恐懼的其實不是伴侶變心，而是恐懼「生活變得索然無味」，導致在關係中習慣性挑剔或自我破壞。</div>
-                                    <div style="margin-bottom: 10px;"><strong style="color: #D32F2F;">😄 化解妙方：</strong>平凡的柴米油鹽不等於枯燥。當您容許內在的激情在日常中以「創意、共同目標」的形式流露時，水火便能共存。</div>
-                                    <div style="background: rgba(255,255,255,0.8); color: #880E4F; font-weight: bold; padding: 10px; border-radius: 6px; text-align: center;">
-                                        👩‍❤️‍👨 化解密碼：「在不變的婚姻框架裡，主動創造微型閃戀的驚奇，給予彼此高質量的個人空間。」
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
-                    `;
+
+                        <div style="background: #EFEBE9; padding: 15px; border-radius: 8px; text-align: center; border: 1px dashed #BCAAA4;">
+                            <strong style="color: #5D4037; font-size: 16px; display: block; margin-bottom: 6px;">👩‍❤️‍👨 重點總結</strong>
+                            <span style="font-size: 15px; color: #6A1B9A; font-weight: bold;">「在不變的婚姻框架裡，主動創造微型閃戀的驚奇，給予彼此高質量的個人空間。」</span>
+                        </div>
+
+                    </div>
+                `;
                 }
+                
                     
                 if ((renWx === "火" && diWx === "金") || (renWx === "金" && diWx === "火")) {
                     title = "反覆戀合型"; currentMbtiType = "反覆戀合型";
