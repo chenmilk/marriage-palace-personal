@@ -1151,11 +1151,29 @@
                 
                 if ((renWx === "土" && diWx === "水") || (renWx === "水" && diWx === "土")) {
                     title = "才華 × 財氣感應型"; currentMbtiType = "財氣感應型";
+
+
+                    // 判斷性別：只有女性才會顯示的專屬文字
+                let femaleExtraDetail = "";
+                let femaleExtraTrait = "";
+                
+                if (gender === "女") {
+                    femaleExtraDetail = `
+                        <span style="color: #C2185B; font-weight: bold;">👩 這種磁場在女性身上更為明顯：</span><br>
+                        女性主「質」，因此更容易獲得有形的物質（如金錢）。這類女性往往能匹配到「優質」的夫婿——要麼是夫家富有（如企業家第二代）、要麼是極具才華的丈夫或有錢的政治家。<br><br>
+                    `;
+                    
+                    femaleExtraTrait = `
+                        <span style="color: #C2185B; font-weight: bold; display: block; margin-top: 6px; padding: 6px; background: #FCE4EC; border-radius: 4px;">
+                            👩 尤其女性的婚姻磁場，對「才華」與「財富」的感應往往更加明顯，容易遇到有才華的丈夫、企業經營者、專業人士，或具有良好家庭資源的對象。
+                        </span>
+                    `;
+                }
                     
                     // 覆寫 2.類型的文字內容
                    detailText = `
                     <div style="text-align: center; margin: 10px 0 20px 0;">
-                        <img src="https://images.unsplash.com/photo-1531254808787-00a270ef9feb?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                        <img src="https://images.unsplash.com/photo-1531254808787-00a270ef9feb?fm=jpg&q=60&w=3000&auto=format&fit=crop" 
                              alt="藍金水波" 
                              style="width: 100%; max-width: 600px; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(13,71,161,0.15);">
                     </div>
@@ -1180,8 +1198,7 @@
                         <strong style="color:#5D4037; font-size: 15.5px; margin-bottom: 8px; display: block;">🌺 婚姻宮特性</strong>
                         <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
                             當土跟水結合，會產生一種將財氣牢牢鎖住的力量。天地間存在著奧妙的道理，婚姻宮帶有「土水築岸」的人，不論男女，彷彿冥冥之中受到上天的眷顧，特別容易吸引到層次較高、經濟條件優渥（有錢或有才氣）的伴侶。<br><br>
-                            <span style="color: #C2185B; font-weight: bold;">👩 這種磁場在女性身上更為明顯：</span><br>
-                            女性主「質」，因此更容易獲得有形的物質（如金錢）。這類女性往往能匹配到「優質」的夫婿——要麼是夫家富有（如企業家第二代）、要麼是極具才華的丈夫或有錢的政治家。<br><br>
+                            ${femaleExtraDetail}
                             🔅 在兩性關係中，往往容易與「才」或「財」產生緣分——也就是容易欣賞、吸引具有才華、能力、經濟實力或良好條件的另一半。
                         </div>
                     </div>
@@ -1227,9 +1244,7 @@
                                 <span style="background: #E0E0E0; padding: 2px 6px; border-radius: 4px; margin-right: 4px; display: inline-block; margin-bottom: 4px;">▪️ 社會地位</span>
                                 <span style="background: #E0E0E0; padding: 2px 6px; border-radius: 4px; margin-right: 4px; display: inline-block; margin-bottom: 4px;">▪️ 家庭背景</span><br>
                                 況且異性緣很好的您，也比較容易遇到條件優秀的對象。<br>
-                                <span style="color: #C2185B; font-weight: bold; display: block; margin-top: 6px; padding: 6px; background: #FCE4EC; border-radius: 4px;">
-                                    👩 尤其女性的婚姻磁場，對「才華」與「財富」的感應往往更加明顯，容易遇到有才華的丈夫、企業經營者、專業人士，或具有良好家庭資源的對象。
-                                </span>
+                                ${femaleExtraTrait}
                             </div>
                         </div>
 
@@ -1367,7 +1382,7 @@
                             <div>
                                 <strong style="color: #D84315; font-size: 15px;">3. 調和「物質與心靈」的對立</strong>
                                 <ul style="margin: 6px 0 0 0; padding-left: 20px; font-size: 14.5px; color: #4E342E; line-height: 1.6;">
-                                    <li style="margin-bottom: 4px;"><strong style="color: #FF8F00;">🔅（二元對立）盲點：</strong>容易用「外在條件（有沒有錢、配不配得上）」來衡量關係，或者在「追求物質安穩」與「渴望純粹情感」之間拉扯。</li>
+                                    <li style="margin-bottom: 4px;"><strong style="color: #FF8F00;">🔅（二元對立）盲點：</strong>容易用「外接條件（有沒有錢、配不配得上）」來衡量關係，或者在「追求物質安穩」與「渴望純粹情感」之間拉扯。</li>
                                     <li style="margin-bottom: 4px;"><strong style="color: #FF8F00;">🔅 看清自己：</strong>自己內在對安全感有極高的要求，容易把伴侶當成填補安全感的工具。</li>
                                     <li><strong style="color: #D32F2F;">🔅 認知化解：</strong>真正的安全感來自「內在豐盛」。當你學會不單看條件，而是去欣賞伴侶靈魂的才華時，土才能真正穩固地承接水。</li>
                                 </ul>
