@@ -668,7 +668,7 @@
             if (typeStr === '熱情付出型') { scoreIP = 80; scoreRM = 35; scoreHD = 30; scoreLC = 45; }
             else if (typeStr === '佛係慢熱型') { scoreIP = 35; scoreRM = 75; scoreHD = 65; scoreLC = 60; }
             else if (typeStr === '理性陪伴型') { scoreIP = 45; scoreRM = 60; scoreHD = 60; scoreLC = 55; }
-            else if (typeStr === '感性配合型') { scoreIP = 70; scoreRM = 20; scoreHD = 40; scoreLC = 15; }
+            else if (typeStr === '感性奉獻型') { scoreIP = 70; scoreRM = 20; scoreHD = 40; scoreLC = 15; }
             else if (typeStr.includes('理念成長型')) { scoreIP = 70; scoreRM = 70; scoreHD = 80; scoreLC = 25; }
             else if (typeStr === '人情結合型') { scoreIP = 60; scoreRM = 60; scoreHD = 70; scoreLC = 50; }
             else if (typeStr.includes('才華') || typeStr.includes('財氣')) { scoreIP = 80; scoreRM = 80; scoreHD = 50; scoreLC = 30; }
@@ -1780,7 +1780,7 @@
                         </div>
                     `;
                 }else {
-                    currentMbtiType = "感性配合型"; // MBTI 計算錨點
+                    currentMbtiType = "感性奉獻型"; // MBTI 計算錨點
                     
                     // 針對第三部曲的男女差異提醒
                     let genderOutcome = "";
@@ -1818,7 +1818,7 @@
 
                     
                         <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #D32F2F; text-align: center;">
-                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【感性配合型】</div>
+                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【感性奉獻型】</div>
                             <div style="font-size:15px; color:#333; font-weight:bold; line-height:1.6;">
                                 愛是我的天性，智慧是我的方向；<br>感性是我的天賦，理性是我的保護。
                             </div>
@@ -1844,7 +1844,7 @@
 
                             <!-- 感性 vs 理性 面向精美對照表 -->
                             <div class="avoid-break" style="background: #fff; border: 1px solid #E0E0E0; border-radius: 8px; padding: 12px; margin-bottom: 20px;">
-                                <div style="font-weight: bold; color: #483D8B; font-size: 14.5px; margin-bottom: 8px; text-align: center;">❖ 「感性配合型」特質對照表</div>
+                                <div style="font-weight: bold; color: #483D8B; font-size: 14.5px; margin-bottom: 8px; text-align: center;">❖ 「感性奉獻型」特質對照表</div>
                                 <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: center;">
                                     <tr style="background: #F3E5F5; color: #4A148C; font-weight: bold;">
                                         <th style="padding: 6px; border: 1px solid #E1BEE7;">面向</th>
@@ -2473,7 +2473,7 @@ else if (currentMbtiType === "理性陪伴型") {
                 `;
             }
 
-else if (currentMbtiType === "感性配合型") {
+else if (currentMbtiType === "感性奉獻型") {
                 interactionHtml = `
                     <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
                         
@@ -2498,7 +2498,7 @@ else if (currentMbtiType === "感性配合型") {
                                 <div style="background: #FCE4EC; padding: 12px; border-radius: 6px; margin-top: 10px; text-align: center; color: #880E4F; font-weight: bold; font-size: 14.5px;">
                                     「愛得深，所以心會牽掛；學會放鬆，愛才能自由。」<br>
                                     「我可以在乎你，但不需要掌握你；我可以牽掛你，也願意給你自由。」<br>
-                                    <span style="font-size: 13.5px; font-weight: normal; color: #AD1457;">【感性配合型】是先有情感，再學習用智慧安放這份愛。</span>
+                                    <span style="font-size: 13.5px; font-weight: normal; color: #AD1457;">【感性奉獻型】是先有情感，再學習用智慧安放這份愛。</span>
                                 </div>
                             </div>
 
@@ -3265,7 +3265,7 @@ else if (currentMbtiType === "人情結合型") {
                 `;
             }
 
-            else if (currentMbtiType === "感性配合型") {
+            else if (currentMbtiType === "感性奉獻型") {
                 spiritualHtml = `
                     <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
                         
@@ -3329,7 +3329,7 @@ else if (currentMbtiType === "人情結合型") {
                         <div class="avoid-break" style="background: #FFF4F4; border: 1.5px dashed #F06292; padding: 18px; border-radius: 8px; text-align: center;">
                             <div style="color: #D81B60; font-size: 16.5px; font-weight: bold; margin-bottom: 10px;">☘️ 身心靈的小提醒</div>
                             <div style="font-size: 15px; color: #4A148C; line-height: 1.6;">
-                                「感性配合型」的您，靈魂自帶強大的轉化力量（拿得起、放得下）。<br>
+                                「感性奉獻型」的您，靈魂自帶強大的轉化力量（拿得起、放得下）。<br>
                                 <strong style="color: #C2185B;">只要學會在熱烈時留一分清醒，在離去時留一分溫柔，</strong><br>
                                 這股能量就會從「婚姻的宿命」蛻變為您「掌控幸福的超能力」。
                             </div>
@@ -3966,7 +3966,7 @@ else if (currentMbtiType === "反覆戀合型") {
             // -----------------------------
             let blessingHtml = "";
             const blessingGroup1 = ["佛係慢熱型", "理性陪伴型", "人情結合型", "反覆戀合型"];
-            const blessingGroup2 = ["熱情付出型", "感性配合型", "理念成長型", "快速結合型", "才華感應型"];
+            const blessingGroup2 = ["熱情付出型", "感性奉獻型", "理念成長型", "快速結合型", "才華感應型"];
 
             if (blessingGroup1.includes(currentMbtiType)) {
                 blessingHtml = `
@@ -4007,7 +4007,7 @@ else if (currentMbtiType === "反覆戀合型") {
                 `;
             }
 
-            else if (currentMbtiType === "感性配合型") {
+            else if (currentMbtiType === "感性奉獻型") {
                 // 感性配合型 專屬融合版祝福 (玫瑰粉+靈魂紫)
                 blessingHtml = `
                     <div class="analysis-text avoid-break" style="background: linear-gradient(135deg, #FFF4F4 0%, #FCE4EC 100%); padding: 22px; border-radius: 12px; border: 1px solid #F8BBD0; text-align: center; line-height: 1.8; box-shadow: 0 4px 10px rgba(194,24,91,0.05);">
