@@ -667,7 +667,7 @@
             
             if (typeStr === '熱情付出型') { scoreIP = 80; scoreRM = 35; scoreHD = 30; scoreLC = 45; }
             else if (typeStr === '佛係慢熱型') { scoreIP = 35; scoreRM = 75; scoreHD = 65; scoreLC = 60; }
-            else if (typeStr === '理性陪伴型') { scoreIP = 45; scoreRM = 60; scoreHD = 60; scoreLC = 55; }
+            else if (typeStr === '理性獨立型') { scoreIP = 45; scoreRM = 60; scoreHD = 60; scoreLC = 55; }
             else if (typeStr === '感性奉獻型') { scoreIP = 70; scoreRM = 20; scoreHD = 40; scoreLC = 15; }
             else if (typeStr.includes('理念成長型')) { scoreIP = 70; scoreRM = 70; scoreHD = 80; scoreLC = 25; }
             else if (typeStr === '人情結合型') { scoreIP = 60; scoreRM = 60; scoreHD = 70; scoreLC = 50; }
@@ -1724,69 +1724,233 @@
                 
             } else if (marriageRel.type === "無") {
                 if (renD === diD) {
-                    currentMbtiType = "理性陪伴型";
+                    currentMbtiType = "理性獨立型";
                     
-                    // 特製 2.類型的排版內容 (置中、紅字)
-                    analysisHtml = `
+                    // 動態判斷五行本質
+                    let wuxingDesc = "";
+                    if (renWx === "木") {
+                        wuxingDesc = "木木依附，雙木成林<br>在婚姻宮能量上，如運作平衡，可互相依附、共榮成長。";
+                    } else if (renWx === "土") {
+                        wuxingDesc = "土土共容、堆積成塔<br>在婚姻宮能量上，如運作平衡，可相互容合、資源不斷。";
+                    } else if (renWx === "水") {
+                        wuxingDesc = "水水相融、匯集成滿<br>在婚姻宮的能量上，如運作平衡，可相互經營、財源流通。";
+                    } else if (renWx === "火") {
+                        wuxingDesc = "火火互映、亮麗光輝<br>在婚姻宮的能量上，如運作平衡，可相互突顯、事業光芒。";
+                    } else if (renWx === "金") {
+                        wuxingDesc = "金金共鳴、價值呼應<br>在婚姻宮能量上，如運作平衡，可相互襯托、尊榮形象。";
+                    }
 
-<div style="text-align: center; margin: 10px 0 20px 0;">
+                    // 特製 2. 類型的排版內容 (如同剋宮一般簡潔，無左側紅線)
+                    analysisHtml = `
+                        <div style="color:#483D8B; font-size:16px; margin-bottom:12px; font-weight: bold; text-align: left;">📌 命盤格局：理性獨立型</div>
+                        
+                        <div style="text-align: center; margin: 10px 0 20px 0;">
                             <img src="https://images.unsplash.com/photo-1622477220437-73fc1b4efe3b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                                  alt="對稱湖面倒影" 
                                  style="width: 100%; max-width: 600px; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,105,92,0.15);">
                         </div>
+                        
+                        <div class="analysis-text" style="text-align: left; margin-bottom: 15px;">
+                            <div style="color: #483D8B; font-weight: bold; font-size: 16px; margin-bottom: 8px;">⭐️ 您的愛情密碼類型 <span style="color:#D32F2F;">［理性獨立型］</span></div>
+                            <div style="font-size: 14.5px; color: #333; line-height: 1.6;">
+                                在您的婚姻宮軌道中，呈現的是<strong style="color:#D32F2F;">「雙軌並進」</strong>的五行能量。<br>
+                                🔅 雙軌並進的堅固戰友，在理性「公事公辦」的基底上加入感性柔情。
+                            </div>
+                        </div>
 
-                    
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #D32F2F; text-align: center;">
-                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【理性陪伴型】</div>
-                            <div style="font-size:16px; color:#333; font-weight:bold;">互相尊重是良藥，空間距離是美感。</div>
-                        </div> 
+                        <div style="background: #FAFAFA; border: 1px solid #E0E0E0; border-left: 4px solid #00695C; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong style="color:#004D40; font-size: 15.5px; margin-bottom: 8px; display: block;">🌼 五行本質</strong>
+                            <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                ${wuxingDesc}
+                            </div>
+                        </div>
+
+                        <div style="background: #FAFAFA; border: 1px solid #E0E0E0; border-left: 4px solid #D81B60; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong style="color:#C2185B; font-size: 15.5px; margin-bottom: 8px; display: block;">🌺 婚姻宮特性</strong>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                <li style="margin-bottom: 6px;"><strong style="color: #D32F2F;">🔅 精神契合：</strong>在感情的世界裡，比起盲目的激情，您更看重精神層面的契合、個人的成長與事業發展。</li>
+                                <li style="margin-bottom: 6px;"><strong style="color: #D32F2F;">🔅 愛自己多過愛對方：</strong>您對自己的要求與現狀比較滿意，但對另一半的眼光相對挑剔，容易注意到對方的缺點。</li>
+                                <li style="margin-bottom: 6px;"><strong style="color: #D32F2F;">🔅 異性緣好，但極度謹慎：</strong>您的異性朋友可以很多，甚至能做一輩子的知心好友，但也因為擇偶非常謹慎，不輕易將就，所以比較不易衝動步入婚姻。</li>
+                                <li><strong style="color: #D32F2F;">🔅 感情步調慢，注重精神陪伴：</strong>您在感情中較為被動、給予對方的寵愛度比較淡然，不易快速陷入熱戀。離別時對您的傷害力與挫折感也相對較低。故容易再有「第二次姻緣」的緣分。</li>
+                            </ul>
+                            <div style="margin-top: 8px; color: #666; font-size: 13.5px;">👫註：配偶若同屬「佛系慢熱型」，兩者都較重質，能接受有名無份的理性陪伴。</div>
+                        </div>
+
+                        <div style="background: #F3E5F5; border: 1px solid #CE93D8; border-left: 4px solid #6A1B9A; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong style="color:#6A1B9A; font-size: 16px; margin-bottom: 8px; display: block;">🎈「理性獨立型」核心精神：【 雙軌並進，心靈盟友 】</strong>
+                            <div style="font-size: 14.5px; color: #4A148C; line-height: 1.6;">
+                                你們的靈魂選擇了一種極度穩固的『戰友模式』。<br>
+                                世界上最長久的關係，往往建立在彼此平等的信任與合作上。浪漫不是只有花前月下，共同經營一個家也是一種極致的浪漫。<br>
+                                當你不再硬套劇本去要求對方展現戲劇化的熱情，而是主動在盟友的基底上加入一點柔軟的傾聽，你們就能創造出兼具『理性安全感』與『感性親密感』的完美神仙眷侶。
+                            </div>
+                        </div>
+
+                        <div style="background: #FCE4EC; padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #D81B60; margin-bottom: 10px;">
+                            <strong style="color:#C2185B; font-size: 15.5px;">🌸 愛情核心句</strong><br>
+                            <span style="font-weight: bold; color: #880E4F; font-size: 15px; display: block; margin-top: 6px;">
+                                「愛自己，是我的底氣；自在，是我的幸福；契合，是我的選擇。」
+                            </span>
+                        </div>
                     `;
-                    
-                    // 特製 3.特質的排版內容
-                    traitsHtml = `
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #483D8B;">
-                            
-                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心能量與愛情觀</div>
-                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
-                                <li style="margin-bottom: 8px;"><strong>核心能量：</strong>您在婚姻宮軌道中，呈現的是「平起平坐、雙向互動」的五行能量。比起盲目的激情衝動，您更看重精神層面的契合、個人的獨立成長與事業發展，屬於先理性觀察、再慢慢投入的感情模式。</li>
-                                <li style="margin-bottom: 8px;"><strong>主要概念：</strong>在感情中，您理性獨立、慎重慢熱，重視精神契合與自我成長。您對自己的現狀較為滿意，不會把全部人生寄託在伴侶身上，追求健康平等的心理邊界。您真正想要的不是一個單方面很愛自己的人，而是一個彼此欣賞、互相信任且願意長久陪伴的人生夥伴。</li>
-                                <li><strong>愛情觀念：</strong>愛要適合，更要能長久。您追求的是能在關係中舒適做自己、彼此互相尊重、有共同價值觀且能一起成長的關係。感情推進步調為「觀察 → 認識 → 理解 → 信任 → 投入 → 陪伴」，不追求短暫的轟轟烈烈，更看重細水長流的精神共鳴。</li>
-                            </ul>
-                            
-                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 個人優勢（相處特長）</div>
-                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
-                                <li style="margin-bottom: 8px;"><strong>理性成熟不衝動：</strong>做選擇時冷靜思考，不易被一時激情牽著走，能有效避開不適合的關係與爛桃花。</li>
-                                <li style="margin-bottom: 8px;"><strong>獨立自主無負擔：</strong>進入婚姻仍保有健全的自我與生活圈，彼此相處自在，不容易產生窒息感或過度依賴。</li>
-                                <li style="margin-bottom: 8px;"><strong>慢熱慎選重責任：</strong>雖然感情投入步調較慢，但經過充分觀察與確認後，具備高度責任感，極具經營長久穩定關係的定力。</li>
-                                <li><strong>靈魂共鳴伴侶感：</strong>重視精神交流，一旦遇到頻率契合的對象，能將男女之愛昇華為攜手成長的高維度人生夥伴。</li>
-                            </ul>
 
-                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 感情發展三部曲</div>
-                            <div style="margin-bottom: 15px; color: #333;">
-                                <strong style="color: #483D8B;">① 開始（動心與建立）</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
-                                    <li style="margin-bottom: 6px;"><strong>慎重慢熱：</strong>眼光較為挑剔、顧慮較多，對婚姻抱持平常心，不易一見鍾情，也不太會盲目主動追求。</li>
-                                    <li style="margin-bottom: 6px;"><strong>朋友起步：</strong>適合經由旁人介紹、工作場合或社交圈相識，先從朋友做起，透過長時間深入相處與觀察再決定投入。</li>
-                                    <li><strong>破象化解：</strong>傳統命盤中與「初戀」或「第一任」緣分較淺；若目前對象已非第一任，此斷緣考驗在冥冥之中早已自然化解。</li>
+                    // 特製 3. 特質的排版內容
+                    traitsHtml = `
+                        <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #D32F2F; margin-top: 15px;">
+                            
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">⭐️ 核心特質：獨立自主的理性靈魂</div>
+                            <div style="font-size: 14.5px; color: #333; margin-bottom: 15px;">理性獨立、慎重慢熱，重視精神契合與自我成長。</div>
+                            
+                            <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 15px; margin-bottom: 15px;">
+                                <strong style="color: #C2185B; font-size: 15.5px;">🌈 特質</strong>
+                                <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #333; line-height: 1.6; font-size: 14.5px;">
+                                    <li style="margin-bottom: 6px;"><strong>① 理性：</strong>不容易只憑激情談感情，會觀察、分析彼此是否適合。不容易因為一時激情就失去自己。</li>
+                                    <li style="margin-bottom: 6px;"><strong>② 獨立：</strong>重視自己的生活、工作、事業與成長，不會把全部人生寄託在伴侶身上。重視個人空間，不喜歡過度被限制或控制。</li>
+                                    <li style="margin-bottom: 6px;"><strong>③ 慎選：</strong>對感情與婚姻有自己的標準，不容易因為寂寞或一時心動就決定。重視相處品質，希望婚姻能讓生活更好，而不是增加壓力。</li>
+                                    <li><strong>④ 慢熱：</strong>感情投入比較慢，需要時間建立信任與安全感；一旦確認關係，反而比較重視長久與責任。自我滿意度較高，比較能接受自己，也比較知道自己喜歡什麼。</li>
                                 </ul>
                             </div>
-                            <div style="margin-bottom: 15px; color: #333;">
-                                <strong style="color: #483D8B;">② 經營（相處與責任）</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
-                                    <li style="margin-bottom: 6px;"><strong>責任支持：</strong>不太會說甜言蜜語，習慣透過生活照顧、物質穩定、支持對方夢想與承擔責任來表達愛意。</li>
-                                    <li style="margin-bottom: 6px;"><strong>心理邊界：</strong>夫妻間宜相敬如賓並保持適度空間感；若生活趨於平淡，容易將精神重心轉移至事業或個人興趣。</li>
-                                    <li><strong>刻意交流：</strong>需注意「穩定不能變成習慣，習慣不能取代愛」，婚姻中需刻意保留專屬兩人的約會時間與情感對話，將生活的夥伴轉化為心靈的伴侶。</li>
-                                </ul>
+                            
+                            <div style="font-size: 14.5px; color: #4E342E; margin-bottom: 20px; line-height: 1.6;">
+                                <strong>您通常是：</strong><br>
+                                觀察 → 認識 → 理解 → 信任 → 投入 → 陪伴<br>
+                                而不是：心動 → 熱戀 → 快速承諾。<br>
+                                這也是為什麼「理性獨立型」的人有時候看起來比較冷靜，其實只是愛得比較慢。<br><br>
+                                <strong style="color: #D32F2F;">一句話定義：「先理性選擇，再慢慢投入」的感情模式。</strong>
                             </div>
-                            <div style="color: #333;">
-                                <strong style="color: #483D8B;">③ 緣成（結果與展望）</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
-                                    <li style="margin-bottom: 6px;"><strong>互相理解支持：</strong>雙方能真正理解彼此的個性與差異，尊重彼此的空間並全力支持對方的夢想。</li>
-                                    <li><strong>終極人生夥伴：</strong>婚姻昇華為深度的靈魂支撐與長期陪伴，形成「我願意陪你走過人生，而你也願意陪我成為自己」的圓滿境界。</li>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">🌹 愛情觀念</div>
+                            <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 15px; margin-bottom: 20px; font-size: 14.5px; line-height: 1.6;">
+                                對自己比較滿意，也比較懂得欣賞自己。通常不會因為孤單就急著進入一段關係。<br>
+                                比起「一定要有人陪」，更重視：<strong style="color: #D32F2F;">「這個人是否真的適合走進我的生活。」</strong><br>
+                                我可以一個人過得很好，但遇見對的人，可以讓生活更加美好。<br><br>
+                                <strong>愛情很好，但不是失去自己的理由。</strong><br>
+                                您對愛情不是追求轟轟烈烈的愛，而是希望：<br>
+                                <ul style="margin: 4px 0 10px 0; padding-left: 20px;">
+                                    <li>可以做自己</li>
+                                    <li>彼此互相尊重</li>
+                                    <li>有共同的價值觀</li>
+                                    <li>能夠互相理解</li>
+                                    <li>有精神上的交流</li>
+                                    <li>在生活中彼此陪伴</li>
+                                    <li>一起成長，而不是互相限制</li>
                                 </ul>
+                                <div style="background: #FFF4F4; padding: 10px; border-radius: 6px; text-align: center; color: #C2185B; font-weight: bold; margin-bottom: 10px;">
+                                    「愛要適合，更要能長久；比起激情，更重視理解、陪伴與精神契合。」
+                                </div>
+                                您通常希望找到：能理解自己的人、能尊重自己的人、相處舒服的人、生活節奏相近的人。<br>
+                                所以您真正想要的不是「一個很愛自己的人」而已，而是：<strong style="color: #D32F2F;">「一個我欣賞、我信任，也願意長久陪伴的人。」</strong><br><br>
+                                💖 愛不求轟轟烈烈，而在理解、尊重與陪伴中，尋找一段能長久同行的關係。
+                            </div>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">🌸 幸福的個人優勢</div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">① 理性成熟，做選擇不容易衝動：</strong><br>不容易被一時激情牽著走，會觀察、思考、確認。比較不容易為愛迷失，知道自己的界線與需求。<br>
+                                    <span style="color: #C2185B;">🌟 幸福優勢：比較能避開不適合自己的關係，做出長遠的選擇。</span>
+                                </div>
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">② 獨立自主，擁有自己的生活：</strong><br>不會把全部人生寄託在伴侶身上，也重視自己的工作、成長與人生目標。懂得愛自己，不容易完全依賴伴侶。<br>
+                                    <span style="color: #C2185B;">🌟 幸福優勢：即使進入婚姻，仍能保有自己，因此關係比較不容易產生過度依賴。</span>
+                                </div>
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">③ 慢熱慎選，一旦認定更重視長久：</strong><br>雖然感情進入得慢，但是經過觀察與確認後，通常比較願意承擔責任、經營關係。<br>
+                                    <span style="color: #C2185B;">🌟 幸福優勢：不是追求短暫激情，而是有能力建立穩定、細水長流的關係。</span>
+                                </div>
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">④ 重視精神交流，適合「一起成長」的伴侶：</strong><br>真正需要的是能夠理解自己、尊重自己，也能與自己談人生、談價值觀的人。重視關係品質，寧可選擇適合的人，也不願勉強自己。<br>
+                                    <span style="color: #C2185B;">🌟 幸福優勢：一旦遇到精神頻率契合的對象，感情容易從愛情提升為人生夥伴。</span>
+                                </div>
+                            </div>
+                            
+                            <div style="font-size: 15px; color: #880E4F; font-weight: bold; text-align: center; margin-bottom: 20px;">
+                                🌺「理性獨立型」最大的幸福優勢，是懂得選擇，也有能力獨立；<br>當遇到真正契合的人，更能把愛走成長久的陪伴。
+                            </div>
+
+                            <div style="background: #FCE4EC; border: 1px dashed #F06292; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
+                                <strong style="color: #C2185B; font-size: 16px;">🌈 幸福密碼</strong><br>
+                                <span style="font-size: 15.5px; color: #880E4F; font-weight: bold; display: block; margin-top: 6px;">
+                                    「白天是並肩作戰的盟友，夜晚是卸下防備的依靠。」
+                                </span>
+                            </div>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">⭐️ 婚姻發展的三部曲</div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #880E4F; font-size: 16px;">① 開始（心動與建立）</strong>
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-top: 8px; margin-bottom: 8px;">
+                                    <strong style="color: #D32F2F;">🌿 因欣賞與契合而開始～</strong><br>
+                                    <div style="font-size: 14.5px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                        🔅 您的感情比較理性、慢熱，不容易因為一時激情就決定一段關係。有時兩個人一開始甚至只是朋友，需經過長時間相處後，才逐漸產生感情。<br>
+                                        🔅 對另一半眼光相當挑剔，顧慮太多，感情給得慢，擔心太快結婚容易因不夠了解而生變。宜經旁人介紹、長時間深入交往後再考慮結婚。<br>
+                                        🔅 對婚姻抱持平常心，比較不會主動去追求，如拖太晚緣分會越來越淡。➡️ 可透過旁人介紹、社交圈、婚友社、工作場合。
+                                    </div>
+                                    <div style="margin-top: 8px; color: #D32F2F; font-weight: bold;">
+                                        適合：慢慢認識，慎重選擇。<br>核心：「先觀察，再愛。」<br>
+                                        認識 → 相處 → 觀察 → 理解 → 信任，慢慢發展。
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-bottom: 8px;">
+                                    <strong style="color: #D32F2F;">🌿 您的緣起特質</strong>
+                                    <ul style="margin: 4px 0 10px 0; padding-left: 20px; font-size: 14.5px; color: #333; line-height: 1.6;">
+                                        <li>慢熱、不容易一見鍾情</li>
+                                        <li>選擇伴侶較為慎重</li>
+                                        <li>重視條件與價值觀是否契合</li>
+                                        <li>容易先做朋友，再發展感情</li>
+                                        <li>比起激情，更在意能否長久相處</li>
+                                    </ul>
+                                    <div style="color: #C2185B; font-weight: bold;">容易「看得見條件，卻忘了感受」。<br>🌼 不要只問「他適不適合我」，也要問「和他在一起，我的心是否自在？」</div>
+                                </div>
+
+                                <div style="background: #FFF4F4; padding: 10px; border-radius: 6px; font-size: 14.5px;">
+                                    <strong style="color: #C2185B;">❣️ 您容易與「初戀」或「第一任」緣薄，易面臨斷緣考驗。</strong><br>
+                                    <strong>自然化解：</strong><br>
+                                    ① 不要太執著初戀情人或青梅竹馬的戀人。<br>
+                                    ② 若目前的對象已非第一任，此考驗冥冥中已自然化解！
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #880E4F; font-size: 16px;">② 經營（相處與責任）</strong>
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-top: 8px; margin-bottom: 8px;">
+                                    <strong style="color: #D32F2F;">🌿 因為自在，所以願意同行～</strong><br>
+                                    <div style="font-size: 14.5px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                        「愛不是熱度，而是持續，從愛情走向陪伴。」<br>
+                                        🔅 當「理性獨立型」進入婚姻後，可能不太會說很多甜言蜜語，但會透過：穩定、陪伴照顧、承擔責任、支持對方、經營生活、一起面對人生與彼此成長來表達愛。<br><br>
+                                        <strong style="color: #C2185B;">❣️ 需要注意的是：</strong>穩定不能變成習慣，習慣不能取代愛💓。<br>
+                                        🔅 當夫妻長期把重心放在工作、事業、孩子或各自生活時，感情可能慢慢失去交流。所以婚姻需要刻意保留：<strong>兩個人的時間、兩個人的話題、兩個人的情感。</strong><br><br>
+                                        🔅 續緣關係中最重要的是：<strong>舒服。</strong>重視自在、舒服與生活品質。如果兩人在一起能保有自己，又能彼此陪伴，感情就能持續。
+                                    </div>
+                                </div>
+                                <div style="background: #FFF4F4; padding: 10px; border-radius: 6px; font-size: 14.5px; text-align: center;">
+                                    <strong style="color: #C2185B;">🌈 幸福密碼：</strong><br>
+                                    <span style="color: #D32F2F; font-weight: bold;">把「生活的夥伴」重新變回「心的伴侶。」</span>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 25px;">
+                                <strong style="color: #880E4F; font-size: 16px;">③ 緣成（結果與展望）</strong>
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-top: 8px; margin-bottom: 8px;">
+                                    <strong style="color: #D32F2F;">🌿 成為彼此最舒服的陪伴～</strong><br>
+                                    <div style="font-size: 14.5px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                        🔅 婚後若能享受穩定平順，感情能維持長久。夫妻間宜「相敬如賓」，保持適當空間感。<br>
+                                        🔅 若覺得生活平淡，易將精神轉移至事業或個人興趣（以事業做排遣）。轉向事業並非感情不合，而是建立健康的心理邊界。<br><br>
+                                        
+                                        <strong style="color: #C2185B;">🩷 緣成的三個層次：</strong><br>
+                                        <strong>① 成為彼此的理解者：</strong>從一開始的：「你適不適合我？」慢慢走向：「我開始真正理解你。」理解彼此的個性、需求、生命歷程，也理解彼此不同的地方。<br>
+                                        <strong>② 成為彼此的支持者：</strong>不要求對方完全按照自己的方式生活，而是：尊重差異、支持夢想、保留空間、兩個人可以各自成長，也可以共同前進。<br>
+                                        <strong>③ 成為彼此的人生夥伴：</strong>到了這個階段，婚姻已經不只是愛情，而是：陪伴、信任、責任、成長與靈魂上的支持。<br><br>
+
+                                        🔅 成熟的婚姻，不是彼此綁住，而是：兩個完整的人，選擇一起生活。<br>
+                                        「我願意陪你走過人生，而你也願意陪我成為自己。」<br>
+                                        最好的愛，是我可以做自己，而你也可以做自己。<br>
+                                        <span style="color: #D32F2F; font-weight: bold;">這是您🌸 緣成——最高層次。</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     `;
+                }
                 }else {
                     currentMbtiType = "感性奉獻型"; 
                     
@@ -2537,15 +2701,15 @@
                 `;
             }
 
-else if (currentMbtiType === "理性陪伴型") {
+else if (currentMbtiType === "理性獨立型") {
                 interactionHtml = `
                     <div class="analysis-text" style="text-align: left; line-height: 1.6; color: #333;">
                         
                         <!-- 導言區塊 -->
                         <div class="avoid-break" style="background: #F8F9FA; border-left: 4px solid #3F51B5; padding: 18px; border-radius: 8px; margin-bottom: 20px;">
-                            <div style="color: #3F51B5; font-size: 17px; font-weight: bold; margin-bottom: 10px;">✦ 【理性陪伴型】的互動解析</div>
+                            <div style="color: #3F51B5; font-size: 17px; font-weight: bold; margin-bottom: 10px;">✦ 【理性獨立型】的互動解析</div>
                             <div style="font-size: 15.5px;">
-                                婚姻宮「理性陪伴型」的解析，並非對命運的定罪，而是引導您先接納自己的特質。當您看懂關係的能量與課題，學會轉化自我，命盤上的「淡象」或「斷緣」就不再只是命定，而是一套讓您看懂關係、經營關係、提升維度的生命智慧。
+                                婚姻宮「理性獨立型」的解析，並非對命運的定罪，而是引導您先接納自己的特質。當您看懂關係的能量與課題，學會轉化自我，命盤上的「淡象」或「斷緣」就不再只是命定，而是一套讓您看懂關係、經營關係、提升維度的生命智慧。
                             </div>
                         </div>
 
@@ -3400,7 +3564,7 @@ else if (currentMbtiType === "人情結合型") {
                 `;
             }
 
-            else if (currentMbtiType === "理性陪伴型") {
+            else if (currentMbtiType === "理性獨立型") {
                 spiritualHtml = `
                     <div class="analysis-text" style="text-align: left; line-height: 1.5; color: #333;">
                         
@@ -3455,7 +3619,7 @@ else if (currentMbtiType === "人情結合型") {
                         <div class="avoid-break" style="background: #FFF3E0; border: 1.5px dashed #FF9800; padding: 15px; border-radius: 8px; text-align: center;">
                             <div style="color: #E65100; font-size: 16.5px; font-weight: bold; margin-bottom: 10px;">☘️ 能量提醒與心靈祝福</div>
                             <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6; text-align: justify;">
-                                「理性陪伴型」不是冷淡，而是愛得比較慢；不是沒有感情，而是需要時間確認；不是不需要伴侶，而是渴望遇見真正值得長久陪伴的人。<br><br>
+                                「理性獨立型」不是冷淡，而是愛得比較慢；不是沒有感情，而是需要時間確認；不是不需要伴侶，而是渴望遇見真正值得長久陪伴的人。<br><br>
                                 您真正要學習的功課不是強迫自己變得浪漫，而是：<br>
                                 <strong style="color: #D32F2F; font-size: 15.5px; display: block; text-align: center; margin: 8px 0;">「我可以保有清醒與理性，同時也允許自己自在地感受愛。」</strong><br>
                                 當您不再只用客觀標準挑選對象，而是去體會——<strong style="color: #483D8B;">「和這個人在一起，我是不是能做真正的自己？」</strong>，婚姻就不再只是條件的媒合，而是找到一位能互相理解、各自獨立精彩、又能一起看盡人生風景的靈魂夥伴。
@@ -4224,7 +4388,7 @@ else if (currentMbtiType === "反覆戀合型") {
             // 生成 七. 祝福結語 (blessingContent)
             // -----------------------------
             let blessingHtml = "";
-            const blessingGroup1 = ["佛係慢熱型", "理性陪伴型", "人情結合型", "反覆戀合型"];
+            const blessingGroup1 = ["佛係慢熱型", "理性獨立型", "人情結合型", "反覆戀合型"];
             const blessingGroup2 = ["熱情付出型", "感性奉獻型", "理念成長型", "快速結合型", "才華感應型"];
 
             if (blessingGroup1.includes(currentMbtiType)) {
