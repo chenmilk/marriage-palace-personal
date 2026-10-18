@@ -2249,64 +2249,177 @@
                 if (marriageRel.dir === "下") {
                     currentMbtiType = "熱情付出型";
                     
-                    // 特製 2.類型的排版內容 (置中、紅字)
+                    
+                    
+                   // 特製 2. 類型的排版內容
                     analysisHtml = `
-
-<div style="text-align: center; margin: 10px 0 20px 0;">
+                        <div style="color:#483D8B; font-size:16px; margin-bottom:12px; font-weight: bold; text-align: left;">📌 命盤格局：熱情付出型</div>
+                        
+                        <div style="text-align: center; margin: 10px 0 20px 0;">
                             <img src="https://plus.unsplash.com/premium_photo-1733306531071-087c077e1502?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                                  alt="生機盎然的自然" 
                                  style="width: 100%; max-width: 600px; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 15px rgba(230,81,0,0.15);">
                         </div>
+                        
+                        <div class="analysis-text" style="text-align: left; margin-bottom: 15px;">
+                            <div style="color: #483D8B; font-weight: bold; font-size: 16px; margin-bottom: 8px;">⭐️ 您的愛情密碼類型 <span style="color:#D32F2F;">［熱情付出型］</span></div>
+                        </div>
 
-                    
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 15px; border-radius: 8px; border-left: 4px solid #D32F2F; text-align: center;">
-                            <div style="color:#D32F2F; font-size:18px; font-weight:bold; margin-bottom:8px;">【熱情付出型】</div>
-                            <div style="font-size:16px; color:#333; font-weight:bold;">愛，是我的天性；經營，是我的力量。</div>
-                        </div> 
+                        <div style="background: #FAFAFA; border: 1px solid #E0E0E0; border-left: 4px solid #D81B60; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong style="color:#C2185B; font-size: 15.5px; margin-bottom: 8px; display: block;">🌺 婚姻宮特性</strong>
+                            <div style="font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                婚姻宮「熱情付出型」，是一種具有愛、付出、照顧與經營力量的能量型態。通常重視感情，也願意為自己所愛的人付出心力。<br>
+                                對您而言，愛不只是感覺，更會化為實際的關心、照顧與責任。<br>
+                                「熱情付出」並不代表婚姻從此一帆風順，而是在面對感情與婚姻時，您天生具有較強的經營關係與維繫感情的能力。<br><br>
+                                <strong style="color: #D32F2F;">真正的幸福，不是因為永遠沒有問題，而是當問題來臨時，彼此願意理解、溝通與一起走過。</strong>
+                            </div>
+                        </div>
+
+                        <div style="background: #F3E5F5; border: 1px solid #CE93D8; border-left: 4px solid #6A1B9A; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong style="color:#6A1B9A; font-size: 16px; margin-bottom: 8px; display: block;">🔥「熱情付出型」核心精神：【繁花似錦，心靈獨處師】</strong>
+                            <div style="font-size: 14.5px; color: #4A148C; line-height: 1.6;">
+                                您身上蘊藏著極其龐大的生命能量。當您把這份專注與激情拿去成就自己的事業與靈魂成長，給伴侶留白的空間，這股強大磁場的能量轉化，就會從『壓迫』變成『庇蔭』，創造枝繁葉茂的家庭港灣。
+                            </div>
+                        </div>
+
+                        <div style="background: #FCE4EC; padding: 12px; border-radius: 6px; text-align: center; border-left: 4px solid #D81B60; margin-bottom: 10px;">
+                            <strong style="color:#C2185B; font-size: 15.5px;">❤️ 愛情核心句</strong><br>
+                            <span style="font-weight: bold; color: #880E4F; font-size: 15px; display: block; margin-top: 6px;">
+                                「愛，是我的天性；經營，是我的力量。」
+                            </span>
+                        </div>
                     `;
                     
-                    // 特製 3.特質的排版內容
+                    // 特製 3. 特質的排版內容
                     traitsHtml = `
-                        <div class="analysis-text" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #483D8B;">
+                        <div class="analysis-text avoid-break" style="background: #FAFAFA; padding: 20px; border-radius: 8px; border-left: 4px solid #D32F2F; margin-top: 15px;">
                             
-                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 核心能量與愛情觀</div>
-                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
-                                <li style="margin-bottom: 8px;"><strong>核心能量：</strong>您在感情與婚姻中，天生具有經營關係、願意付出與照顧伴侶的特質。這是一種偏向穩定、長久、持續經營的婚姻能量。它並非代表婚姻一定沒有問題，而是表示您更有能力透過自己的努力，讓婚姻朝向幸福穩定發展。</li>
-                                <li style="margin-bottom: 8px;"><strong>主要概念：</strong>在感情中，您天生願意付出、照顧、承擔責任，也希望建立一段穩定而長久的關係。對您而言，婚姻不只是兩個人的結合，更是一份願意共同成長、彼此守護的人生承諾。一旦認定一個人，便會真誠投入，希望對方幸福。</li>
-                                <li><strong>愛情觀念：</strong>比較容易找到自己欣賞的對象。一旦開始交往，通常會專注經營這段感情，不會同時發展多段關係或腳踏兩條船；因此，大多是在一段感情真正結束後，才會重新開始新的戀情。</li>
-                            </ul>
-                            
-                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 個人優勢（相處特長）</div>
-                            <ul style="margin: 0; padding-left: 20px; margin-bottom: 20px; color:#333; line-height: 1.6;">
-                                <li style="margin-bottom: 8px;"><strong>主動與吸力：</strong>容易遇到自己心儀的對象，且願意投入感情。</li>
-                                <li style="margin-bottom: 8px;"><strong>重情與付出：</strong>重視婚姻與家庭，樂於照顧另一半，願意疼對方、寵對方。</li>
-                                <li><strong>包容與韌性：</strong>願意包容與體諒，遇問題時傾向修復關係而非輕易放棄，婚姻較容易維持穩定。</li>
-                            </ul>
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">⭐️ 核心特質</div>
+                            <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 15px; margin-bottom: 15px;">
+                                <strong style="color: #C2185B; font-size: 15.5px;">🌈 特質</strong>
+                                <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #333; line-height: 1.6; font-size: 14.5px;">
+                                    <li style="margin-bottom: 6px;"><strong>❤️ 熱情：</strong>對感情較有投入感，不喜歡過於冷淡的關係。</li>
+                                    <li style="margin-bottom: 6px;"><strong>❤️ 願意付出：</strong>會用實際行動表達關心，而不只是說說而已。</li>
+                                    <li style="margin-bottom: 6px;"><strong>❤️ 疼愛伴侶：</strong>多數「熱情付出型」的人，都具有照顧另一半的特質。</li>
+                                    <li style="margin-bottom: 6px;"><strong>❤️ 重視責任：</strong>一旦進入婚姻，通常願意承擔家庭與伴侶的責任。</li>
+                                    <li><strong>❤️ 願意經營：</strong>遇到問題時，較傾向想辦法改善，而不是輕易放棄。</li>
+                                </ul>
+                            </div>
 
-                            <div style="color:#D32F2F; font-size:16.5px; font-weight:bold; margin-bottom:12px;">✦ 感情發展三部曲</div>
-                            <div style="margin-bottom: 15px; color: #333;">
-                                <strong style="color: #483D8B;">① 開始（動心與建立）</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
-                                    <li style="margin-bottom: 6px;"><strong>主動追求：</strong>通常較容易主動認識喜歡的人，並勇於追求幸福。</li>
-                                    <li style="margin-bottom: 6px;"><strong>真誠打動：</strong>較能找到滿意的伴侶；雖然對方第一眼不見得能立刻接受，但經由您的主動與付出，大部分都能如願。</li>
-                                    <li><strong>婚姻意願：</strong>較容易建立感情，且對婚姻抱持較高的接受度，大多都有結婚的意願。</li>
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">🌹 愛情觀</div>
+                            <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 15px; margin-bottom: 20px; font-size: 14.5px; line-height: 1.6;">
+                                您對愛情通常抱持比較積極的態度。<br>
+                                遇到喜歡的人時，較容易：
+                                <ul style="margin: 4px 0 10px 0; padding-left: 20px;">
+                                    <li>主動投入感情</li>
+                                    <li>願意追求自己喜歡的人</li>
+                                    <li>重視感情的發展</li>
+                                    <li>希望建立穩定關係</li>
                                 </ul>
+                                一旦進入一段關係，也通常比較願意專心經營。<br><br>
+                                <div style="background: #FFF4F4; padding: 10px; border-radius: 6px; text-align: center; color: #C2185B; font-weight: bold;">
+                                    對您而言：「愛一個人，不只是擁有，而是願意照顧與陪伴。」
+                                </div>
                             </div>
-                            <div style="margin-bottom: 15px; color: #333;">
-                                <strong style="color: #483D8B;">② 經營（相處與責任）</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
-                                    <li style="margin-bottom: 6px;"><strong>專一配合：</strong>交往或婚後往往願意配合對方、全心付出。</li>
-                                    <li style="margin-bottom: 6px;"><strong>界線分明：</strong>感情專一且界線明確，鮮少有過於親密的普通異性朋友。</li>
-                                    <li><strong>責任擔當：</strong>願意共同經營家庭，高度重視家庭責任，因此姻緣通常較能長久。</li>
-                                </ul>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">🌸 幸福的個人優勢</div>
+                            <div style="font-size: 14.5px; color: #4E342E; margin-bottom: 12px; font-weight: bold;">「熱情付出型」最大的幸福優勢，在於：</div>
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">🌟 1．具有愛人的能力：</strong><br>有些人想愛，卻不知道如何表達；但您通常比較容易把愛化為行動。
+                                </div>
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">🌟 2．願意為關係努力：</strong><br>婚姻需要經營，而您天生就比較願意投入心力。
+                                </div>
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">🌟 3．容易給伴侶安全感：</strong><br>因為重視責任、願意照顧，因此容易讓另一半感受到被愛與被支持。
+                                </div>
+                                <div style="background: #FFF4F4; color: #333; padding: 10px 12px; border-radius: 6px; font-size: 14.5px; border-left: 3px solid #E57373;">
+                                    <strong style="color: #B71C1C;">🌟 4．具有長久經營的力量：</strong><br>您的感情不是只追求一時激情，而是具有：「陪伴、照顧、責任與持續經營的能力。」
+                                </div>
                             </div>
-                            <div style="color: #333;">
-                                <strong style="color: #483D8B;">③ 緣成（結果與展望）</strong>
-                                <ul style="margin: 5px 0 0 0; padding-left: 20px; line-height: 1.6;">
-                                    <li style="margin-bottom: 6px;"><strong>共同努力：</strong>雙方願意共同努力經營家庭、承擔責任、持續付出與長期陪伴。</li>
-                                    <li><strong>安定長久：</strong>婚姻容易形成「安定」、「信任」與「白頭偕老」的狀態，整體婚姻較穩定、波折較少。</li>
-                                </ul>
+
+                            <div style="background: #FCE4EC; border: 1px dashed #F06292; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
+                                <strong style="color: #C2185B; font-size: 16px;">🌈 幸福密碼</strong><br>
+                                <span style="font-size: 15.5px; color: #880E4F; font-weight: bold; display: block; margin-top: 6px;">
+                                    「給愛留一道通風的縫隙，強大的能量才能綻放成滿園繁花。」
+                                </span>
                             </div>
+
+                            <div style="color:#C62828; font-size:16.5px; font-weight:bold; margin-bottom:12px;">⭐️ 婚姻發展三部曲</div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #880E4F; font-size: 16px;">1：開始（心動與建立）</strong>
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-top: 8px;">
+                                    <strong style="color: #D32F2F;">☘️ 勇敢走向愛</strong><br>
+                                    <div style="font-size: 14.5px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                        您遇到喜歡的人時，通常比較容易投入感情；內心會有一股力量，希望把握自己認定的人。<br>
+                                        <span style="color: #C2185B; font-weight: bold;">因為心動，所以願意靠近。</span><br>
+                                        較容易：
+                                        <ul style="margin: 4px 0 0 0; padding-left: 20px;">
+                                            <li>主動認識</li>
+                                            <li>願意追求</li>
+                                            <li>積極建立關係</li>
+                                            <li>把握感情機會</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <strong style="color: #880E4F; font-size: 16px;">2：經營（相處與責任）</strong>
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-top: 8px;">
+                                    <strong style="color: #D32F2F;">☘️ 用行動守護愛</strong><br>
+                                    <div style="font-size: 14.5px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                        一旦認定一個人，往往願意付出時間、心力與責任，希望讓自己所愛的人過得更好。<br>
+                                        您通常願意：
+                                        <ul style="margin: 4px 0 10px 0; padding-left: 20px;">
+                                            <li>照顧伴侶</li>
+                                            <li>承擔責任</li>
+                                            <li>配合彼此的生活</li>
+                                            <li>為關係努力</li>
+                                        </ul>
+                                        <div style="background: #FFF4F4; padding: 10px; border-radius: 6px; text-align: center; color: #C2185B; font-weight: bold;">
+                                            「愛，不只是開始，而是願意一直走下去。」
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 25px;">
+                                <strong style="color: #880E4F; font-size: 16px;">3：緣成（結果與展望）</strong>
+                                <div style="background: #fff; border: 1px solid #FFCDD2; border-radius: 6px; padding: 12px; margin-top: 8px;">
+                                    <strong style="color: #D32F2F;">🌸 讓愛成為人生的陪伴</strong><br>
+                                    <div style="font-size: 14.5px; margin-top: 4px; color: #333; line-height: 1.6;">
+                                        當雙方都願意珍惜彼此，您的婚姻能量容易發展成一種穩定的陪伴。<br>
+                                        婚姻不再只是激情，而會慢慢形成：<strong style="color: #1A237E;">信任、默契、安定、陪伴、經營家庭、共同成長</strong>。<br><br>
+                                        <div style="background: #FFF4F4; padding: 10px; border-radius: 6px; text-align: center; color: #C2185B; font-weight: bold;">
+                                            「最好的愛，是走過歲月後，依然願意牽著彼此的手。」
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 🩷 化解妙方 -->
+                            <div class="avoid-break" style="background: #FFF8E1; border-left: 4px solid #FF8F00; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                                <div style="color: #E65100; font-size: 16.5px; font-weight: bold; margin-bottom: 12px;">🩷 化解妙方</div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="color: #D84315; font-size: 15px;">⭐️ 能量重疊／過旺</strong>
+                                    <ul style="margin: 6px 0 0 0; padding-left: 20px; font-size: 14.5px; color: #4E342E; line-height: 1.6;">
+                                        <li style="margin-bottom: 6px;"><strong style="color: #FF8F00;">🔅（二元對立）盲點：</strong>在「極度依賴／掌控」與「感覺被冷落／發飆」兩極擺盪。</li>
+                                        <li style="margin-bottom: 6px;"><strong style="color: #FF8F00;">🔅 識清自己：</strong>內在能量與存在感極強，容易把「愛」誤解為「佔有或控制」，讓伴侶感到束縛。</li>
+                                        <li><strong style="color: #D32F2F;">🔅 意識擴展（調和對立）：</strong>愛不是綁架，而是兩個獨立靈魂的並肩同行。將過剩的能量投注於自身的事業或創造力，給予伴侶空間，強大的磁場才會變成滋養關係的養分。</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 👩‍❤️‍👨 重點總結 -->
+                            <div style="background: #EFEBE9; padding: 15px; border-radius: 8px; text-align: center; border: 1px dashed #BCAAA4; margin-bottom: 20px;">
+                                <strong style="color: #5D4037; font-size: 16px; display: block; margin-bottom: 6px;">👩‍❤️‍👨 重點總結</strong>
+                                <span style="font-size: 15px; color: #D32F2F; font-weight: bold;">建立「健康的情感退潮期」，每週安排各自獨處、追尋個人興趣的時間。</span>
+                            </div>
+
                         </div>
                     `;
 
